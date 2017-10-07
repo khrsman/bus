@@ -3,78 +3,67 @@
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-            <h1>Laporan Pengeluaran</h1>
+            <h1>Laporan Pendapatan</h1>
             <ol class="breadcrumb">
                 <li><a href="#">Home</a></li>
-                <li class="active">Laporan Penggeluaran</li>
+                <li class="active">Laporan Pendapatan</li>
             </ol>
         </section>
         <section class="content">
+          <div class="row" id="tabel">
                                   <?php
                                   $total = 0;
                                   foreach ($data as $key => $value) {
-                                    // $jumlah = $value['jumlah'];
-                                    // $jumlah =  str_replace(",","",$jumlah);
-                                    // $total = $total+$jumlah
-
                                     $data_pendapatan = $this->db->query("SELECT id_unit,tanggal_dari,tanggal_sampai,harga,
-                                                if(tanggal_sampai >= '2017-09-30',
-                                                 		datediff('2017-09-30', tanggal_dari),
-                                                		datediff(tanggal_sampai, tanggal_dari)) hari,
-                                                if(tanggal_sampai >= '2017-09-30',
-                                                 		harga*datediff('2017-09-30', tanggal_dari),
-                                                		harga*datediff(tanggal_sampai, tanggal_dari)) total
-                                                from booking
-                                                where id_unit like '%".$value['seri']."%'")->result_array();
-
-?>
-<div class="row" id="tabel">
-    <div class="col-md-12">
-        <div class="box box-primary">
-            <div class="box-header">
-            Pendapatan bus <?php echo $value['seri'] ?>
-            </div>
-            <div class="box-body">
-<table id="dt" class="table table-hover table-bordered display nowrap" width="100%" cellspacing="0">
-    <thead>
-        <tr>
-            <th>Seri</th>
-            <th>Tanggal</th>
-            <th>Jumlah Hari</th>
-            <th>Seri</th>
-        </tr>
-    </thead>
-    <tbody>
-<?php
-                                    foreach ($data_pendapatan as $key => $value2) {
+                                      datediff(tanggal_sampai, tanggal_dari) hari, total from booking
+                                                where id_unit like '%".$value['seri']."%'")->result_array(); ?>
+                                          <div class="col-md-6">
+                                              <div class="box box-primary">
+                                                  <div class="box-header">
+                                                  Pendapatan bus <?php echo $value['seri'] ?>
+                                                  </div>
+                                                  <div class="box-body">
+                                      <table id="dt" class="table table-hover table-bordered display nowrap" width="100%" cellspacing="0">
+                                          <thead>
+                                              <tr>
+                                                  <th>Seri</th>
+                                                  <th>Tanggal</th>
+                                                  <th>Jumlah Hari</th>
+                                                  <th>Total</th>
+                                              </tr>
+                                          </thead>
+                                          <tbody>
+                                      <?php
+                                    $total = 0;
+                                      foreach ($data_pendapatan as $key => $value2) {
+                                          $jumlah = $value2['total'];
+                                          $jumlah =  str_replace(",", "", $jumlah);
+                                          $total = $total+$jumlah
                                       ?>
                                     <tr>
                                         <td><?php echo $value['seri'] ?></td>
                                         <td><?php echo $value2['tanggal_dari'] ?></td>
                                         <td><?php echo $value2['hari'] ?></td>
-                                        <td><?php echo $value2['total'] ?></td>
+                                        <td><?php echo number_format($value2['total']) ?></td>
                                     </tr>
                                     <?php
-                                  } ?>
+
+                                      } ?>
                                 </tbody>
                                 <tfooter>
                                 <tr>
                                     <td colspan="3"> Total </td>
-                                    <!-- <td><?php echo number_format($total) ?></td> -->
+                                    <td><?php echo number_format($total) ?></td>
                                 </tr>
                             <tfooter>
                             </table>
                         </div>
                     </div>
                 </div>
-            </div>
-
                                   <?php
-                                        }
+                                  }
                                     ?>
-
-    </div>
-</div>
+                                      </div>
 </section>
 </div>
 

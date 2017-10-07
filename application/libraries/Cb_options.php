@@ -23,8 +23,8 @@
 
          public function marketing()
          {
-           $header = '<select class="form-control" name="id_marketing">
-             <option selected="">--- PILIH ---</option>';
+           $header = '<select class="form-control input_validation" name="id_marketing">
+             <option value="" selected="" disabled>--- PILIH ---</option>';
            $select_item = '';
            $footer = '</select>';
 
@@ -133,16 +133,21 @@
            echo $cb_kategori_pengeluaran;
          }
 
-         public function tipe_user()
-         {
-           $header = '<select class="form-control" name="tipe_user">
-             <option selected="">--- PILIH ---</option>';
 
-             $select_item = '<option value="ADMIN"> ADMIN </option>
-             <option value="KELURAHAN"> KELURAHAN </option>';
+         public function kode_booking()
+         {
+           $header = '<select class="form-control" name="id_booking">
+             <option selected="">--- PILIH ---</option>';
+           $select_item = '';
            $footer = '</select>';
-           $cb_tipe_user = $header.$select_item.$footer;
-           echo $cb_tipe_user;
+
+           $data = $this->CI->db->get('booking')->result_array();
+           foreach ($data as $key => $value) {
+             $select_item .= '<option value="'.$value['id_booking'].'">'.$value['id_booking'].' ('.$value['nama_penyewa'].' - '.$value['tujuan'].')</option>'  ;
+           }
+           $footer = '</select>';
+           $cb_unit = $header.$select_item.$footer;
+           echo $cb_unit;
          }
 
 

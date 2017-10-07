@@ -20,16 +20,19 @@
                             <form role="form" class="form-horizontal xform">
                                 <input type="hidden" id="id_spj" name="id_spj" >
 																<div class="form-group">
-                                  <label class="col-sm-4 control-label">No booking</label>
+                                  <label class="col-sm-4 control-label">Kode booking</label>
                                   <div class="col-sm-8">
-                                      <input type = "text" name="id_booking" id="id_booking" class="form-control"  >
+                                    <?php
+                                    $this->load->library('Cb_options');
+                                    $this->cb_options->kode_booking();
+                                    ?>
                                   </div>
                             </div>
 													<div class="form-group">
                                   <label class="col-sm-4 control-label">Bus</label>
                                   <div class="col-sm-8">
                                     <?php
-                                    $this->load->library('Cb_options');
+
                                     $this->cb_options->unit();
                                     ?>
                                   </div>
@@ -126,7 +129,7 @@
                         </div>
                         <div class="box-footer">
                             <a class="btn btn-danger" id="cancel"><span class="fa fa-remove "></span> Cancel</a>
-                            <a class="btn btn-primary add_page" id="simpan"><span class="fa fa-check "></span> Simpan</a>
+                            <a class="btn btn-primary add_page" id="simpan_custom"><span class="fa fa-check "></span> Simpan</a>
                             <a class="btn btn-primary edit_page" id="update"><span class="fa fa-check "></span> update</a>
                         </div>
                     </div>
@@ -150,7 +153,7 @@
 																			 <th>Crew</th>
 																			 <th>Km awal</th>
 																			 <th>Km akhir</th>
-																			 <th width="150px">Aksi</th>
+																			 <th id="aksi">Aksi</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -174,10 +177,91 @@ $().ready(function(){
   var url_hapus =  page+'/delete';
   var url_get = page+'/get';
 
-loadDataTable(url_get);
-function loadDataTable(url){
+  $('body').on('click', '.hapus_custom', function() {
+    var id = $(this).val();
+    $.ajax({
+        type: "GET",
+        url: url_hapus,
+        data: {id: id},
+        success: function (resdata) {
+          $.notify({
+            title: "Berhasil : ",
+            message: "Data berhasil dihapus",
+            icon: 'fa fa-check'
+          },{
+            type: "success"
+          });
+          loadDataTable_custom(url_get);
+          //  location.reload();
+        },
+        error: function (jqXHR, exception) {
+          // pesan error menggunakan notify.js
+          $.notify({
+            title: "Error :",
+            message: "Telah terjadi kesalahan!",
+            icon: 'fa fa-check'
+          },{
+            type: "danger"
+          });
+        }
+    });
+    });
+
+
+    $('#simpan_custom').click(function(){
+      var valid = true;
+      $('.input_validation').each(function() {
+        if(!this.value){
+          valid = false;
+          var lbl = $(this).parent().prev("label").text();
+          $.notify({
+            title: "Error :",
+            message: lbl+" harus diisi!",
+            icon: 'fa fa-check'
+          },{
+            type: "danger"
+          });
+        $(this).addClass("focus");
+     }
+    });
+    if(valid){
+      var data = $('form').serialize();
+    }
+    $.ajax({
+          type: "POST",
+          url: url_simpan,
+          data: {data: data},
+          success: function (resdata) {
+            $.notify({
+              title: "Berhasil : ",
+              message: "Data telah ditambahkan",
+              icon: 'fa fa-check'
+            },{
+              type: "success"
+            });
+              $(".xform")[0].reset();
+              loadDataTable_custom(url_get);
+              $('#form_tambah').toggle( "slide", 'slow', function(){$('#tabel').toggle( "slide");});
+                // location.reload();
+          },
+          error: function (jqXHR, exception) {
+            // pesan error menggunakan notify.js
+            $.notify({
+              title: "Error :",
+              message: "Telah terjadi kesalahan!",
+              icon: 'fa fa-check'
+            },{
+              type: "danger"
+            });
+          }
+      });
+    });
+
+
+loadDataTable_custom(url_get);
+function loadDataTable_custom(url){
 $('#dt').dataTable({
-  // "scrollX": true,
+  "destroy": true,
   "bLengthChange": false,
   "displayLength":10,
   "language": {
@@ -196,7 +280,7 @@ $('#dt').dataTable({
       for ( var i=0, ien=json.length ; i<ien ; i++ ) {
         // masukan aksi kedalam data json
         json[i][index_action] = '<button value="'+json[i][0]+'" class="btn btn-primary edit" ><i class="fa fa-pencil"></i> Edit</button> '+
-        '<button value="'+json[i][0]+'" class="btn btn-danger hapus"><i class="fa  fa-trash"></i> Hapus</button>';
+        '<button value="'+json[i][0]+'" class="btn btn-danger hapus_custom"><i class="fa  fa-trash"></i> Hapus</button>';
         json[i].splice(0,1); // hapus kolom index
         json[i][0] = '<a href ="spj/cetak?id='+ json[i][0] +'" class="btn btn-success" ><i class="fa fa-pencil"></i> Cetak </button> ';
       }

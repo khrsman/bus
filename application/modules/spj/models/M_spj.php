@@ -16,7 +16,12 @@ class M_spj extends CI_Model
         $this->db->where('id_spj', $id);
         $this->db->limit(1);
       }
-        $this->db->select('id_spj pk,id_spj,id_booking,id_unit,id_sopir,id_crew,km_awal,km_akhir');
+        $this->db->select('id_spj pk,id_spj,id_booking,
+(select seri from unit where unit.id_unit = spj.id_unit) bus,
+(select nama from pegawai where pegawai.id_pegawai = spj.id_sopir) sopir,
+(select nama from pegawai where pegawai.id_pegawai = spj.id_crew) crew,
+km_awal,km_akhir
+');
         $query = $this->db->get('spj');
         return $query->result_array();
     }

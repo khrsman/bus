@@ -43,9 +43,41 @@ var page = $("#page_custom").attr("value");
 var url_get = page+'/get';
 loadDataTable_custom(url_get);
 
+
+$('body').on('click', '.hapus_custom', function() {
+  var id = $(this).val();
+  var url_hapus = page+'/delete';
+  $.ajax({
+      type: "GET",
+      url: url_hapus,
+      data: {id: id},
+      success: function (resdata) {
+        $.notify({
+          title: "Berhasil : ",
+          message: "Data berhasil dihapus",
+          icon: 'fa fa-check'
+        },{
+          type: "success"
+        });
+        loadDataTable_custom(url_get);
+        //  location.reload();
+      },
+      error: function (jqXHR, exception) {
+        // pesan error menggunakan notify.js
+        $.notify({
+          title: "Error :",
+          message: "Telah terjadi kesalahan!",
+          icon: 'fa fa-check'
+        },{
+          type: "danger"
+        });
+      }
+  });
+  });
+
 function loadDataTable_custom(url){
 $('#dt').dataTable({
-  // "scrollX": true,
+  "destroy": true,
   "bLengthChange": false,
   "displayLength":10,
   "language": {
@@ -64,7 +96,7 @@ $('#dt').dataTable({
       for ( var i=0, ien=json.length ; i<ien ; i++ ) {
         var id = json[i][0];
         // masukan aksi kedalam data json
-        json[i][index_action] = '<button value="'+json[i][0]+'" class="btn btn-danger hapus"><i class="fa  fa-trash"></i> Hapus</button>';
+        json[i][index_action] = '<button value="'+json[i][0]+'" class="btn btn-danger hapus_custom"><i class="fa  fa-trash"></i> Hapus</button>';
         json[i][0] = '<a href ="pembayaran/kwitansi?id_pembayaran='+ id +'" class="btn btn-primary" ><i class="fa fa-pencil"></i> Cetak Kwitansi </a> ';
         // json[i].splice(0,1); // hapus kolom index
       }

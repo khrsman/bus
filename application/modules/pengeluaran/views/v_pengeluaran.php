@@ -58,6 +58,7 @@
                         <div class="box-footer">
                             <a class="btn btn-danger" id="cancel"><span class="fa fa-remove "></span> Cancel</a>
                             <a class="btn btn-primary add_page" id="simpan"><span class="fa fa-check "></span> Simpan</a>
+                              <a class="btn btn-primary add_page" id="simpan_tambah"><span class="fa fa-check "></span> Simpan dan tambah</a>
                             <a class="btn btn-primary edit_page" id="update"><span class="fa fa-check "></span> update</a>
                         </div>
                     </div>

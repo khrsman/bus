@@ -88,9 +88,15 @@
                               <div class="form-group">
                                       <label class="col-sm-4 control-label">Nama Penyewa</label>
                                       <div class="col-sm-8">
-                                          <input type = "text" name="nama_penyewa" id="nama_penyewa" class="form-control"  >
+                                          <input type = "text" name="nama_penyewa" id="nama_penyewa" class="form-control input_validation"   >
                                       </div>
                                 </div>
+                                <div class="form-group">
+                                        <label class="col-sm-4 control-label">No Telepon</label>
+                                        <div class="col-sm-8">
+                                            <input type = "text" name="no_telepon" id="no_telepon" class="form-control input_validation"   >
+                                        </div>
+                                  </div>
                                 <div class="form-group">
                                         <label class="col-sm-4 control-label">Tujuan</label>
                                         <div class="col-sm-8">
@@ -126,7 +132,7 @@
                                       <!-- <input value="0" type = "number" name="jumlah_bus" id="jumlah_bus" class="form-control hitung_total"
                                       onkeydown='return (event.which >= 48 && event.which <= 57) || event.which == 8 || event.which == 46 || event.which == 37 || event.which == 39'
                                       > -->
-                                      <select name="id_unit[]" multiple id="langOpt">
+                                      <select name="id_unit[]" multiple id="langOpt" class="input_validation">
                                         <?php
                                         // $this->db->select('id_unit,nama');
                                         $query = $this->db->get('unit')->result_array();
@@ -141,7 +147,7 @@
                             <div class="form-group">
                                     <label class="col-sm-4 control-label">Jumlah Bus</label>
                                     <div class="col-sm-8">
-                                      <input value="0" type = "number" readonly name="jumlah_bus" id="jumlah_bus" class="form-control" >
+                                      <input value="0" type = "number" readonly name="jumlah_bus" id="jumlah_bus" class="form-control " >
                                     </div>
                               </div>
 
@@ -190,12 +196,9 @@
 																			 <th>Total Harga</th>
 																			 <th>Status bayar</th>
 																			 <th>Sisa</th>
-																			 <th width="150px">Aksi</th>
+																			 <th id="aksi">Aksi</th>
                                 </thead>
                             </table>
-
-
-
                         </div>
                     </div>
                 </div>
@@ -264,11 +267,12 @@ function hitung_total(){
 $().ready(function(){
 var page = $("#page_custom").attr("value");
 var url_get = page+'/get';
+
 loadDataTable_custom(url_get);
 
 function loadDataTable_custom(url){
 $('#dt').dataTable({
-  //  "scrollX": true,
+  "destroy": true,
   "bLengthChange": false,
   "displayLength":10,
   "language": {
@@ -288,7 +292,7 @@ $('#dt').dataTable({
         var id = json[i][0];
         // masukan aksi kedalam data json
         json[i][index_action] = '<button value="'+ id +'" class="btn btn-primary edit" ><i class="fa fa-pencil"></i> Edit</button> '+
-        '<button value="'+json[i][0]+'" class="btn btn-danger hapus"><i class="fa  fa-trash"></i> Hapus</button>';
+        '<button value="'+json[i][0]+'" class="btn btn-danger hapus_custom"><i class="fa  fa-trash"></i> Hapus</button>';
         json[i][0] = '<a href ="pembayaran/by_id_booking?id_booking='+ id +'" class="btn btn-success" ><i class="fa fa-pencil"></i> Bayar </a> <a style="margin-top:10px" href ="pembayaran/invoice?id_booking='+ id +'" class="btn btn-success" ><i class="fa fa-pencil"></i> Cetak Invoice </a> ';
         // json[i].splice(0,1); // hapus kolom index
       }
@@ -299,6 +303,7 @@ $('#dt').dataTable({
   },
   "fnInitComplete": function() {
     // aksi setelah berhasil inisiasi data table
+    $("#aksi").css("width", "10%");
   }
 });
 }
@@ -307,9 +312,27 @@ $('#dt').dataTable({
 
 $('#simpan_custom').click(function(){
   // kirim data form berdasarkan nama(property name) inputannya
-  var data = $('form').serialize();
   var redirect = "<?php echo site_url() ?>/booking";
-  simpan(redirect);
+  var valid = true;
+  $('.input_validation').each(function() {
+    if(!this.value){
+      valid = false;
+      var lbl = $(this).parent().prev("label").text();
+      $.notify({
+        title: "Error :",
+        message: lbl+" harus diisi!",
+        icon: 'fa fa-check'
+      },{
+        type: "danger"
+      });
+    $(this).addClass("focus");
+ }
+});
+if(valid){
+  simpan(redirect,url_get);
+}
+
+
   // location.reload();
 });
 $('#bayar_custom').click(function(){
@@ -320,7 +343,42 @@ $('#bayar_custom').click(function(){
   simpan(redirect);
 });
 
-function simpan(redirect){
+
+$('body').on('click', '.hapus_custom', function() {
+  var id = $(this).val();
+  var url_hapus = page+'/delete';
+  $.ajax({
+      type: "GET",
+      url: url_hapus,
+      data: {id: id},
+      success: function (resdata) {
+        $.notify({
+          title: "Berhasil : ",
+          message: "Data berhasil dihapus",
+          icon: 'fa fa-check'
+        },{
+          type: "success"
+        });
+        loadDataTable_custom(url_get);
+        //  location.reload();
+      },
+      error: function (jqXHR, exception) {
+        // pesan error menggunakan notify.js
+        $.notify({
+          title: "Error :",
+          message: "Telah terjadi kesalahan!",
+          icon: 'fa fa-check'
+        },{
+          type: "danger"
+        });
+      }
+  });
+  });
+
+
+
+function simpan(redirect,url_get){
+
 $.ajax({
     type: "POST",
     url: "<?php echo site_url() ?>/booking/add",
@@ -334,7 +392,12 @@ $.ajax({
         type: "success"
       });
         $(".xform")[0].reset();
-        window.location.href = redirect;
+        if(url_get){
+          loadDataTable_custom(url_get);
+            $('#form_tambah').toggle( "slide", 'slow', function(){$('#tabel').toggle( "slide");});
+        } else{
+          window.location.href = redirect;
+        }
     },
     error: function (jqXHR, exception) {
       // pesan error menggunakan notify.js

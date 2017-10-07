@@ -20,9 +20,9 @@ class Sparepart extends CI_Controller {
         $data = array();
         parse_str($_POST['data'], $data);
         // jika fieldnya auto increment
-        // if (isset($data['id_sparepart'])) {
-        //   $data['id_sparepart'] = NULL;
-        // };
+        if (isset($data['id_sparepart'])) {
+          $data['id_sparepart'] = NULL;
+        };
         $insert = $this->M_sparepart->insert($data);
         if (!$insert) {
             $msg = $this->db->_error_message();

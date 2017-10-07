@@ -28,8 +28,10 @@
 
                             $unit = $this->db->get('unit')->result_array();
                             $booking = $this->db->query('SELECT EXTRACT( DAY FROM tanggal_dari ) tanggal_dari,
-                            EXTRACT( YEAR_MONTH FROM tanggal_dari ), tujuan, booking.id_marketing, nama_penyewa,id_unit,pembayaran.status
-                            from booking join pembayaran using(id_booking)')->result_array();
+                                                  			 EXTRACT( YEAR_MONTH FROM tanggal_dari ),
+                                                  			 tujuan, bk.id_marketing, nama_penyewa,id_unit,
+                                                  			 (select MAX(status) from pembayaran byr where byr.id_booking = bk.id_booking) status
+                                                         from booking bk')->result_array();
 
                             echo "  <thead><tr>";
                             for ($i=0; $i <= $number; $i++) {

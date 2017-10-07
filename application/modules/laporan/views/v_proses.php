@@ -25,6 +25,7 @@
                                         <option value='pengeluaran'>Pengeluaran</option>";
                                         <option value='rekap_pendapatan'>Rekap Pendapatan</option>";
                                         <option value='rekap_pengeluaran'>Rekap Pengeluaran</option>";
+                                        <option value='rekap_total'>Rekap Total</option>";
                                     </select>
 
                                   </div>
@@ -176,6 +177,76 @@
                     </div>
                 </div>
             </div>
+            <div class="row input_laporan" style="display:none" id="rekap_pendapatan">
+                <div class="col-md-6">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title add_page">Rekap pendapatan</h3>
+                        </div>
+                        <div class="box-body">
+                            <form role="form" class="form-horizontal xform" action="laporan/rekap_pendapatan" method="post">
+                                <div class="form-group">
+                                        <label class="col-sm-4 control-label">Tanggal</label>
+                                        <div class="col-sm-8">
+                                            <div class="input-group">
+                                            <div class="input-group-addon">
+                                              <i class="fa fa-calendar"></i>
+                                            </div>
+                                            <input class="form-control datepicker" value="<?php echo date('d/m/Y') ?>" name="tanggal_dari" id="tanggal_dari" type="text">
+                                            <div class="input-group-addon">
+                                            S.d
+                                            </div>
+                                            <div class="input-group-addon">
+                                              <i class="fa fa-calendar"></i>
+                                            </div>
+                                            <input class="form-control datepicker" value="<?php echo date('d/m/Y') ?>" name="tanggal_sampai" id="tanggal_sampai" type="text">
+
+                                        </div>
+                                        </div>
+                                  </div>
+                        </div>
+                        <div class="box-footer" style="float:right">
+                            <button type="input" class="btn btn-primary edit_page"><span class="fa fa-check"></span> Lihat Laporan</button>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="row input_laporan" style="display:none" id="rekap_total">
+                <div class="col-md-6">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title add_page">Rekap Total</h3>
+                        </div>
+                        <div class="box-body">
+                            <form role="form" class="form-horizontal xform" action="laporan/rekap_total" method="post">
+                                <div class="form-group">
+                                        <label class="col-sm-4 control-label">Tanggal</label>
+                                        <div class="col-sm-8">
+                                            <div class="input-group">
+                                            <div class="input-group-addon">
+                                              <i class="fa fa-calendar"></i>
+                                            </div>
+                                            <input class="form-control datepicker" value="<?php echo date('d/m/Y') ?>" name="tanggal_dari" id="tanggal_dari" type="text">
+                                            <div class="input-group-addon">
+                                            S.d
+                                            </div>
+                                            <div class="input-group-addon">
+                                              <i class="fa fa-calendar"></i>
+                                            </div>
+                                            <input class="form-control datepicker" value="<?php echo date('d/m/Y') ?>" name="tanggal_sampai" id="tanggal_sampai" type="text">
+
+                                        </div>
+                                        </div>
+                                  </div>
+                        </div>
+                        <div class="box-footer" style="float:right">
+                            <button type="input" class="btn btn-primary edit_page"><span class="fa fa-check"></span> Lihat Laporan</button>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
     </div>
 </div>
 </section>
@@ -199,9 +270,15 @@
     case 'pendapatan':
         $("#pendapatan").show();
         break;
-        case 'rekap_pengeluaran':
+    case 'rekap_pengeluaran':
             $("#rekap_pengeluaran").show();
             break;
+    case 'rekap_pendapatan':
+          $("#rekap_pendapatan").show();
+          break;
+          case 'rekap_total':
+                $("#rekap_total").show();
+                break;
     default:
         //code block
 }

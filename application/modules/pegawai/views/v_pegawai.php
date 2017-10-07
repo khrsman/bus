@@ -10,7 +10,7 @@
         </section>
         <section class="content">
             <div class="row" style="display:none" id="form_tambah">
-                <div class="col-md-12">
+                <div class="col-md-6">
                     <div class="box box-primary">
                         <div class="box-header with-border">
                             <h3 class="box-title add_page">Tambah</h3>
@@ -19,10 +19,10 @@
                         <div class="box-body">
                             <form role="form" class="form-horizontal xform">
                                 <input type="hidden" id="id_pegawai" name="id_pegawai" >
-													<div class="form-group">
+													<div class="form-group" >
                                   <label class="col-sm-4 control-label">Nama</label>
                                   <div class="col-sm-8">
-                                      <input type = "text" name="nama" id="nama" class="form-control"  >
+                                      <input type = "text" name="nama" id="nama" class="form-control input_validation "  >
                                   </div>
                             </div>
 
@@ -36,9 +36,8 @@
                     </div>
                 </div>
             </div>
-
             <div class="row" id="tabel">
-                <div class="col-md-12">
+                <div class="col-md-6">
                     <div class="box box-primary">
                         <div class="box-header">
                             <button class="btn btn-primary" id="tambah"><span class="fa fa-plus"></span> Tambah</button>
@@ -46,10 +45,9 @@
                         <div class="box-body">
                             <table id="dt" class="table table-hover table-bordered display nowrap" width="100%" cellspacing="0">
                                 <thead>
-                                    <tr>                                      
+                                    <tr>
 																			 <th>Nama</th>
-																			 <th width="150px">Aksi</th>
-
+																			 <th id="aksi">Aksi</th>
                                     </tr>
                                 </thead>
                             </table>

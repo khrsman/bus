@@ -23,7 +23,7 @@ id_unit, format(total,0), GROUP_CONCAT(status) status_bayar, format(min(sisa),0)
 
 ');
 $this->db->group_by('id_booking,tujuan,tanggal_dari,tanggal_sampai,id_unit,total');
-$this->db->join('pembayaran','id_booking');
+$this->db->join('pembayaran','id_booking',"left");
         $query = $this->db->get('booking');
 
         return $query->result_array();

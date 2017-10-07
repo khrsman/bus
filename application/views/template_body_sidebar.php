@@ -29,7 +29,7 @@
           <!-- <li><a href="#"><i class="fa fa-circle-o"></i> Pengguna sistem </a></li> -->
           <li><a href="<?php echo site_url() ?>/unit"><i class="fa fa-circle-o"></i> Unit </a></li>
           <li><a href="<?php echo site_url() ?>/pegawai"><i class="fa fa-circle-o"></i> Pegawai </a></li>
-          <li><a href="<?php echo site_url() ?>/pegawai"><i class="fa fa-circle-o"></i> Marketing </a></li>
+          <li><a href="<?php echo site_url() ?>/marketing"><i class="fa fa-circle-o"></i> Marketing </a></li>
           <li><a href="<?php echo site_url() ?>/supplier"><i class="fa fa-circle-o"></i> Supplier </a></li>
           <li><a href="<?php echo site_url() ?>/sparepart"><i class="fa fa-circle-o"></i> Sparepart </a></li>
           <li><a href="<?php echo site_url() ?>/kategori_pengeluaran"><i class="fa fa-circle-o"></i> Kategori Pengeluaran </a></li>
@@ -52,7 +52,7 @@
         </ul>
       </li>
       <li><a href="<?php echo site_url() ?>/laporan"><i class="fa fa-book"></i> Laporan </a></li>
-    
+
 
     </ul>
   </section>

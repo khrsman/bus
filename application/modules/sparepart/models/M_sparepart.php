@@ -16,7 +16,7 @@ class M_sparepart extends CI_Model
         $this->db->where('id_sparepart', $id);
         $this->db->limit(1);
       }
-        $this->db->select('id_sparepart pk,id_sparepart, nama,stok');
+        $this->db->select('id_sparepart, nama,stok');
         $query = $this->db->get('sparepart');
         return $query->result_array();
     }

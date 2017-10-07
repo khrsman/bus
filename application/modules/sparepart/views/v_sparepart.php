@@ -18,12 +18,7 @@
                         </div>
                         <div class="box-body">
                             <form role="form" class="form-horizontal xform">
-                              	<div class="form-group">
-                                  <label class="col-sm-4 control-label">Kode</label>
-                                  <div class="col-sm-8">
-                                      <input type = "text" name="id_sparepart" id="id_sparepart" class="form-control edit_protection"  >
-                                  </div>
-                            </div>
+                                      <input type = "hidden" name="id_sparepart" id="id_sparepart" class="form-control"  >
 																<div class="form-group">
                                   <label class="col-sm-4 control-label">Nama</label>
                                   <div class="col-sm-8">
@@ -43,7 +38,7 @@
             </div>
 
             <div class="row" id="tabel">
-                <div class="col-md-12">
+                <div class="col-md-8">
                     <div class="box box-primary">
                         <div class="box-header">
                             <button class="btn btn-primary" id="tambah"><span class="fa fa-plus"></span> Tambah</button>
@@ -52,7 +47,6 @@
                             <table id="dt" class="table table-hover table-bordered display nowrap" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
-                                         <th>Kode</th>
                                          <th>Nama</th>
                                          <th>Stok</th>
 																			 <th width="150px">Aksi</th>

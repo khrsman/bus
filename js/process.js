@@ -1,7 +1,8 @@
 $().ready(function(){
   var page = $("#page").attr("value");
 
-  // inisiasi data table
+  // inisiasi data table,
+  // jika undefined maka tidak load data table
   if(typeof page != 'undefined'){
     var url_get = page+'/get';
     var url_simpan = page+'/add';
@@ -18,8 +19,13 @@ $().ready(function(){
     var url_get = page+'/get';
   }
 
+  $(".input_number").keypress(function(event){
+    // alert(event.which);
+    return (event.which >= 48 && event.which <= 57) || event.which == 8 || event.which == 0 ;
+  })
 
-// tampilkan form tambah data
+
+// Menampilkan form tambah data
   $('#tambah').click(function(){
     if($('#tabel').is(':visible')){
       $('.add_page').show();
@@ -34,40 +40,77 @@ $().ready(function(){
     $('#form_tambah').toggle( "slide", 'slow', function(){$('#tabel').toggle( "slide");});
   });
 
-  // tombol edit di klik
+  // Aksi pada saat tombol edit di klik
   $('body').on('click', '.edit', function() {
     var id = $(this).val();
     edit(id,url_edit);
   });
-  // tombol hapus di klik
+  // Aksi pada saat tombol hapus di klik
   $('body').on('click', '.hapus', function() {
     var id = $(this).val();
-    hapus(id,url_hapus);
+    hapus(id,url_hapus,url_get);
   });
-  // tombol simpan di klik
+
+  // Aksi pada saat tombol simpan di klik
   $('#simpan').click(function(){
-    // kirim data form berdasarkan nama(property name) inputannya
-    var data = $('form').serialize();
-    simpan(data,url_simpan)
+    var valid = true;
+    $('.input_validation').each(function() {
+      if(!this.value){
+        valid = false;
+        var lbl = $(this).parent().prev("label").text();
+        $.notify({
+          title: "Error :",
+          message: lbl+" harus diisi!",
+          icon: 'fa fa-check'
+        },{
+          type: "danger"
+        });
+      $(this).addClass("focus");
+   }
   });
- // tombol update di klik
+
+  if(valid){
+    var data = $('form').serialize();
+    simpan(data,url_simpan,url_get);
+  }
+
+  });
+ // Aksi pada saat tombol update di klik
   $('#update').click(function(){
     // kirim data form berdasarkan nama(property name) inputannya
+    var valid = true;
+    $('.input_validation').each(function() {
+      if(!this.value){
+        valid = false;
+        var lbl = $(this).parent().prev("label").text();
+        $.notify({
+          title: "Error :",
+          message: lbl+" harus diisi!",
+          icon: 'fa fa-check'
+        },{
+          type: "danger"
+        });
+      $(this).addClass("focus");
+   }
+  });
+
+  if(valid){
     var data = $('form').serialize();
-    update(data,url_update);
+    update(data,url_update,url_get);
+  }
   });
 });
 
-// aksi pada saat tombol enter ditekan
+// Aksi pada saat tombol enter ditekan
     $("form").keypress(function (e) {
      if (e.which == 13) {
        e.preventDefault()
        var data = $('form').serialize();;
        if($("#simpan").is(":visible")){
-         simpan(data,url_simpan)
+         simpan(data,url_simpan,url_get)
        }
        if($("#update").is(":visible")){
-         update(data,url_update);
+         update(data,url_update,url_get);
        }
      }
  });
@@ -75,10 +118,15 @@ $().ready(function(){
 
 
 
- // fungsi nisiasi data table
+
+ // fungsi inisiasi data table
 function loadDataTable(url){
+  // $('#dt').DataTable().clear();
+
 $('#dt').dataTable({
-  // "scrollX": true,
+  // "bRetrieve":true,
+    "destroy": true,
+  // "fnClearTable": true,
   "bLengthChange": false,
   "displayLength":10,
   "language": {
@@ -100,21 +148,26 @@ $('#dt').dataTable({
         '<button value="'+json[i][0]+'" class="btn btn-danger hapus"><i class="fa  fa-trash"></i> Hapus</button>';
         json[i].splice(0,1); // hapus kolom index
       }
-        // console.log(json);
       return json;
-
     }
   },
   "fnInitComplete": function() {
+    // this.fnAdjustColumnSizing(true);
+    $("#aksi").css("width", "10%");
+    // this.fnAdjustColumnSizing(true);
     // aksi setelah berhasil inisiasi data table
   }
 });
+// $("#aksi").css("width", "10%");
 }
 
 
 
 
-// fungsi Tampilkan halaman edit
+// -----------------------------------------------------------------------------------------------------------
+// --------------------------------------- DAFTAR FUNGSI -----------------------------------------------------
+// -----------------------------------------------------------------------------------------------------------
+
 function edit(id,url_edit){
   $.ajax({
       type: "GET",
@@ -146,7 +199,7 @@ function edit(id,url_edit){
 }
 
 // fungsi update
-function update(data,url_update){
+function update(data,url_update,url_get){
   $.ajax({
       type: "POST",
       url: url_update,
@@ -160,7 +213,9 @@ function update(data,url_update){
           type: "success"
         });
           $(".xform")[0].reset();
-            location.reload();
+          loadDataTable(url_get);
+          $('#form_tambah').toggle( "slide", 'slow', function(){$('#tabel').toggle( "slide");});
+            // location.reload();
       },
       error: function (jqXHR, exception) {
         // pesan error menggunakan notify.js
@@ -176,7 +231,7 @@ function update(data,url_update){
 }
 
 // fungsi hapus
-function hapus(id,url_hapus){
+function hapus(id,url_hapus,url_get){
   $.ajax({
       type: "GET",
       url: url_hapus,
@@ -189,7 +244,8 @@ function hapus(id,url_hapus){
         },{
           type: "success"
         });
-         location.reload();
+        loadDataTable(url_get);
+        //  location.reload();
       },
       error: function (jqXHR, exception) {
         // pesan error menggunakan notify.js
@@ -205,7 +261,7 @@ function hapus(id,url_hapus){
 }
 
 // fungsi simpan
-function simpan(data, url_simpan){
+function simpan(data, url_simpan, url_get){
   $.ajax({
       type: "POST",
       url: url_simpan,
@@ -219,7 +275,9 @@ function simpan(data, url_simpan){
           type: "success"
         });
           $(".xform")[0].reset();
-            location.reload();
+          loadDataTable(url_get);
+          $('#form_tambah').toggle( "slide", 'slow', function(){$('#tabel').toggle( "slide");});
+            // location.reload();
       },
       error: function (jqXHR, exception) {
         // pesan error menggunakan notify.js

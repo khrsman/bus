@@ -10,7 +10,7 @@
         </section>
         <section class="content">
             <div class="row" style="display:none" id="form_tambah">
-                <div class="col-md-12">
+                <div class="col-md-6">
                     <div class="box box-primary">
                         <div class="box-header with-border">
                             <h3 class="box-title add_page">Tambah</h3>
@@ -38,7 +38,7 @@
             </div>
 
             <div class="row" id="tabel">
-                <div class="col-md-12">
+                <div class="col-md-6">
                     <div class="box box-primary">
                         <div class="box-header">
                             <button class="btn btn-primary" id="tambah"><span class="fa fa-plus"></span> Tambah</button>

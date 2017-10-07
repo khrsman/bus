@@ -69,8 +69,7 @@
 																			 <th>No polisi</th>
 																			 <th>Stnk</th>
 																			 <th>Kir</th>
-																			 <th width="150px">Aksi</th>
-
+																			 <th id="aksi">Aksi</th>
                                     </tr>
                                 </thead>
                             </table>

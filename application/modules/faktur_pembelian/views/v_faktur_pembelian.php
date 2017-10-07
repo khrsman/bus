@@ -49,7 +49,7 @@
                         </div>
                         <div class="box-footer">
                             <a class="btn btn-danger" id="cancel"><span class="fa fa-remove "></span> Cancel</a>
-                            <a class="btn btn-primary add_page" id="simpan"><span class="fa fa-check "></span> Simpan</a>
+                            <a class="btn btn-primary add_page" id="simpan_custom"><span class="fa fa-check "></span> Simpan</a>
                             <a class="btn btn-primary edit_page" id="update"><span class="fa fa-check "></span> update</a>
                         </div>
                     </div>
@@ -89,8 +89,6 @@
 
 <script>
 	 $(function(){
-
-
 			$('.datepicker').datepicker({
 						format: 'yyyy-mm-dd',
 						todayBtn: "linked",
@@ -99,14 +97,100 @@
 						autoclose: true
 			 });
 
-
        var page = $("#page_custom").attr("value");
        var url_get = page+'/get';
+       var url_simpan = page+'/add';
        loadDataTable_custom(url_get);
+
+       $('body').on('click', '.hapus_custom', function() {
+         var id = $(this).val();
+         var url_hapus =  page+'/delete';
+         $.ajax({
+             type: "GET",
+             url: url_hapus,
+             data: {id: id},
+             success: function (resdata) {
+               $.notify({
+                 title: "Berhasil : ",
+                 message: "Data berhasil dihapus",
+                 icon: 'fa fa-check'
+               },{
+                 type: "success"
+               });
+               loadDataTable_custom(url_get);
+               //  location.reload();
+             },
+             error: function (jqXHR, exception) {
+               // pesan error menggunakan notify.js
+               $.notify({
+                 title: "Error :",
+                 message: "Telah terjadi kesalahan!",
+                 icon: 'fa fa-check'
+               },{
+                 type: "danger"
+               });
+             }
+         });
+         });
+
+         $('#simpan_custom').click(function(){
+           var valid = true;
+           $('.input_validation').each(function() {
+             if(!this.value){
+               valid = false;
+               var lbl = $(this).parent().prev("label").text();
+               $.notify({
+                 title: "Error :",
+                 message: lbl+" harus diisi!",
+                 icon: 'fa fa-check'
+               },{
+                 type: "danger"
+               });
+             $(this).addClass("focus");
+          }
+         });
+
+         if(valid){
+           var data = $('form').serialize();
+           simpan_custom(data,url_simpan,url_get);
+         }
+       });
+       
+       function simpan_custom(data, url_simpan, url_get){
+         $.ajax({
+             type: "POST",
+             url: url_simpan,
+             data: {data: data},
+             success: function (resdata) {
+               $.notify({
+                 title: "Berhasil : ",
+                 message: "Data telah ditambahkan",
+                 icon: 'fa fa-check'
+               },{
+                 type: "success"
+               });
+                 $(".xform")[0].reset();
+                 loadDataTable_custom(url_get);
+                 $('#form_tambah').toggle( "slide", 'slow', function(){$('#tabel').toggle( "slide");});
+                   // location.reload();
+             },
+             error: function (jqXHR, exception) {
+               // pesan error menggunakan notify.js
+               $.notify({
+                 title: "Error :",
+                 message: "Telah terjadi kesalahan!",
+                 icon: 'fa fa-check'
+               },{
+                 type: "danger"
+               });
+             }
+         });
+       }
+
 
        function loadDataTable_custom(url){
        $('#dt').dataTable({
-        //  "scrollX": true,
+         "destroy": true,
          "bLengthChange": false,
          "displayLength":10,
          "language": {
@@ -126,7 +210,7 @@
                var id = json[i][0];
                // masukan aksi kedalam data json
                json[i][index_action] = '<button value="'+ id +'" class="btn btn-primary edit" ><i class="fa fa-pencil"></i> Edit</button> '+
-               '<button value="'+json[i][0]+'" class="btn btn-danger hapus"><i class="fa  fa-trash"></i> Hapus</button>';
+               '<button value="'+json[i][0]+'" class="btn btn-danger hapus_custom"><i class="fa  fa-trash"></i> Hapus</button>';
                json[i][0] = '<a href ="detail_pembelian?no_faktur='+ id +'" class="btn btn-success" ><i class="fa fa-pencil"></i> Detail </button> ';
                // json[i].splice(0,1); // hapus kolom index
              }

@@ -19,8 +19,6 @@ class Spj extends CI_Controller {
     $data['page'] = 'v_spj_cetak';
     $id = $this->input->get('id');
     $data['spj'] = $this->M_spj->get_detail_spj($id);
-    
-
     $this->load->view('v_main',$data);
 
     }
