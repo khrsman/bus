@@ -1,7 +1,6 @@
 <!doctype html>
 <html>
 <head>
-
       <style>
     .invoice-box{
         max-width:800px;
@@ -81,10 +80,21 @@
             text-align:center;
         }
     }
+
+    @media print {
+  .btn {
+    display: none;
+  }
+}
     </style>
 </head>
 
   <div class="content-wrapper">
+    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" style="margin:10px">
+    <i class="fa fa-pencil"></i> Ubah Harga
+  </button>
+  <button class="btn btn-primary btn-lg" onclick="window.print()" style="margin:10px"><i class="fa fa-print"></i> Cetak</button>
+
     <div class="invoice-box">
         <table cellpadding="0" cellspacing="0">
             <tr class="top">
@@ -94,7 +104,6 @@
                             <td class="title">
                                   <img src="<?php echo base_url() ?>img/logo_dmh.png" style="width:100px;">
                             </td>
-
                             <td style="text-align:right">
                                 NO : <?php echo $inv['id_pembayaran'] ?><br>
                             </td>
@@ -153,7 +162,7 @@
                 </td>
 
                 <td>
-                    <?php echo $terbilang ?>
+                  <span id="terbilang">   <?php echo $terbilang ?> </span>
                 </td>
             </tr>
 
@@ -199,7 +208,7 @@
                   Jumlah
                 </td>
                 <td>
-                  <?php echo $inv['jumlah_bus'] ?> bus x  Rp. <?php echo $inv['harga'] ?>
+                <span id="jumlah_bus_kwitansi"> <?php echo $inv['jumlah_bus'] ?> bus x  Rp. <?php echo $inv['harga'] ?></span>
                 </td>
             </tr>
             <tr class="item">
@@ -207,7 +216,7 @@
                 Harga
                 </td>
                 <td>
-                    Rp. <?php echo $inv['total'] ?>
+                    <span id="harga_total_kwitansi"> Rp. <?php echo $inv['total'] ?> </span>
                 </td>
             </tr>
             <tr class="item">
@@ -215,25 +224,63 @@
                 Sisa
                 </td>
                 <td>
-                    Rp. <?php echo $inv['sisa_bayar'] ?>
+                  <span id="sisa_bayar_kwitansi">   Rp. <?php echo $inv['sisa_bayar'] ?></span>
                 </td>
             </tr>
 
             <tr class="item">
-                <td><br><br><br><strong>Jumlah: Rp. <?php echo $inv['jumlah_bayar'] ?><strong></td>
+                <td><br><br><br><strong>Jumlah:   <span id="jumlah_bayar_kwitansi"> Rp. <?php echo $inv['jumlah_bayar'] ?><strong> </span></td>
                 <td style="float:right">
                   bandung,
                   <?php
                     echo date('d',strtotime($inv['tanggal_bayar']));
                     echo " ".date('F',strtotime($inv['tanggal_bayar']));
                     echo " ".date('Y',strtotime($inv['tanggal_bayar']));
-
                        ?>
                 </td>
             </tr>
         </table>
     </div>
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Ubah Harga</h4>
+          </div>
+          <div class="modal-body">
+            <form role="form" class="form-horizontal xform">
+                <input type="hidden" id="id_pegawai" name="id_pegawai" >
+          <div class="form-group" >
+                  <label class="col-sm-4 control-label">Jumlah bus x Harga</label>
+                  <div class="col-sm-8">
+                      <input type = "text" name="nama" id="jumlah_bus_modal" value = "<?php echo $inv['jumlah_bus'] ?> bus x  Rp. <?php echo $inv['harga'] ?>" class="form-control input_validation "  >
+                  </div>
+            </div>
+            <div class="form-group" >
+                    <label class="col-sm-4 control-label">Harga total</label>
+                    <div class="col-sm-8">
+                        <input type = "text" id="harga_total_modal" class="form-control input_validation "  >
+                    </div>
+              </div>
+              <div class="form-group" >
+                      <label class="col-sm-4 control-label">Bayar</label>
+                      <div class="col-sm-8">
+                          <input type = "text" name="nama" id="jumlah_bayar_modal" class="form-control input_validation "  >
+                      </div>
+                </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Kembali</button>
+            <button type="button" class="btn btn-primary" id="update_harga" >Simpan</button>
+          </div>
+        </div>
+      </div>
     </div>
+    </div>
+
 
 </html>
 
@@ -244,3 +291,40 @@
       margin: 0mm;  /* this affects the margin in the printer settings */
   }
 </style>
+
+
+<script type="text/javascript">
+
+Number.prototype.format = function(){
+   return this.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+};
+
+
+$("#update_harga").click(function(){
+
+  harga_total = $("#harga_total_modal").val() || 0;
+  bayar = $("#jumlah_bayar_modal").val() || 0;
+
+  $.post( "<?php echo site_url("pembayaran/ajax_terbilang")?>", { jumlah: bayar } )
+  .done(function(data){
+  $("#terbilang").text(data+" rupiah");
+  });
+
+
+sisa = harga_total - bayar;
+sisa = parseInt(sisa);
+harga_total = parseInt(harga_total);
+bayar = parseInt(bayar);
+
+  $("#harga_total_kwitansi").text("Rp. "+harga_total.format());
+   $("#jumlah_bus_kwitansi").text($("#jumlah_bus_modal").val());
+   $("#sisa_bayar_kwitansi").text("Rp. "+sisa.format());
+   $("#jumlah_bayar_kwitansi").text("Rp. "+bayar.format());
+
+$('#myModal').modal('hide');
+
+
+//
+})
+
+</script>

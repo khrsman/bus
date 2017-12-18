@@ -16,6 +16,11 @@ class Pembayaran extends CI_Controller {
     $this->load->view('v_main',$data);
     }
 
+    function ajax_terbilang(){
+     $jumlah =   $this->input->post('jumlah');
+      echo $this->Terbilang($jumlah);
+    }
+
 
     function Terbilang($x)
     {
@@ -31,7 +36,7 @@ class Pembayaran extends CI_Controller {
       elseif ($x < 1000)
         return  $this->Terbilang($x / 100) . " ratus" .  $this->Terbilang($x % 100);
       elseif ($x < 2000)
-        return " seribu" . Terbilang($x - 1000);
+        return " seribu" . $this->Terbilang($x - 1000);
       elseif ($x < 1000000)
         return $this->Terbilang($x / 1000) . " ribu" .  $this->Terbilang($x % 1000);
       elseif ($x < 1000000000)
