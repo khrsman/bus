@@ -7,7 +7,6 @@ class M_spj extends CI_Model
     public function __construct()
     {
         parent::__construct();
-
     }
 
     public function get($id = NULL){

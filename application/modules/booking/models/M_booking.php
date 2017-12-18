@@ -16,7 +16,7 @@ class M_booking extends CI_Model
         $this->db->where('id_booking', $id);
         $this->db->limit(1);
       }
-        $this->db->select('id_booking pk,id_booking, tujuan,
+        $this->db->select('id_booking pk,nama_penyewa, no_telepon,alamat_jemput, tujuan,
 DATE_FORMAT(tanggal_dari, "%d/%m/%Y") tanggal_dari,
 DATE_FORMAT(tanggal_sampai, "%d/%m/%Y") tanggal_sampai,
 id_unit, format(total,0), GROUP_CONCAT(status) status_bayar, format(min(sisa),0) sisa,

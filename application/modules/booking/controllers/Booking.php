@@ -14,6 +14,13 @@ class Booking extends CI_Controller {
       $data['page'] = 'v_schedule';
       $this->load->view('v_main',$data);
     }
+    function view_schedule(){
+      // print_r($this->input->post());
+      // die;
+      $data['bulan'] = $this->input->post('bulan');
+      $data['tahun'] = $this->input->post('tahun');
+      $this->load->view('v_schedule_table',$data);
+    }
 
     function index(){
     $data['page'] = 'v_booking';
@@ -35,7 +42,7 @@ class Booking extends CI_Controller {
         foreach ($data['id_unit'] as $key => $value) {
           $unit .= $value.",";
         }
-        $data['id_unit'] = rtrim($unit,',');    
+        $data['id_unit'] = rtrim($unit,',');
 
 
         $insert = $this->M_booking->insert($data);
@@ -43,6 +50,20 @@ class Booking extends CI_Controller {
             $msg = $this->db->_error_message();
             $num = $this->db->_error_number();
           }
+    }
+
+    function get_unit_booking(){
+      // print_r($this->input->post());
+      $id = $this->input->post('id');
+      $unit = $this->db->query("select id_unit from booking where id_booking = $id")->result_array()[0];
+
+      $unit_arr = explode(",", $unit['id_unit']);
+
+      foreach ($unit_arr as $key => $value) {
+        echo "<label class='radio-inline'><input type='radio' name='optradio'>$value</label>";
+      }
+
+    
     }
 
     // fungsi update

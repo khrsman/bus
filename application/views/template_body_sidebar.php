@@ -16,7 +16,7 @@
     <!-- sidebar menu: : style can be found in sidebar.less -->
     <ul class="sidebar-menu" data-widget="tree">
       <!-- <li class="header">MAIN NAVIGATION</li> -->
-      <li><a href="<?php echo site_url() ?>/dashboard"><i class="fa fa-dashboard text-red"></i> <span>Dashboard</span></a></li>
+      <!-- <li><a href="<?php echo site_url() ?>/dashboard"><i class="fa fa-dashboard text-red"></i> <span>Dashboard</span></a></li> -->
       <li><a href="<?php echo site_url() ?>/booking/schedule"><i class="fa fa-circle-o"></i> Jadwal </a></li>
       <li class="treeview menu-open">
         <a href="#">
@@ -37,7 +37,7 @@
       </li>
       <li class="treeview menu-open">
         <a href="#">
-          <i class="fa fa-exchange"></i> <span>Service</span>
+          <i class="fa fa-exchange"></i> <span>Transaksi</span>
           <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
           </span>

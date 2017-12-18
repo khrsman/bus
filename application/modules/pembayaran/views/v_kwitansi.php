@@ -84,7 +84,7 @@
     </style>
 </head>
 
-<body>
+  <div class="content-wrapper">
     <div class="invoice-box">
         <table cellpadding="0" cellspacing="0">
             <tr class="top">
@@ -153,7 +153,7 @@
                 </td>
 
                 <td>
-                    Tiga juta dua ratus ribu rupiah
+                    <?php echo $terbilang ?>
                 </td>
             </tr>
 
@@ -233,7 +233,8 @@
             </tr>
         </table>
     </div>
-</body>
+    </div>
+
 </html>
 
 <style type="text/css" media="print">

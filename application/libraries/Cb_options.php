@@ -136,7 +136,7 @@
 
          public function kode_booking()
          {
-           $header = '<select class="form-control" name="id_booking">
+           $header = '<select class="form-control" name="id_booking" id="id_booking">
              <option selected="">--- PILIH ---</option>';
            $select_item = '';
            $footer = '</select>';
@@ -153,8 +153,8 @@
 
          public function bulan()
          {
-           $bulan = '<select class="form-control" name="bulan">
-             <option selected="">--- PILIH ---</option>
+           $bulan = '<select class="form-control" name="bulan" id="bulan">
+             <option selected="" value="" disabled>--- PILIH ---</option>
              <option value="1">1 - Januari</option>
              <option value="2">2 - Februari</option>
              <option value="3">3 - Maret</option>
@@ -169,7 +169,19 @@
              <option value="12">12 - Desember</option>
              </select>
              ';
-
            echo $bulan;
+         }
+
+         public function tahun()
+         {
+           $header = '<select class="form-control" name="tahun" id="tahun">';
+             $select_item = '';
+             for ($i=0; $i <= 5 ; $i++) {
+               $year = date('Y') - $i;
+              $select_item .= '<option value="'.$year.'">'.$year.'</option>';
+             }
+            $footer = '</select>';
+           $cb_posyandu = $header.$select_item.$footer;
+           echo $cb_posyandu;
          }
  }

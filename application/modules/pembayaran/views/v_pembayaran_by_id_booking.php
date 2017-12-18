@@ -18,6 +18,9 @@
                             <div id="jumlah_tagihan">
                               <strong><?php echo $data_booking[0]['total'] ?></strong>
                             </div>
+                            <div id="jumlah_sisa" style="display:none">
+                            <?php echo $sisa_bayar; ?>
+                            </div>
                         </div>
                         <div class="box-body">
                             <form role="form" class="form-horizontal xform">
@@ -80,7 +83,7 @@
                             <div class="form-group">
                                     <label class="col-sm-4 control-label">Sisa pembayaran</label>
                                     <div class="col-sm-8">
-                                        <input type = "number" value="0" name="sisa" id="sisa" class="form-control"
+                                        <input readonly value="<?php echo $sisa_bayar ?>" name="sisa" id="sisa" class="form-control"
                                           onkeydown='return (event.which >= 48 && event.which <= 57) || event.which == 8 || event.which == 46 || event.which == 37 || event.which == 39'
                                            >
                                     </div>
@@ -129,18 +132,20 @@
        });
        $('input[type=radio][name=status]').change(function() {
         //  alert(this.value);
-        var status = $("#jumlah_tagihan").text();
+        var status = $("#jumlah_sisa").text();
          if ($(this).val() == "LUNAS") {
            $("#jumlah").val(status.trim());
            $("#sisa").val(0);
          } else {
+          //  alert(status);
            $("#jumlah").val('0');
+           $("#sisa").val(parseInt(status));
          }
    });
    $( ".hitung_sisa" ).keyup(function() {
     //  var total = 0;
      var harga = $("#jumlah").val();
-     var total = $("#jumlah_tagihan").text().trim();
+     var total = $("#jumlah_sisa").text().trim();
      var sisa = parseInt(total)-parseInt(harga);
     $("#sisa").val(sisa);
 });
@@ -170,7 +175,7 @@ $('#simpan_custom').click(function(){
         });
           $(".xform")[0].reset();
           var id_pembayaran = $("#id_pembayaran").val();
-           window.location.href = "<?php echo site_url() ?>/pembayaran/invoice?id_pembayaran="+id_pembayaran;
+           window.location.href = "<?php echo site_url() ?>/pembayaran/kwitansi?id_pembayaran="+id_pembayaran;
       },
       error: function (jqXHR, exception) {
         // pesan error menggunakan notify.js

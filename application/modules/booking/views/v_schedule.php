@@ -9,83 +9,39 @@
             </ol>
         </section>
         <section class="content">
-
+          <div  id="page_content"></div>
             <div class="row" id="tabel">
-                <div class="col-md-12">
+                <div class="col-md-8">
                     <div class="box box-primary">
-                      <div class="box-header">
-                          Bulan : <?php echo date('F'); ?>
-
-                      </div>
                         <div class="box-body">
-                            <div class="table-responsive">
-                            <table id="dt" class="table table-hover table-bordered display" width="100%" cellspacing="0">
-                            <?php
-                            $month = date('m');
-                            $year = date('Y');
-                            $number = cal_days_in_month(CAL_GREGORIAN, $month, $year); // 31
-
-
-                            $unit = $this->db->get('unit')->result_array();
-                            $booking = $this->db->query('SELECT EXTRACT( DAY FROM tanggal_dari ) tanggal_dari,
-                                                  			 EXTRACT( YEAR_MONTH FROM tanggal_dari ),
-                                                  			 tujuan, bk.id_marketing, nama_penyewa,id_unit,
-                                                  			 (select MAX(status) from pembayaran byr where byr.id_booking = bk.id_booking) status
-                                                         from booking bk')->result_array();
-
-                            echo "  <thead><tr>";
-                            for ($i=0; $i <= $number; $i++) {
-                              Echo "<td width=50px>{$i}</td>";
-                            }
-                            echo "</tr></thead><tbody>";
-                            foreach ($unit as $key => $value) {
-                              $no_seri_unit = $value['seri'];
-                              echo "<tr>";
-                              echo "<td >{$no_seri_unit}</td>";
-                              for ($i=1; $i <= $number; $i++) {
-                                $tujuan = '';
-                                $penyewa = $bgcolor = '';
-                                foreach ($booking as $key => $value2) {
-                                  if ($value2['tanggal_dari'] == $i && strpos($value2['id_unit'], $no_seri_unit) !== false ){
-                                    $tujuan .= $value2['tujuan'];
-                                    $penyewa .= $value2['nama_penyewa'];
-                                    if($value2['status'] == "LUNAS"){
-                                       $bgcolor = 'bgcolor = "#66ff66"';
-                                    } else{
-                                      $bgcolor = 'bgcolor = "#f45c42"';
-                                    }
-
-                                  }
-                                }
-                                Echo "<td {$bgcolor}>{$tujuan}<br>{$penyewa}</td>";
-                              }
-                              echo "</tr>";
-                            }
-                            ?>
-                          </tbody>
-                            </table>
-                        </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row" id="tabel">
-                <div class="col-md-6">
-                    <div class="box box-primary">
-
-                        <div class="box-body">
-                          <div class="form-group">
-                            <label class="col-sm-3 control-label">Pilih bulan</label>
-                            <div class="col-sm-5">
-                                <?php
-                                $this->load->library('Cb_options');
-                                $this->cb_options->bulan();
-                                ?>
-                            </div>
-                            <div class="col-sm-4">
-                                <button type="input" class="btn btn-primary edit_page"><span class="fa fa-check"></span> Lihat jadwal</button>
-                            </div>
-                        </div>
+                          <form role="form" class="form-horizontal xform">
+                            <div class="row">
+                              <div class="col-md-4">
+                                <div class="form-group">
+                                  <label class="col-md-4 control-label">Tahun</label>
+                                  <div class="col-md-8">
+                                      <?php
+                                      $this->load->library('Cb_options');
+                                      $this->cb_options->tahun();
+                                      ?>
+                                  </div>
+                              </div>
+                              </div>
+                                <div class="col-md-4">
+                                  <div class="form-group">
+                                    <label class="col-md-4 control-label">Bulan</label>
+                                    <div class="col-md-8">
+                                        <?php
+                                        $this->cb_options->bulan();
+                                        ?>
+                                    </div>
+                                </div>
+                                </div>
+                                <div class="col-md-4">
+                                  <btn id="lihat_jadwal" type="input" class="btn btn-primary edit_page"><span class="fa fa-check"></span> Lihat jadwal</btn>
+                                </div>
+                                  </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -93,3 +49,41 @@
 </div>
 </section>
 </div>
+
+<!-- <script src="<?php echo base_url() ?>js/jquery-2.1.4.min.js"></script> -->
+
+<script type="text/javascript">
+$(document).ready(function () {
+
+  var request = $.ajax({
+      url: "<?php echo site_url('booking/view_schedule'); ?>",
+      type: "POST",
+      data: {bulan: <?php echo date('m') ?>, tahun:<?php echo date('Y') ?>},
+      dataType: "html"
+  });
+  request.done(function(data) {
+      $("#page_content").html(data);
+  });
+
+
+  $('#lihat_jadwal').click(function(){
+
+    bulan = $('#bulan').val();
+    tahun = $('#tahun').val();
+
+    if(!bulan){
+      alert('Pilih Bulan');
+      return;
+    }
+        var request = $.ajax({
+            url: "<?php echo site_url('booking/view_schedule'); ?>",
+            type: "POST",
+            data: {bulan: bulan, tahun:tahun},
+            dataType: "html"
+        });
+        request.done(function(data) {
+            $("#page_content").html(data);
+        });
+  })
+ });
+ </script>

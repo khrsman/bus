@@ -20,15 +20,15 @@
                           <table id="dt" class="table table-hover table-bordered display nowrap" width="100%" cellspacing="0">
                               <thead>
                                   <tr>
-                                     <th>Kategori</th>
+                                     <th>Unit</th>
                                      <th>Jumlah</th>
                                   </tr>
                               </thead>
                               <tbody>
                                 <?php foreach ($data_rekap as $key => $value) { ?>
                                   <tr>
-                                      <td><?php echo $value['kategori'] ?></td>
-                                      <td><?php echo $value['jumlah'] ?></td>
+                                      <td><?php echo $value['seri'] ?></td>
+                                      <td>Rp. <?php echo $value['jumlah'] ?></td>
                                   </tr>
                                   <?php   } ?>
                               </tbody>

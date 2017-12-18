@@ -36,7 +36,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="row" id="tabel">
                 <div class="col-md-8">
                     <div class="box box-primary">
@@ -48,7 +47,6 @@
                                 <thead>
                                     <tr>
                                          <th>Nama</th>
-                                         <th>Stok</th>
 																			 <th width="150px">Aksi</th>
                                     </tr>
                                 </thead>

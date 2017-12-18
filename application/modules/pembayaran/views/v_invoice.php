@@ -1,7 +1,6 @@
 <!doctype html>
 <html>
 <head>
-
       <style>
     .invoice-box{
         max-width:800px;
@@ -83,8 +82,7 @@
     }
     </style>
 </head>
-
-<body>
+  <div class="content-wrapper">
     <div class="invoice-box">
         <table cellpadding="0" cellspacing="0">
             <tr class="top">
@@ -186,13 +184,9 @@
                        ?>
                 </td>
             </tr>
-
-
-
         </table>
     </div>
-</body>
-</html>
+</div>
 
 <style type="text/css" media="print">
 @page

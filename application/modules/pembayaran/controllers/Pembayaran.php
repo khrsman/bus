@@ -16,6 +16,28 @@ class Pembayaran extends CI_Controller {
     $this->load->view('v_main',$data);
     }
 
+
+    function Terbilang($x)
+    {
+      $abil = array("", "satu", "dua", "tiga", "empat", "lima", "enam", "tujuh", "delapan", "sembilan", "sepuluh", "sebelas");
+      if ($x < 12)
+        return " " . $abil[$x];
+      elseif ($x < 20)
+        return  $this->Terbilang($x - 10) . "belas";
+      elseif ($x < 100)
+        return  $this->Terbilang($x / 10) . " puluh" .  $this->Terbilang($x % 10);
+      elseif ($x < 200)
+        return " seratus" .  $this->Terbilang($x - 100);
+      elseif ($x < 1000)
+        return  $this->Terbilang($x / 100) . " ratus" .  $this->Terbilang($x % 100);
+      elseif ($x < 2000)
+        return " seribu" . Terbilang($x - 1000);
+      elseif ($x < 1000000)
+        return $this->Terbilang($x / 1000) . " ribu" .  $this->Terbilang($x % 1000);
+      elseif ($x < 1000000000)
+        return $this-> Terbilang($x / 1000000) . " juta" .  $this->Terbilang($x % 1000000);
+    }
+
     function invoice(){
     $data['page'] = 'v_invoice';
     $id_booking = $this->input->get('id_booking');
@@ -26,6 +48,8 @@ class Pembayaran extends CI_Controller {
     $data['page'] = 'v_kwitansi';
     $id_pembayaran = $this->input->get('id_pembayaran');
     $data['inv'] = $this->M_pembayaran->get_kwitansi($id_pembayaran);
+      $data['terbilang'] = $this->terbilang(str_ireplace(",","",$data['inv']['jumlah_bayar']))." rupiah";
+
     $this->load->view('v_main',$data);
     }
 
@@ -33,7 +57,9 @@ class Pembayaran extends CI_Controller {
     $data['page'] = 'v_pembayaran_by_id_booking';
     $data['kode_bayar'] = $this->M_pembayaran->get_kode_bayar();
     $kode_booking = $this->input->get('id_booking');
-    $data['data_booking'] = $this->M_pembayaran->get_detail_booking($kode_booking);
+    $data_booking = $this->M_pembayaran->get_detail_booking($kode_booking);
+    $data['data_booking'] = $data_booking;
+    $data['sisa_bayar'] = $data_booking[0]['total'] - $this->M_pembayaran->get_sisa_bayar($kode_booking)['jumlah'];
     $this->load->view('v_main',$data);
     }
 

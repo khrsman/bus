@@ -77,7 +77,7 @@ class Laporan extends CI_Controller {
     $tanggal_sampai = $this->input->post('tanggal_sampai');
     $tanggal_sampai = DateTime::createFromFormat('d/m/Y', $tanggal_sampai)->format('Y-m-d');
 
-    $data['data'] = $this->M_laporan->get_laporan_pendapatan($unit);
+    $data['data_rekap'] = $this->M_laporan->get_laporan_rekap_pendapatan($tanggal_dari,$tanggal_sampai);
     $this->load->view('v_main',$data);
     }
 
@@ -91,7 +91,7 @@ class Laporan extends CI_Controller {
     $query = $this->db->query('select * from unit')->result_array();
     foreach ($query as $key => $value) {
       $seri = $value['seri'];
-      $query = $this->db->query('SELECT sum(total) total from booking where (tanggal_dari >= "'.$tanggal_dari.'" and tanggal_dari <= "'.$tanggal_sampai.'") and id_unit like "%'.$seri.'%"' )->result_array();
+      $query = $this->db->query('SELECT sum(harga) total from booking where (tanggal_dari >= "'.$tanggal_dari.'" and tanggal_dari <= "'.$tanggal_sampai.'") and id_unit like "%'.$seri.'%"' )->result_array();
       $pendapatan_bis[$seri] = $query[0]['total'];
                         // $total = $total + $pendapatan_bis
 

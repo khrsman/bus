@@ -29,11 +29,10 @@ class M_laporan extends CI_Model
         return $query->result_array();
     }
     public function get_laporan_rekap_pendapatan($tanggal_dari,$tanggal_sampai){
-        $query = $this->db->query('select (select nama from kategori_pengeluaran kat where kat.id_kategori_pengeluaran = lap.id_kategori_pengeluaran) kategori,
-        format(sum(jumlah),0) jumlah from pengeluaran lap
-        where tanggal BETWEEN "'.$tanggal_dari.'" and "'.$tanggal_sampai.'"
-        group by id_kategori_pengeluaran');
+        $query = $this->db->query("select seri, format(ifnull((select sum(harga) from booking where id_unit like concat('%',unit.seri,'%' )),0),0) jumlah
+from unit group by id_unit");
         return $query->result_array();
+        // where tanggal_dari BETWEEN "'.$tanggal_dari.'" and "'.$tanggal_sampai.'"
     }
 
 }

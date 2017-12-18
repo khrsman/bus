@@ -50,6 +50,12 @@ class M_pembayaran extends CI_Model
         $query = $this->db->get('booking');
         return $query->result_array();
     }
+    public function get_sisa_bayar($kode_booking){
+        $this->db->where('id_booking', $kode_booking);
+        $this->db->select('ifnull(sum(jumlah),0) jumlah');
+        $query = $this->db->get('pembayaran');
+        return $query->result_array()[0];
+    }
     public function get_kwitansi($id_pembayaran){
         $this->db->select('id_pembayaran, byr.dari, byr.untuk, bk.tujuan, byr.tanggal tanggal_bayar,
                 DATE_FORMAT(bk.tanggal_dari, "%d/%m/%Y") tanggal_dari,
@@ -68,6 +74,8 @@ class M_pembayaran extends CI_Model
                 DATE_FORMAT(bk.jam_dari, "%H:%i") jam_dari,  DATE_FORMAT(bk.jam_sampai, "%H:%i") jam_sampai, bk.jumlah_bus,FORMAT(bk.harga,0) harga,FORMAT(bk.total,0) total');
         $this->db->where('id_booking',$id_booking);
         $query = $this->db->get('booking bk');
+        // echo $this->db->last_query();
+        // die;
         return $query->result_array()[0];
     }
 

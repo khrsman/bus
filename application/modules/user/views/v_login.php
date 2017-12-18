@@ -30,19 +30,19 @@
     background-repeat: no-repeat;">
 <div class="login-box">
   <div class="login-logo">
-    <a href="#"><b>Login </b></a>
+    <a href="#"><b>Login Aplikasi DMH</b></a>
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
-    <p class="login-box-msg">Sign in to start your session</p>
+    <p class="login-box-msg">Masukan username dan password</p>
 
-    <form action="../../index2.html" method="post">
+    <form action="<?php echo site_url('user/login') ?>" method="post">
       <div class="form-group has-feedback">
-        <input class="form-control" placeholder="Username">
+        <input class="form-control" placeholder="Username" name="username">
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input type="password" class="form-control" placeholder="Password">
+        <input type="password" class="form-control" placeholder="Password" name="password">
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
       <div class="row">
@@ -50,14 +50,14 @@
         </div>
         <!-- /.col -->
         <div class="col-xs-4">
-          <!-- <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button> -->
-          <a href="<?php echo site_url() ?>/dashboard" class="btn btn-primary btn-block btn-flat">Sign In</a>
+          <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+          <!-- <a href="<?php echo site_url() ?>/dashboard" class="btn btn-primary btn-block btn-flat">Sign In</a> -->
         </div>
         <!-- /.col -->
       </div>
     </form>
     <!-- /.social-auth-links -->
-    <a href="#">Lupa password</a><br>
+    <!-- <a href="#">Lupa password</a><br> -->
   </div>
   <!-- /.login-box-body -->
 </div>

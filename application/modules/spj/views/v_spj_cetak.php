@@ -1,7 +1,3 @@
-
-
-<!doctype html>
-<html>
 <head>
 <style type="text/css" media="print">
 @page
@@ -93,7 +89,7 @@
     </style>
 </head>
 
-<body>
+  <div class="content-wrapper">
     <div class="invoice-box">
         <table cellpadding="0" cellspacing="0">
             <tr class="top">
@@ -231,5 +227,4 @@
             </tr>
         </table>
     </div>
-</body>
-</html>
+</div>

@@ -185,10 +185,19 @@
                             <button class="btn btn-primary" id="tambah"><span class="fa fa-plus"></span> Tambah </button>
                         </div>
                         <div class="box-body">
+                          <style media="screen">
+                          th { font-size: 14px; }
+                          td { font-size: 12px; }
+                          table tbody tr td .btn{
+                            padding:  1 1;
+                          }
+                          </style>
                             <table id="dt" class="table table-striped table-bordered dt-responsive" width="100%">
                                 <thead>
-                                       <th width="110px">Pembayaran</th>
-                                       <th>Kode booking</th>
+                                       <th width="100px">Pembayaran</th>
+                                       <th>Nama</th>
+                                       <th>Telepon</th>
+                                       <th>Alamat</th>
 																			 <th>Tujuan</th>
 																			 <th>Dari </th>
 																			 <th>Sampai </th>
@@ -274,6 +283,7 @@ function loadDataTable_custom(url){
 $('#dt').dataTable({
   "destroy": true,
   "bLengthChange": false,
+  "scrollX": true,
   "displayLength":10,
   "language": {
           "lengthMenu": "Tampilkan _MENU_ data per halaman ",

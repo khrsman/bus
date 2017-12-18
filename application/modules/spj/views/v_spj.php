@@ -30,18 +30,19 @@
                             </div>
 													<div class="form-group">
                                   <label class="col-sm-4 control-label">Bus</label>
-                                  <div class="col-sm-8">
+                                  <div class="col-sm-8" id='cb_unit_ajax'>
                                     <?php
-
-                                    $this->cb_options->unit();
+                                    // $this->cb_options->unit();
                                     ?>
+                                    <label class="radio-inline"><input type="radio" name="optradio">Option 1</label>
+<label class="radio-inline"><input type="radio" name="optradio">Option 2</label>
+<label class="radio-inline"><input type="radio" name="optradio">Option 3</label>
                                   </div>
                             </div>
 													<div class="form-group">
                                   <label class="col-sm-4 control-label">Sopir</label>
                                   <div class="col-sm-8">
                                     <?php
-
                                     $this->cb_options->sopir();
                                     ?>
                                   </div>
@@ -66,6 +67,24 @@
                                       <input type = "text" name="km_akhir" id="km_akhir" class="form-control"  >
                                   </div>
                             </div>
+                            <div class="form-group">
+                              <label class="col-sm-4 control-label">Solar perliter x jumlah</label>
+                              <div class="col-sm-8">
+                                  <div class="input-group">
+                                  <input class="form-control input_number hitung_biaya" placeholder="harga per liter" id="solar_per_liter" type="text">
+                                  <div class="input-group-addon">
+                                  X
+                                  </div>
+                                  <input class="form-control input_number hitung_biaya" placeholder="solar dibutuhkan" id="solar_dibutuhkan" type="text">
+                                </div>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label class="col-sm-4 control-label">Biaya Solar</label>
+                              <div class="col-sm-8">
+                                  <input readonly="" type = "text" name="biaya_solar" id="biaya_solar" class="form-control"  >
+                              </div>
+                            </div>
 
                             </form>
                         </div>
@@ -79,52 +98,52 @@
                                 <div class="form-group">
                                   <label class="col-sm-4 control-label">Upah Sopir</label>
                                   <div class="col-sm-8">
-                                      <input type = "text" name="biaya_sopir" id="biaya_sopir" class="form-control"  >
+                                      <input type = "text" name="biaya_sopir" id="biaya_sopir" class="form-control input_number hitung_biaya"  >
                                   </div>
                             </div>
                             <div class="form-group">
                               <label class="col-sm-4 control-label">Upah Kenek</label>
                               <div class="col-sm-8">
-                                  <input type = "text" name="biaya_crew" id="biaya_crew" class="form-control"  >
+                                  <input type = "text" name="biaya_crew" id="biaya_crew" class="form-control input_number hitung_biaya"  >
                               </div>
                               </div>
-                              <div class="form-group">
-                                <label class="col-sm-4 control-label">Solar</label>
-                                <div class="col-sm-8">
-                                    <input type = "text" name="biaya_solar" id="biaya_solar" class="form-control"  >
-                                </div>
-                              </div>
+
                               <div class="form-group">
                                 <label class="col-sm-4 control-label">Tol</label>
                                 <div class="col-sm-8">
-                                    <input type = "text" name="biaya_tol" id="biaya_tol" class="form-control"  >
+                                    <input type = "text" name="biaya_tol" id="biaya_tol" class="form-control input_number hitung_biaya"  >
                                 </div>
                               </div>
                               <div class="form-group">
                                 <label class="col-sm-4 control-label">Parkir</label>
                                 <div class="col-sm-8">
-                                    <input type = "text" name="biaya_parkir" id="biaya_parkir" class="form-control"  >
+                                    <input type = "text" name="biaya_parkir" id="biaya_parkir" class="form-control input_number hitung_biaya"  >
                                 </div>
                               </div>
                               <div class="form-group">
                                 <label class="col-sm-4 control-label">Tips</label>
                                 <div class="col-sm-8">
-                                    <input type = "text" name="biaya_tips" id="biaya_tips" class="form-control"  >
+                                    <input type = "text" name="biaya_tips" id="biaya_tips" class="form-control input_number hitung_biaya"  >
                                 </div>
                               </div>
                               <div class="form-group">
                                 <label class="col-sm-4 control-label">Penyebrangan</label>
                                 <div class="col-sm-8">
-                                    <input type = "text" name="biaya_penyebrangan" id="biaya_penyebrangan" class="form-control"  >
+                                    <input type = "text" name="biaya_penyebrangan" id="biaya_penyebrangan" class="form-control input_number hitung_biaya"  >
                                 </div>
                               </div>
                               <div class="form-group">
                                 <label class="col-sm-4 control-label">Lain-lain</label>
                                 <div class="col-sm-8">
-                                    <input type = "text" name="biaya_lain" id="biaya_lain" class="form-control"  >
+                                    <input type = "text" name="biaya_lain" id="biaya_lain" class="form-control input_number hitung_biaya"  >
                                 </div>
                               </div>
-
+                              <div class="form-group">
+                                <label class="col-sm-4 control-label">Total</label>
+                                <div class="col-sm-8">
+                                    <input type = "text" readonly name="biaya_total" id="biaya_total" class="form-control"  >
+                                </div>
+                              </div>
                             </form>
                         </div>
                         <div class="box-footer">
@@ -176,6 +195,46 @@ $().ready(function(){
   var url_update =  page+'/update';
   var url_hapus =  page+'/delete';
   var url_get = page+'/get';
+
+  $("#id_booking").change(function(){
+    // alert('test');
+     id = $(this).val();
+
+
+$.post( "<?php echo site_url('booking/get_unit_booking ') ?>", { id: id })
+  .done(function( data ) {
+    $("#cb_unit_ajax").html(data)
+    // alert( "Data Loaded: " + data );
+  });
+
+  });
+
+  $("#solar_per_liter").keyup(function(){
+    harga = $(this).val();
+    liter = $("#solar_dibutuhkan").val() || 0 ;
+    total = parseInt(liter)*parseInt(harga);
+    $("#biaya_solar").val(total);
+  });
+  $("#solar_dibutuhkan").keyup(function(){
+  liter = $(this).val();
+  harga = $("#solar_per_liter").val() || 0 ;
+  total = parseInt(liter)*parseInt(harga);
+  $("#biaya_solar").val(total);
+  });
+  $(".hitung_biaya").keyup(function(){
+
+    solar = $("#biaya_solar").val() || 0 ;
+    sopir = $("#biaya_sopir").val() || 0 ;
+    crew = $("#biaya_crew").val() || 0 ;
+    tol = $("#biaya_tol").val() || 0 ;
+    parkir = $("#biaya_parkir").val() || 0 ;
+    tips = $("#biaya_tips").val() || 0 ;
+    penyebrangan = $("#biaya_penyebrangan").val() || 0 ;
+    lainnya = $("#biaya_lain").val() || 0 ;
+
+    total = parseInt(solar)+parseInt(sopir)+parseInt(crew)+parseInt(tol)+parseInt(parkir)+parseInt(tips)+parseInt(penyebrangan)+parseInt(lainnya);
+    $("#biaya_total").val(total);
+  });
 
   $('body').on('click', '.hapus_custom', function() {
     var id = $(this).val();
