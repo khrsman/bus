@@ -34,9 +34,7 @@
                                     <?php
                                     // $this->cb_options->unit();
                                     ?>
-                                    <label class="radio-inline"><input type="radio" name="optradio">Option 1</label>
-<label class="radio-inline"><input type="radio" name="optradio">Option 2</label>
-<label class="radio-inline"><input type="radio" name="optradio">Option 3</label>
+                                  -
                                   </div>
                             </div>
 													<div class="form-group">
@@ -58,13 +56,13 @@
 													<div class="form-group">
                                   <label class="col-sm-4 control-label">Km awal</label>
                                   <div class="col-sm-8">
-                                      <input type = "text" name="km_awal" id="km_awal" class="form-control"  >
+                                      <input type = "text" value="0" name="km_awal" id="km_awal" class="form-control"  >
                                   </div>
                             </div>
 													<div class="form-group">
                                   <label class="col-sm-4 control-label">Km akhir</label>
                                   <div class="col-sm-8">
-                                      <input type = "text" name="km_akhir" id="km_akhir" class="form-control"  >
+                                      <input type = "text" value="0" name="km_akhir" id="km_akhir" class="form-control"  >
                                   </div>
                             </div>
                             <div class="form-group">
@@ -82,7 +80,7 @@
                             <div class="form-group">
                               <label class="col-sm-4 control-label">Biaya Solar</label>
                               <div class="col-sm-8">
-                                  <input readonly="" type = "text" name="biaya_solar" id="biaya_solar" class="form-control"  >
+                                  <input readonly="" type = "text" value="0" name="biaya_solar" id="biaya_solar" class="form-control"  >
                               </div>
                             </div>
 
@@ -98,50 +96,50 @@
                                 <div class="form-group">
                                   <label class="col-sm-4 control-label">Upah Sopir</label>
                                   <div class="col-sm-8">
-                                      <input type = "text" name="biaya_sopir" id="biaya_sopir" class="form-control input_number hitung_biaya"  >
+                                      <input type = "text" value="0" name="biaya_sopir" id="biaya_sopir" class="form-control input_number hitung_biaya"  >
                                   </div>
                             </div>
                             <div class="form-group">
                               <label class="col-sm-4 control-label">Upah Kenek</label>
                               <div class="col-sm-8">
-                                  <input type = "text" name="biaya_crew" id="biaya_crew" class="form-control input_number hitung_biaya"  >
+                                  <input type = "text" value="0" name="biaya_crew" id="biaya_crew" class="form-control input_number hitung_biaya"  >
                               </div>
                               </div>
 
                               <div class="form-group">
                                 <label class="col-sm-4 control-label">Tol</label>
                                 <div class="col-sm-8">
-                                    <input type = "text" name="biaya_tol" id="biaya_tol" class="form-control input_number hitung_biaya"  >
+                                    <input type = "text" value="0" name="biaya_tol" id="biaya_tol" class="form-control input_number hitung_biaya"  >
                                 </div>
                               </div>
                               <div class="form-group">
                                 <label class="col-sm-4 control-label">Parkir</label>
                                 <div class="col-sm-8">
-                                    <input type = "text" name="biaya_parkir" id="biaya_parkir" class="form-control input_number hitung_biaya"  >
+                                    <input type = "text" value="0" name="biaya_parkir" id="biaya_parkir" class="form-control input_number hitung_biaya"  >
                                 </div>
                               </div>
                               <div class="form-group">
                                 <label class="col-sm-4 control-label">Tips</label>
                                 <div class="col-sm-8">
-                                    <input type = "text" name="biaya_tips" id="biaya_tips" class="form-control input_number hitung_biaya"  >
+                                    <input type = "text" value="0" name="biaya_tips" id="biaya_tips" class="form-control input_number hitung_biaya"  >
                                 </div>
                               </div>
                               <div class="form-group">
                                 <label class="col-sm-4 control-label">Penyebrangan</label>
                                 <div class="col-sm-8">
-                                    <input type = "text" name="biaya_penyebrangan" id="biaya_penyebrangan" class="form-control input_number hitung_biaya"  >
+                                    <input type = "text" value="0" name="biaya_penyebrangan" id="biaya_penyebrangan" class="form-control input_number hitung_biaya"  >
                                 </div>
                               </div>
                               <div class="form-group">
                                 <label class="col-sm-4 control-label">Lain-lain</label>
                                 <div class="col-sm-8">
-                                    <input type = "text" name="biaya_lain" id="biaya_lain" class="form-control input_number hitung_biaya"  >
+                                    <input type = "text" value="0" name="biaya_lain" id="biaya_lain" class="form-control input_number hitung_biaya"  >
                                 </div>
                               </div>
                               <div class="form-group">
                                 <label class="col-sm-4 control-label">Total</label>
                                 <div class="col-sm-8">
-                                    <input type = "text" readonly name="biaya_total" id="biaya_total" class="form-control"  >
+                                    <input type = "text" value="0" readonly name="biaya_total" id="biaya_total" class="form-control"  >
                                 </div>
                               </div>
                             </form>

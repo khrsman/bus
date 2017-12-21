@@ -2,10 +2,10 @@
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-            <h1>kategori_pengeluaran</h1>
+            <h1>Kategori Pengeluaran</h1>
             <ol class="breadcrumb">
                 <li><a href="#">Home</a></li>
-                <li class="active">kategori_pengeluaran</li>
+                <li class="active">Kategori Pengeluaran</li>
             </ol>
         </section>
         <section class="content">
@@ -38,7 +38,7 @@
             </div>
 
             <div class="row" id="tabel">
-                <div class="col-md-12">
+                <div class="col-md-8">
                     <div class="box box-primary">
                         <div class="box-header">
                             <button class="btn btn-primary" id="tambah"><span class="fa fa-plus"></span> Tambah</button>

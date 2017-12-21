@@ -136,7 +136,6 @@
                   <center><strong>KWITANSI</strong></center><BR>
                 </td>
             </tr>
-
             <tr class="heading">
                 <td>
                   Pembayaran

@@ -39,7 +39,7 @@
 
          public function unit()
          {
-           $header = '<select class="form-control" name="id_unit">
+           $header = '<select class="form-control input_validation" name="id_unit">
              <option selected="">--- PILIH ---</option>';
            $select_item = '';
            $footer = '</select>';
@@ -87,8 +87,8 @@
 
          public function sparepart()
          {
-           $header = '<select class="form-control" name="id_sparepart">
-             <option selected="">--- PILIH ---</option>';
+           $header = '<select class="form-control input_validation" name="id_sparepart">
+             <option selected="" disabled>--- PILIH ---</option>';
            $select_item = '';
            $footer = '</select>';
 

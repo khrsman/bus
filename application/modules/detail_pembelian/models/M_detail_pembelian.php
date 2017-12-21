@@ -53,5 +53,9 @@ class M_detail_pembelian extends CI_Model
         $query = $this->db->delete('detail_pembelian');
     }
 
+    public function update_stok($id_sparepart, $jumlah){
+      $this->db->query('update sparepart set  stok  = stok + '.$jumlah.' where id_sparepart = '.$id_sparepart );
+    }
+
 
 }

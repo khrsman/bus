@@ -49,6 +49,7 @@
           <li><a href="<?php echo site_url() ?>/spj"><i class="fa fa-circle-o"></i> SPJ</a></li>
           <li><a href="<?php echo site_url() ?>/faktur_pembelian"><i class="fa fa-circle-o"></i> Pembelian sparepart</a></li>
             <li><a href="<?php echo site_url() ?>/pengeluaran"><i class="fa fa-circle-o"></i> Pengeluaran</a></li>
+            <li><a href="<?php echo site_url() ?>/pemakaian_sparepart"><i class="fa fa-circle-o"></i> Pemakaian Sparepart</a></li>
         </ul>
       </li>
       <li><a href="<?php echo site_url() ?>/laporan"><i class="fa fa-book"></i> Laporan </a></li>

@@ -15,7 +15,7 @@ class M_spj extends CI_Model
         $this->db->where('id_spj', $id);
         $this->db->limit(1);
       }
-        $this->db->select('id_spj pk,id_spj,id_booking,
+        $this->db->select('id_spj pk,id_spj,(select CONCAT_WS(" - ",nama_penyewa,tujuan) from booking where id_booking = spj.id_booking) Penyewa,
 (select seri from unit where unit.id_unit = spj.id_unit) bus,
 (select nama from pegawai where pegawai.id_pegawai = spj.id_sopir) sopir,
 (select nama from pegawai where pegawai.id_pegawai = spj.id_crew) crew,

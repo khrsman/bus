@@ -1,17 +1,17 @@
-        <section class="content">
             <div class="row" id="tabel">
                 <div class="col-md-12">
                     <div class="box box-primary">
+
                         <div class="box-header">
-                        <h3> Laporan  pengeluaran</h3>
+                          <h3>  Laporan Pemakaian Sparepart </h3>
                         </div>
                         <div class="box-body">
-                            <table id="dt" class="table  table-bordered" width="100%" cellspacing="0">
+                            <table id="dt" class="table table-hover table-bordered display nowrap" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
                                         <th>Tanggal</th>
-                                        <th>Kategori</th>
-                                       <th>Keterangan</th>
+                                        <th>Nama</th>
+                                       <th>Unit</th>
                                        <th>Jumlah</th>
                                     </tr>
                                 </thead>
@@ -25,8 +25,8 @@
                                     ?>
                                     <tr>
                                         <td><?php echo $value['tanggal'] ?></td>
-                                        <td><?php echo $value['kategori'] ?></td>
-                                        <td><?php echo $value['keterangan'] ?></td>
+                                        <td><?php echo $value['nama_sparepart'] ?></td>
+                                        <td><?php echo $value['unit'] ?></td>
                                         <td><?php echo $value['jumlah'] ?> </td>
                                     </tr>
                                     <?php
@@ -44,6 +44,25 @@
                     </div>
                 </div>
             </div>
-    </div>
-</div>
-</section>
+
+
+<script type="text/javascript" src="<?php echo base_url() ?>js/datepicker/js/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="<?php echo base_url() ?>js/datepicker/locales/bootstrap-datepicker.id.min.js"></script>
+<link rel="stylesheet" href="<?php echo base_url() ?>js/datepicker/css/bootstrap-datepicker.css">
+<script src="<?php echo base_url() ?>js/jquery.multiselect.js"></script>
+<script>
+	 $(function(){
+     $('.datepicker').datepicker({
+           format: 'dd/mm/yyyy',
+           todayBtn: "linked",
+           language: "id",
+           calendarWeeks: true,
+           autoclose: true
+      });
+      $('#langOpt').multiselect({
+          selectAll: true,
+          columns: 2,
+          placeholder: 'Pilih Kategori'
+      });
+	 });
+</script>

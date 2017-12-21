@@ -1,5 +1,16 @@
 
 <link href="<?php echo base_url() ?>css/jquery.multiselect.css" rel="stylesheet" type="text/css">
+
+
+<style>
+#modal_table tr>td {
+  padding: 5px;
+}
+tr:hover{
+  /*background-color: red;*/
+  cursor: pointer;;
+}
+</style>
 <div id="page_custom" value="booking">
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -185,27 +196,17 @@
                             <button class="btn btn-primary" id="tambah"><span class="fa fa-plus"></span> Tambah </button>
                         </div>
                         <div class="box-body">
-                          <style media="screen">
-                          th { font-size: 14px; }
-                          td { font-size: 12px; }
-                          table tbody tr td .btn{
-                            padding:  1 1;
-                          }
-                          </style>
-                            <table id="dt" class="table table-striped table-bordered dt-responsive" width="100%">
+
+                          * Klik data untuk melihat detail
+                            <table id="dt" class="table table-striped table-hover dt-responsive" width="100%">
                                 <thead>
                                        <th width="100px">Pembayaran</th>
                                        <th>Nama</th>
                                        <th>Telepon</th>
                                        <th>Alamat</th>
 																			 <th>Tujuan</th>
-																			 <th>Dari </th>
-																			 <th>Sampai </th>
-																			 <th>Bus</th>
-																			 <th>Total Harga</th>
 																			 <th>Status bayar</th>
-																			 <th>Sisa</th>
-																			 <th id="aksi">Aksi</th>
+																			 <th id="aksi" width="150px">Aksi</th>
                                 </thead>
                             </table>
                         </div>
@@ -217,6 +218,82 @@
 </section>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Detail Booking</h4>
+      </div>
+      <div class="modal-body" style="padding:20">
+
+                      <table id="modal_table">
+                        <tr>
+                          <td>Nama</td>
+                          <td>: </td>
+                          <td><span id="modal_nama" >nama</span></td>
+                        </tr>
+                        <tr>
+                          <td>Alamat Jemput</td>
+                          <td>: </td>
+                            <td><span id="modal_alamat_jemput" > - </span></td>
+                        </tr>
+                        <tr>
+                          <td>Tujuan</td>
+                          <td>: </td>
+                          <td><span id="modal_tujuan" > - </span></td>
+                        </tr>
+                        <tr>
+                          <td>Tanggal</td>
+                          <td>: </td>
+                          <td><span id="modal_dari" > - </span></td>
+                        </tr>
+                        <tr>
+                          <td>Unit</td>
+                          <td>: </td>
+                          <td><span id="modal_unit" > - </span></td>
+                        </tr>
+                        <tr>
+                          <td>Total Harga</td>
+                          <td>: </td>
+                        <td><span id="modal_total_harga" > - </span></td>
+                        </tr>
+                        <tr>
+                          <td>Status Bayar</td>
+                          <td>: </td>
+                          <td><span id="modal_status_bayar" > - </span></td>
+                        </tr>
+                        <tr>
+                          <td>Sisa</td>
+                          <td>: </td>
+                          <td><span id="modal_sisa" > - </span></td>
+                        </tr>
+                        <tr>
+                          <td>Kas Jalan</td>
+                          <td>: </td>
+                          <td><span id="modal_kas_jalan" > - </span></td>
+                        </tr>
+                        <tr>
+                          <td>Total Bersih</td>
+                          <td>: </td>
+                          <td><span id="modal_total_bersih" > - </span></td>
+                        </tr>
+                      </table>
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- /Modal -->
+
 <script type="text/javascript" src="<?php echo base_url() ?>js/datepicker/js/bootstrap-datepicker.js"></script>
 <script type="text/javascript" src="<?php echo base_url() ?>js/datepicker/locales/bootstrap-datepicker.id.min.js"></script>
 <link rel="stylesheet" href="<?php echo base_url() ?>js/datepicker/css/bootstrap-datepicker.css">
@@ -226,6 +303,40 @@
 <script src="<?php echo base_url() ?>js/timepicker/bootstrap-timepicker.min.js"></script>
 <script src="<?php echo base_url() ?>js/jquery.multiselect.js"></script>
 <script>
+
+$(document).on( "click", "tbody>tr",function(e){
+  if($(e.target).hasClass('btn_delete') || $(e.target).hasClass('btn_edit') ){
+        // e.preventDefault();
+        return;
+    }
+
+    id =   $(this).find(".edit").val();
+    $.get("<?php echo site_url() ?>/booking/detail?id="+id, function(data, status){
+       //  console.log(data);
+      var arr = JSON.parse(data);
+      console.log(arr.nama_penyewa);
+      $("#modal_nama").text(arr.nama_penyewa);
+      $("#modal_alamat_jemput").text(arr.alamat_jemput);
+      $("#modal_tujuan").text(arr.tujuan);
+      $("#modal_dari").text(arr.tanggal_dari+" - "+ arr.tanggal_sampai);
+      $("#modal_unit").text(arr.id_unit);
+      $("#modal_total_harga").text(arr.total);
+      $("#modal_status_bayar").text(arr.status_bayar);
+       $("#modal_sisa").text(arr.sisa);
+      $("#modal_kas_jalan").text(arr.kas_jalan);
+      $("#modal_total_bersih").text(arr.total_bersih);
+
+      // arr.tujuan;
+      // arr.tanggal_dari;
+      // arr.tanggal_sampai;
+      // arr.dari;
+      // arr.harga;
+      // arr.total;
+      // arr.marketing;
+      // alert(arr.tujuan);
+});
+     $("#myModal").modal();
+  });
 
 
 function hitung_total(){
@@ -283,7 +394,7 @@ function loadDataTable_custom(url){
 $('#dt').dataTable({
   "destroy": true,
   "bLengthChange": false,
-  "scrollX": true,
+  // "scrollX": true,
   "displayLength":10,
   "language": {
           "lengthMenu": "Tampilkan _MENU_ data per halaman ",

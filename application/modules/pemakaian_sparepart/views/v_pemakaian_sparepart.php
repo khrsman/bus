@@ -1,16 +1,16 @@
-<div id="page" value="sparepart">
+<div id="page" value="pemakaian_sparepart">
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-            <h1>sparepart</h1>
+            <h1>Pemakaian Sparepart</h1>
             <ol class="breadcrumb">
                 <li><a href="#">Home</a></li>
-                <li class="active">sparepart</li>
+                <li class="active">Pemakaian Sparepart</li>
             </ol>
         </section>
         <section class="content">
             <div class="row" style="display:none" id="form_tambah">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="box box-primary">
                         <div class="box-header with-border">
                             <h3 class="box-title add_page">Tambah</h3>
@@ -18,11 +18,29 @@
                         </div>
                         <div class="box-body">
                             <form role="form" class="form-horizontal xform">
-                                      <input type = "hidden" name="id_sparepart" id="id_sparepart" class="form-control"  >
+                                <input type="hidden" id="id_pemakaian_sparepart" name="id_pemakaian_sparepart" >
 																<div class="form-group">
                                   <label class="col-sm-4 control-label">Nama</label>
                                   <div class="col-sm-8">
-                                      <input type = "text" name="nama" id="nama" class="form-control"  >
+                                      <input type = "text" name="id_sparepart" id="id_sparepart" class="form-control"  >
+                                  </div>
+                            </div>
+													<div class="form-group">
+                                  <label class="col-sm-4 control-label">Jumlah</label>
+                                  <div class="col-sm-8">
+                                      <input type = "text" name="jumlah" id="jumlah" class="form-control"  >
+                                  </div>
+                            </div>
+													<div class="form-group">
+                                  <label class="col-sm-4 control-label">Id unit</label>
+                                  <div class="col-sm-8">
+                                      <input type = "text" name="id_unit" id="id_unit" class="form-control"  >
+                                  </div>
+                            </div>
+													<div class="form-group">
+                                  <label class="col-sm-4 control-label">Tanggal</label>
+                                  <div class="col-sm-8">
+                                      <input type = "text" name="tanggal" id="tanggal" class="form-control"  >
                                   </div>
                             </div>
 
@@ -36,8 +54,9 @@
                     </div>
                 </div>
             </div>
+
             <div class="row" id="tabel">
-                <div class="col-md-8">
+                <div class="col-md-12">
                     <div class="box box-primary">
                         <div class="box-header">
                             <button class="btn btn-primary" id="tambah"><span class="fa fa-plus"></span> Tambah</button>
@@ -46,9 +65,12 @@
                             <table id="dt" class="table table-hover table-bordered display nowrap" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
-                                         <th>Nama</th>
-                                         <th>Stok</th>
+                                         <th> Nama</th>
+																			 <th>Jumlah</th>
+																			 <th>Unit</th>
+																			 <th>Tanggal</th>
 																			 <th width="150px">Aksi</th>
+
                                     </tr>
                                 </thead>
                             </table>

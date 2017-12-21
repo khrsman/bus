@@ -34,5 +34,29 @@ from unit group by id_unit");
         return $query->result_array();
         // where tanggal_dari BETWEEN "'.$tanggal_dari.'" and "'.$tanggal_sampai.'"
     }
+    public function get_laporan_pemakaian_sparepart($tanggal_dari,$tanggal_sampai,$unit,$sparepart){
+      $where = '';
+      if($unit || $sparepart)
+      $where .= " where ";
+      if($unit)
+        $where .= "id_unit in($unit)";
+      if ($sparepart){
+        if($unit){
+          $where .= " and id_sparepart in($sparepart)";
+        } else{
+          $where .= " id_sparepart in($sparepart)";
+        }
+      }
+
+
+        $query = $this->db->query("select tanggal,
+        (select seri from unit where id_unit = pemakaian_sparepart.id_unit) unit,
+        (select nama from sparepart where id_sparepart = pemakaian_sparepart.id_sparepart) nama_sparepart,
+        jumlah
+        from pemakaian_sparepart $where");
+        // echo $this->db->last_query();
+        // die;
+        return $query->result_array();
+    }
 
 }
