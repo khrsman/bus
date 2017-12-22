@@ -116,9 +116,6 @@ $().ready(function(){
  });
 
 
-
-
-
  // fungsi inisiasi data table
 function loadDataTable(url){
   // $('#dt').DataTable().clear();

@@ -18,7 +18,7 @@
       <!-- <li class="header">MAIN NAVIGATION</li> -->
       <!-- <li><a href="<?php echo site_url() ?>/dashboard"><i class="fa fa-dashboard text-red"></i> <span>Dashboard</span></a></li> -->
       <li><a href="<?php echo site_url() ?>/booking/schedule"><i class="fa fa-circle-o"></i> Jadwal </a></li>
-      <li class="treeview menu-open">
+      <li class=" menu-open">
         <a href="#">
           <i class="fa fa-folder-open "></i> <span>Data</span>
           <span class="pull-right-container">
@@ -35,7 +35,7 @@
           <li><a href="<?php echo site_url() ?>/kategori_pengeluaran"><i class="fa fa-circle-o"></i> Kategori Pengeluaran </a></li>
         </ul>
       </li>
-      <li class="treeview menu-open">
+      <li class=" menu-open">
         <a href="#">
           <i class="fa fa-exchange"></i> <span>Transaksi</span>
           <span class="pull-right-container">

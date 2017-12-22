@@ -16,7 +16,7 @@ class M_marketing extends CI_Model
         $this->db->where('id_marketing', $id);
         $this->db->limit(1);
       }
-        $this->db->select('id_marketing pk,id_marketing,keterangan');
+        $this->db->select('id_marketing pk,id_marketing,keterangan,  CONCAT("<div style=background-color:",warna,"> ",warna," </div>" ) warna');
         $query = $this->db->get('marketing');
         return $query->result_array();
     }

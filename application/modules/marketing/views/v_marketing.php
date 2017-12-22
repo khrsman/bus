@@ -30,7 +30,12 @@
                                       <input type = "text" name="keterangan" id="keterangan" class="form-control"  >
                                   </div>
                             </div>
-
+                            <div class="form-group">
+                                    <label class="col-sm-4 control-label">Warna</label>
+                                    <div class="col-sm-8">
+                                      <input type="color" name="warna" >
+                                    </div>
+                              </div>
                             </form>
                         </div>
                         <div class="box-footer">
@@ -43,7 +48,7 @@
             </div>
 
             <div class="row" id="tabel">
-                <div class="col-md-6">
+                <div class="col-md-8">
                     <div class="box box-primary">
                         <div class="box-header">
                             <button class="btn btn-primary" id="tambah"><span class="fa fa-plus"></span> Tambah</button>
@@ -52,10 +57,10 @@
                             <table id="dt" class="table table-hover table-bordered display nowrap" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
-                                         <th>Kode marketing</th>
+                                       <th>Kode marketing</th>
 																			 <th>Keterangan</th>
+																			 <th>Kode Warna</th>
 																			 <th width="150px">Aksi</th>
-
                                     </tr>
                                 </thead>
                             </table>
