@@ -207,7 +207,11 @@
                   Jumlah
                 </td>
                 <td>
-                <span id="jumlah_bus_kwitansi"> <?php echo $inv['jumlah_bus'] ?> bus x  Rp. <?php echo $inv['harga'] ?></span>
+                  <div id="jumlah_bus_kwitansi">
+                  <?php foreach ($harga_unit as $key => $value): ?>
+                      <span >  <?php echo $value['jumlah'] ?> unit x  Rp. <?php echo $value['harga'] ?></span><br>
+                  <?php endforeach; ?>
+                </div>
                 </td>
             </tr>
             <tr class="item">
@@ -254,19 +258,22 @@
           <div class="form-group" >
                   <label class="col-sm-4 control-label">Jumlah bus x Harga</label>
                   <div class="col-sm-8">
-                      <input type = "text" name="nama" id="jumlah_bus_modal" value = "<?php echo $inv['jumlah_bus'] ?> bus x  Rp. <?php echo $inv['harga'] ?>" class="form-control input_validation "  >
+                    <?php foreach ($harga_unit as $key => $value): ?>
+                      <input type = "text" name="nama" value = "<?php echo $value['jumlah'] ?> unit x  Rp. <?php echo $value['harga'] ?>" class="form-control input_validation jumlah_bus_modal"  >
+                  <?php endforeach; ?>
+                      <!-- <input type = "text" name="nama" id="jumlah_bus_modal" value = "<?php echo $unit ?> bus x  Rp. <?php echo $inv['harga'] ?>" class="form-control input_validation "  > -->
                   </div>
             </div>
             <div class="form-group" >
                     <label class="col-sm-4 control-label">Harga total</label>
                     <div class="col-sm-8">
-                        <input type = "text" id="harga_total_modal" class="form-control input_validation "  >
+                        <input type = "text" id="harga_total_modal" value = "<?php echo str_replace(',','',$inv['total']) ?>" class="form-control input_validation "  >
                     </div>
               </div>
               <div class="form-group" >
                       <label class="col-sm-4 control-label">Bayar</label>
                       <div class="col-sm-8">
-                          <input type = "text" name="nama" id="jumlah_bayar_modal" class="form-control input_validation "  >
+                          <input type = "text" name="nama" id="jumlah_bayar_modal" value = "<?php echo str_replace(',','',$inv['jumlah_bayar']) ?>" class="form-control input_validation "  >
                       </div>
                 </div>
             </form>
@@ -314,9 +321,15 @@ sisa = harga_total - bayar;
 sisa = parseInt(sisa);
 harga_total = parseInt(harga_total);
 bayar = parseInt(bayar);
+$("#jumlah_bus_kwitansi").html("");
+$('.jumlah_bus_modal').each(function(i, obj){
+  val = obj.value;
+ $("#jumlah_bus_kwitansi").append("<span>"+val+"</span><br>");
+})
+
 
   $("#harga_total_kwitansi").text("Rp. "+harga_total.format());
-   $("#jumlah_bus_kwitansi").text($("#jumlah_bus_modal").val());
+
    $("#sisa_bayar_kwitansi").text("Rp. "+sisa.format());
    $("#jumlah_bayar_kwitansi").text("Rp. "+bayar.format());
 

@@ -7,7 +7,6 @@ class M_pembayaran extends CI_Model
     public function __construct()
     {
         parent::__construct();
-
     }
 
     public function get($id = NULL){
@@ -19,6 +18,10 @@ class M_pembayaran extends CI_Model
         $this->db->select('id_pembayaran pk,id_booking,dari,jumlah,tanggal,status');
         $query = $this->db->get('pembayaran');
         return $query->result_array();
+    }
+    function get_detail_unit($id_booking){
+      $this->db->select('unit, format(harga,0) harga')->where('id_booking', $id_booking);
+      return $this->db->get('booking_harga_unit')->result_array();
     }
 
 
@@ -57,14 +60,22 @@ class M_pembayaran extends CI_Model
         return $query->result_array()[0];
     }
     public function get_kwitansi($id_pembayaran){
-        $this->db->select('id_pembayaran, byr.dari, byr.untuk, bk.tujuan, byr.tanggal tanggal_bayar,
+        $this->db->select('id_pembayaran, id_booking, byr.dari, byr.untuk, bk.tujuan, byr.tanggal tanggal_bayar,
                 DATE_FORMAT(bk.tanggal_dari, "%d/%m/%Y") tanggal_dari,
                 DATE_FORMAT(bk.tanggal_sampai, "%d/%m/%Y") tanggal_sampai,
                 DATE_FORMAT(bk.jam_dari, "%H:%i") jam_dari,  DATE_FORMAT(bk.jam_sampai, "%H:%i") jam_sampai, bk.jumlah_bus,FORMAT(bk.harga,0) harga,FORMAT(bk.total,0) total,FORMAT(byr.sisa,0) sisa_bayar, FORMAT(byr.jumlah,0) jumlah_bayar');
         $this->db->where('id_pembayaran',$id_pembayaran);
         $this->db->join('booking bk','id_booking');
         $query = $this->db->get('pembayaran byr');
+      //   echo $this->db->last_query();
+      //  die;
         return $query->result_array()[0];
+    }
+
+    function get_harga_unit($id_booking){
+      $this->db->select('count(*) jumlah, format(harga,0) harga')->where('id_booking', $id_booking)->group_by('harga');
+
+      return $this->db->get('booking_harga_unit')->result_array();
     }
 
     public function get_invoice($id_booking){

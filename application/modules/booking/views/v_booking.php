@@ -11,17 +11,19 @@ tr:hover{
   cursor: pointer;;
 }
 </style>
+
 <div id="page_custom" value="booking">
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-            <h1>booking</h1>
+            <h1>Booking</h1>
             <ol class="breadcrumb">
                 <li><a href="#">Home</a></li>
                 <li class="active">booking</li>
             </ol>
         </section>
         <section class="content">
+
             <div class="row" style="display:none" id="form_tambah">
                 <div class="col-md-6">
                     <div class="box box-primary">
@@ -137,13 +139,13 @@ tr:hover{
                         <div class="box-body">
                             <form role="form" class="form-horizontal xform">
 
-													<div class="form-group">
+													<div class="form-group select_unit">
                                   <label class="col-sm-4 control-label">Bus</label>
                                   <div class="col-sm-8">
                                       <!-- <input value="0" type = "number" name="jumlah_bus" id="jumlah_bus" class="form-control hitung_total"
                                       onkeydown='return (event.which >= 48 && event.which <= 57) || event.which == 8 || event.which == 46 || event.which == 37 || event.which == 39'
                                       > -->
-                                      <select name="id_unit[]" multiple id="langOpt" class="input_validation">
+                                      <select name="id_unit[]" multiple id="langOpt" class="input_validation select_unit">
                                         <?php
                                         // $this->db->select('id_unit,nama');
                                         $query = $this->db->get('unit')->result_array();
@@ -156,20 +158,26 @@ tr:hover{
                                   </div>
                             </div>
                             <div class="form-group">
+                                    <label class="col-sm-4 control-label">Harga</label>
+                                    <div class="col-sm-8 form_harga_unit">
+                                    </div>
+                              </div>
+
+                            <div class="form-group">
                                     <label class="col-sm-4 control-label">Jumlah Bus</label>
                                     <div class="col-sm-8">
                                       <input value="0" type = "number" readonly name="jumlah_bus" id="jumlah_bus" class="form-control " >
                                     </div>
                               </div>
 
-													<div class="form-group">
+													<!-- <div class="form-group">
                                   <label class="col-sm-4 control-label">Harga</label>
                                   <div class="col-sm-8">
                                       <input  value="0" type = "number" name="harga" id="harga" class="form-control hitung_total"
                                       onkeydown='return (event.which >= 48 && event.which <= 57) || event.which == 8 || event.which == 46 || event.which == 37 || event.which == 39'
                                       >
                                   </div>
-                            </div>
+                            </div> -->
 													<div class="form-group">
                                   <label class="col-sm-4 control-label">Total</label>
                                   <div class="col-sm-8">
@@ -230,54 +238,59 @@ tr:hover{
       </div>
       <div class="modal-body" style="padding:20">
 
-                      <table id="modal_table">
+                      <table id="modal_table" class="table">
                         <tr>
-                          <td>Nama</td>
+                          <td><strong>Nama</strong></td>
                           <td>: </td>
                           <td><span id="modal_nama" >nama</span></td>
                         </tr>
                         <tr>
-                          <td>Alamat Jemput</td>
+                          <td><strong>Telepon</strong></td>
+                          <td>: </td>
+                          <td><span id="modal_telepon" >nama</span></td>
+                        </tr>
+                        <tr>
+                          <td><strong>Alamat Jemput</strong></strong></td>
                           <td>: </td>
                             <td><span id="modal_alamat_jemput" > - </span></td>
                         </tr>
                         <tr>
-                          <td>Tujuan</td>
+                          <td><strong>Tujuan</strong></td>
                           <td>: </td>
                           <td><span id="modal_tujuan" > - </span></td>
                         </tr>
                         <tr>
-                          <td>Tanggal</td>
+                          <td><strong>Tanggal</strong></td>
                           <td>: </td>
                           <td><span id="modal_dari" > - </span></td>
                         </tr>
                         <tr>
-                          <td>Unit</td>
+                          <td><strong>Unit</strong></td>
                           <td>: </td>
                           <td><span id="modal_unit" > - </span></td>
                         </tr>
                         <tr>
-                          <td>Total Harga</td>
+                          <td><strong>Total Harga</strong></td>
                           <td>: </td>
                         <td><span id="modal_total_harga" > - </span></td>
                         </tr>
                         <tr>
-                          <td>Status Bayar</td>
+                          <td><strong>Status Bayar</strong></td>
                           <td>: </td>
                           <td><span id="modal_status_bayar" > - </span></td>
                         </tr>
                         <tr>
-                          <td>Sisa</td>
+                          <td><strong>Sisa</strong></td>
                           <td>: </td>
                           <td><span id="modal_sisa" > - </span></td>
                         </tr>
                         <tr>
-                          <td>Kas Jalan</td>
+                          <td><strong>Kas Jalan</strong></td>
                           <td>: </td>
                           <td><span id="modal_kas_jalan" > - </span></td>
                         </tr>
                         <tr>
-                          <td>Total Bersih</td>
+                          <td><strong>Total Bersih</strong></td>
                           <td>: </td>
                           <td><span id="modal_total_bersih" > - </span></td>
                         </tr>
@@ -286,7 +299,7 @@ tr:hover{
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
       </div>
     </div>
 
@@ -305,7 +318,7 @@ tr:hover{
 <script>
 
 $(document).on( "click", "tbody>tr",function(e){
-  if($(e.target).hasClass('btn_delete') || $(e.target).hasClass('btn_edit') ){
+  if($(e.target).hasClass('hapus_custom') || $(e.target).hasClass('edit') ){
         // e.preventDefault();
         return;
     }
@@ -314,17 +327,25 @@ $(document).on( "click", "tbody>tr",function(e){
     $.get("<?php echo site_url() ?>/booking/detail?id="+id, function(data, status){
        //  console.log(data);
       var arr = JSON.parse(data);
-      console.log(arr.nama_penyewa);
+
+      unit = arr.unit;
+      txt_unit = '';
+      unit.forEach(function(element) {
+        txt_unit = txt_unit+'<span>'+ element.unit+' (Rp. '+element.harga+')</span><br>';
+});
+
       $("#modal_nama").text(arr.nama_penyewa);
+      $("#modal_telepon").text(arr.no_telepon);
       $("#modal_alamat_jemput").text(arr.alamat_jemput);
       $("#modal_tujuan").text(arr.tujuan);
       $("#modal_dari").text(arr.tanggal_dari+" - "+ arr.tanggal_sampai);
-      $("#modal_unit").text(arr.id_unit);
-      $("#modal_total_harga").text(arr.total);
+      $("#modal_unit").html(txt_unit);
+      $("#modal_total_harga").text('Rp. '+arr.total);
       $("#modal_status_bayar").text(arr.status_bayar);
        $("#modal_sisa").text(arr.sisa);
       $("#modal_kas_jalan").text(arr.kas_jalan);
       $("#modal_total_bersih").text(arr.total_bersih);
+
 
       // arr.tujuan;
       // arr.tanggal_dari;
@@ -340,26 +361,55 @@ $(document).on( "click", "tbody>tr",function(e){
 
 
 function hitung_total(){
-  var harga = $("#harga").val();
-  var jumlah = $("#jumlah_bus").val();
-  var total = parseInt(harga)*parseInt(jumlah);
- $("#total").val(total);
+  harga = 0;
+  $(".harga_unit").each(function() {
+    harga_unit = $(this).val();
+    harga = parseInt(harga) + parseInt(harga_unit);
+    console.log(harga_unit);
+    // console.log(parseInt(harga_unit));
+  })
+
+  // var jumlah = $("#jumlah_bus").val();
+  // var total = parseInt(harga)*parseInt(jumlah);
+ $("#total").val(harga);
 }
+
+
+
+
 	 $(function(){
 
-     $('#langOpt').multiselect({
-         columns: 2,
-         placeholder: 'Pilih Bus'
-     });
+  $('select[multiple].select_unit').multiselect({
+      columns: 3,
+      placeholder: 'Pilih Unit',
+      search: true,
+      searchOptions: {
+          'default': 'Cari Unit'
+      },
 
-       $('#langOpt').change(function(){
-       var count = $('#langOpt option:selected').length;
-       $("#jumlah_bus").val(count);
-       hitung_total();
-       })
+      onOptionClick: function( element, option ){
+ var thisOpt = $(option);
+ var val  =thisOpt.val();
+ var count = $('#langOpt option:selected').length;
 
-     $( ".hitung_total" ).keyup(function() {
-    hitung_total();
+if(thisOpt.prop('checked')){
+  if($('.harga_per_unit').is('#'+val)){
+  } else{
+    add3 = '<div class="harga_per_unit" id="'+val+'"><label class="col-sm-2 control-label">'+val+' </label> <div class="col-sm-10"><input type = "text" name="harga_perunit['+val+']" id="" value="0" class="form-control hitung_total harga_unit" onkeydown="return (event.which >= 48 && event.which <= 57) || event.which == 8 || event.which == 46 || event.which == 37 || event.which == 39"></div>';
+           $('.form_harga_unit').append(add3);
+  }
+} else{
+  $('#'+val).remove();
+}
+$("#jumlah_bus").val(count);
+hitung_total();
+
+}
+  });
+
+
+   $('body').on( "keyup",".hitung_total", function() {
+  hitung_total();
   });
 
 			$('.datepicker').datepicker({

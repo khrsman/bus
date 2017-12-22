@@ -47,13 +47,15 @@ class Pembayaran extends CI_Controller {
     $data['page'] = 'v_invoice';
     $id_booking = $this->input->get('id_booking');
     $data['inv'] = $this->M_pembayaran->get_invoice($id_booking);
+      $data['harga_unit'] =   $this->M_pembayaran->get_harga_unit($data['inv']['id_booking']);
     $this->load->view('v_main',$data);
     }
     function kwitansi(){
     $data['page'] = 'v_kwitansi';
     $id_pembayaran = $this->input->get('id_pembayaran');
     $data['inv'] = $this->M_pembayaran->get_kwitansi($id_pembayaran);
-      $data['terbilang'] = $this->terbilang(str_ireplace(",","",$data['inv']['jumlah_bayar']))." rupiah";
+    $data['harga_unit'] =   $this->M_pembayaran->get_harga_unit($data['inv']['id_booking']);
+    $data['terbilang'] = $this->terbilang(str_ireplace(",","",$data['inv']['jumlah_bayar']))." rupiah";
 
     $this->load->view('v_main',$data);
     }

@@ -30,10 +30,9 @@ $this->db->join('pembayaran','id_booking',"left");
 
     public function get_detail($id = NULL){
 
-
         $this->db->where('id_booking', $id);
         $this->db->limit(1);
-    
+
         $this->db->select('id_booking pk,nama_penyewa, no_telepon,alamat_jemput, tujuan,
 DATE_FORMAT(tanggal_dari, "%d/%m/%Y") tanggal_dari,
 DATE_FORMAT(tanggal_sampai, "%d/%m/%Y") tanggal_sampai,
@@ -48,11 +47,23 @@ $this->db->join('pembayaran','id_booking',"left");
 
         return $query->result_array()[0];
     }
+    function get_detail_unit($id_booking){
+      $this->db->select('unit, format(harga,0) harga')->where('id_booking', $id_booking);
+      return $this->db->get('booking_harga_unit')->result_array();
+    }
 
+    public function insert($data,$data_perunit){
 
-    public function insert($data){
-        $query = $this->db->insert('booking',$data);
-        return $query;
+       $this->db->trans_start();
+      $query = $this->db->insert('booking',$data);
+      $query2 = $this->db->insert_batch('booking_harga_unit',$data_perunit);
+       $this->db->trans_complete();
+
+      if ($this->db->trans_status() === FALSE)
+{
+      // die;  // generate an error... or use the log_message() function to log your error
+}
+         return $query;
     }
 
     public function update_by_id($data, $id){

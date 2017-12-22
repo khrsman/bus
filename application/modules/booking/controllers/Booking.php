@@ -25,7 +25,10 @@ class Booking extends CI_Controller {
     function detail(){
         $id = $this->input->get('id');
         $data = $this->M_booking->get_detail($id);
-          echo json_encode($data);
+        $data_unit = $this->M_booking->get_detail_unit($id);
+        $data['unit'] = $data_unit;
+
+           echo json_encode($data);
     }
 
     function index(){
@@ -49,13 +52,25 @@ class Booking extends CI_Controller {
           $unit .= $value.",";
         }
         $data['id_unit'] = rtrim($unit,',');
+        $data_harga = $data['harga_perunit'];
+        $id_booking = $data['id_booking'];
 
+      $data_perunit = array();
+      $i =0;
+      #data untuk tabel detail harga perunit
+        foreach ($data_harga as $key => $value) {
+          $data_perunit[$i]['unit'] = $key;
+          $data_perunit[$i]['harga'] = $value;
+          $data_perunit[$i]['id_booking'] = $id_booking;
+          $i++;
+        }
+        unset($data['harga_perunit']);
 
-        $insert = $this->M_booking->insert($data);
-        if (!$insert) {
-            $msg = $this->db->_error_message();
-            $num = $this->db->_error_number();
-          }
+        $insert = $this->M_booking->insert($data,$data_perunit);
+        // if (!$insert) {
+        //     $msg = $this->db->_error_message();
+        //     $num = $this->db->_error_number();
+          // }
     }
 
     function get_unit_booking(){
