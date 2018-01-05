@@ -57,7 +57,7 @@
                                   </div>
                             </div> -->
                             <div class="form-group">
-                                    <label class="col-sm-4 control-label">Status pembayaran</label>
+                                    <label class="col-sm-4 control-label input_validation">Status pembayaran</label>
                                     <div class="col-sm-8">
                                       <label class="radio-inline">
                                             <input type="radio" name="status" value="LUNAS"> LUNAS
@@ -77,14 +77,14 @@
                                   <label class="col-sm-4 control-label">Jumlah pembayaran</label>
                                   <div class="col-sm-8">
                                       <input type = "number" value="0" name="jumlah" id="jumlah" class="form-control hitung_sisa"
-                                        onkeydown='return (event.which >= 48 && event.which <= 57) || event.which == 8 || event.which == 46 || event.which == 37 || event.which == 39' >
+                                      onkeydown="return (event.which >= 48 && event.which <= 57) || (event.which >= 96 && event.which <= 105) || event.which == 8 || event.which == 46 || event.which == 37 || event.which == 39">
                                   </div>
                             </div>
                             <div class="form-group">
                                     <label class="col-sm-4 control-label">Sisa pembayaran</label>
                                     <div class="col-sm-8">
                                         <input readonly value="<?php echo $sisa_bayar ?>" name="sisa" id="sisa" class="form-control"
-                                          onkeydown='return (event.which >= 48 && event.which <= 57) || event.which == 8 || event.which == 46 || event.which == 37 || event.which == 39'
+                                        onkeydown="return (event.which >= 48 && event.which <= 57) || (event.which >= 96 && event.which <= 105) || event.which == 8 || event.which == 46 || event.which == 37 || event.which == 39"
                                            >
                                     </div>
                               </div>

@@ -24,7 +24,7 @@
   <![endif]-->
 
   <!-- Google Font -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic"> -->
   <!-- <script src="<?php echo base_url() ?>/AdminLTE/bower_components/jquery/dist/jquery.min.js"></script> -->
   	<script src="<?php echo base_url() ?>js/jquery-2.1.4.min.js"></script>
     <!-- <script src="<?php echo base_url() ?>js/bootstrap.min.js"></script> -->

@@ -15,8 +15,9 @@ class M_pemakaian_sparepart extends CI_Model
       if($id){
         $this->db->where('id_pemakaian_sparepart', $id);
         $this->db->limit(1);
+      } else{
+          $this->db->select('id_pemakaian_sparepart,(select nama from sparepart where id_sparepart = pemakaian_sparepart.id_sparepart) nama,jumlah, (select seri from unit where id_unit = pemakaian_sparepart.id_unit) Kendaraan, DATE_FORMAT(tanggal, "%d/%m/%Y") tanggal');
       }
-        $this->db->select('id_pemakaian_sparepart,(select nama from sparepart where id_sparepart = pemakaian_sparepart.id_sparepart) nama,jumlah, (select seri from unit where id_unit = pemakaian_sparepart.id_unit) Kendaraan,tanggal');
         $query = $this->db->get('pemakaian_sparepart');
         return $query->result_array();
     }

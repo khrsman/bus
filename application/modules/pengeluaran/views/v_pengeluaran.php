@@ -42,13 +42,13 @@
 													<div class="form-group">
                                   <label class="col-sm-4 control-label">Keterangan</label>
                                   <div class="col-sm-8">
-                                      <input type = "text" name="keterangan" id="keterangan" class="form-control"  >
+                                      <input type = "text" name="keterangan" id="keterangan" class="form-control input_validation"  >
                                   </div>
                             </div>
 													<div class="form-group">
                                   <label class="col-sm-4 control-label">Jumlah</label>
                                   <div class="col-sm-8">
-                                      <input type = "text" name="jumlah" id="jumlah" class="form-control"   onkeydown='return (event.which >= 48 && event.which <= 57) || event.which == 8 || event.which == 46 || event.which == 37 || event.which == 39'
+                                      <input type = "text" name="jumlah" id="jumlah" class="form-control input_validation"  value="0" onkeydown="return (event.which >= 48 && event.which <= 57) || (event.which >= 96 && event.which <= 105) || event.which == 8 || event.which == 46 || event.which == 37 || event.which == 39"
                                       >
                                   </div>
                             </div>
@@ -104,5 +104,63 @@
            calendarWeeks: true,
            autoclose: true
       });
-	 });
+     });
+
+     var page = window.location.href;
+     var url_simpan = page+'/add';
+
+     $('#simpan_tambah').click(function(){
+        var valid = true;
+        $('.input_validation').each(function() {
+          if(!this.value){
+            valid = false;
+            var lbl = $(this).parent().prev("label").text();
+            $.notify({
+              title: "Error :",
+              message: lbl+" harus diisi!",
+              icon: 'fa fa-check'
+            },{
+              type: "danger"
+            });
+          $(this).addClass("focus");
+       }
+      });
+    
+      if(valid){
+        var data = $('form').serialize();
+        simpan_tambah(data,url_simpan);
+      }
+    
+      });
+
+     function simpan_tambah(data, url_simpan){
+  $.ajax({
+      type: "POST",
+      url: url_simpan,
+      data: {data: data},
+      success: function (resdata) {
+        $.notify({
+          title: "Berhasil : ",
+          message: "Data telah ditambahkan",
+          icon: 'fa fa-check'
+        },{
+          type: "success"
+        });
+          $(".xform")[0].reset();
+        //   loadDataTable(url_get);
+        //   $('#form_tambah').toggle( "slide", 'slow', function(){$('#tabel').toggle( "slide");});
+            // location.reload();
+      },
+      error: function (jqXHR, exception) {
+        // pesan error menggunakan notify.js
+        $.notify({
+          title: "Error :",
+          message: "Telah terjadi kesalahan!",
+          icon: 'fa fa-check'
+        },{
+          type: "danger"
+        });
+      }
+  });
+}
 </script>

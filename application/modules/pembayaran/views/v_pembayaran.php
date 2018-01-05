@@ -2,7 +2,7 @@
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-            <h1>pembayaran</h1>
+            <h1>Kwitansi</h1>
             <ol class="breadcrumb">
                 <li><a href="#">Home</a></li>
                 <li class="active">pembayaran</li>
@@ -18,8 +18,8 @@
                                 <thead>
                                     <tr>
                                        <th width="120px">Cetak</th>
-																			 <th>Kode booking</th>
-																			 <th>Dari</th>
+																			 <th>Nama (Tujuan)</th>
+																			 <th>Terima Dari</th>
 																			 <th>Jumlah</th>
 																			 <th>Tanggal</th>
 																			 <th>Status</th>

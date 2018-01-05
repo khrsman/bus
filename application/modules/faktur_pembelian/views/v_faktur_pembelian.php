@@ -2,10 +2,10 @@
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-            <h1>faktur_pembelian</h1>
+            <h1>faktur pembelian</h1>
             <ol class="breadcrumb">
                 <li><a href="#">Home</a></li>
-                <li class="active">faktur_pembelian</li>
+                <li class="active">faktur pembelian</li>
             </ol>
         </section>
         <section class="content">
@@ -63,6 +63,7 @@
                             <button class="btn btn-primary" id="tambah"><span class="fa fa-plus"></span> Tambah</button>
                         </div>
                         <div class="box-body">
+                          *klik detail untuk melihat detail barangnya
                             <table id="dt" class="table table-hover table-bordered display nowrap" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
@@ -155,7 +156,7 @@
            simpan_custom(data,url_simpan,url_get);
          }
        });
-       
+
        function simpan_custom(data, url_simpan, url_get){
          $.ajax({
              type: "POST",

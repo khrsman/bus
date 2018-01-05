@@ -1,9 +1,9 @@
         <section class="content">
             <div class="row" id="tabel">
                 <div class="col-md-12">
-                    <div class="box box-primary">
+                    <div class="box box-primary box-solid">
                         <div class="box-header">
-                        <h3> Laporan  pengeluaran</h3>
+                         Laporan  pengeluaran
                         </div>
                         <div class="box-body">
                             <table id="dt" class="table  table-bordered" width="100%" cellspacing="0">
@@ -27,7 +27,7 @@
                                         <td><?php echo $value['tanggal'] ?></td>
                                         <td><?php echo $value['kategori'] ?></td>
                                         <td><?php echo $value['keterangan'] ?></td>
-                                        <td><?php echo $value['jumlah'] ?> </td>
+                                        <td>Rp. <?php echo  number_format($value['jumlah']) ?> </td>
                                     </tr>
                                     <?php
                                         }
@@ -36,7 +36,7 @@
                                 <tfooter>
                                 <tr>
                                     <td colspan="3"> Total </td>
-                                    <td><?php echo number_format($total) ?></td>
+                                    <td>Rp. <?php echo number_format($total) ?></td>
                                 </tr>
                             <tfooter>
                             </table>

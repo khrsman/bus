@@ -15,8 +15,14 @@
 <!-- FastClick -->
 <script src="<?php echo base_url() ?>/AdminLTE/bower_components/fastclick/lib/fastclick.js"></script>
 
-<script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
-<link href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css" rel="stylesheet">
+<!-- <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+<link href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css" rel="stylesheet"> -->
+
+
+
+   <script src="<?php echo base_url() ?>js/jquery.dataTables.min.js"></script>
+<link href="<?php echo base_url() ?>css/jquery.dataTables.min.css" rel="stylesheet">
+
 
 <!-- AdminLTE App -->
 <script src="<?php echo base_url() ?>/AdminLTE/dist/js/adminlte.min.js"></script>

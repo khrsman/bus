@@ -46,7 +46,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="row" id="tabel">
                 <div class="col-md-8">
                     <div class="box box-primary">

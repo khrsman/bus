@@ -1,9 +1,9 @@
             <div class="row" id="tabel">
                 <div class="col-md-12">
-                    <div class="box box-primary">
+                    <div class="box box-primary box-solid">
 
                         <div class="box-header">
-                          <h3>  Laporan Pemakaian Sparepart </h3>
+                         Laporan Pemakaian Sparepart
                         </div>
                         <div class="box-body">
                             <table id="dt" class="table table-hover table-bordered display nowrap" width="100%" cellspacing="0">

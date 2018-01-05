@@ -15,7 +15,8 @@ class M_pembayaran extends CI_Model
         $this->db->where('id_pembayaran', $id);
         $this->db->limit(1);
       }
-        $this->db->select('id_pembayaran pk,id_booking,dari,jumlah,tanggal,status');
+        $this->db->select('id_pembayaran pk,(select concat(nama_penyewa," (",tujuan,")") from booking where id_booking = pembayaran.id_booking) nama,dari,format(jumlah,0),tanggal,status');
+        $this->db->order_by('id_pembayaran','desc');
         $query = $this->db->get('pembayaran');
         return $query->result_array();
     }
@@ -48,9 +49,13 @@ class M_pembayaran extends CI_Model
     }
 
     public function get_detail_booking($kode_booking){
+        $this->db->select("*,
+        (select max(tanggal) from detail_booking det where det.id_booking = bk.id_booking) tanggal_sampai,
+        (select min(tanggal) from detail_booking det where det.id_booking = bk.id_booking) tanggal_dari,
+        (select count(id_unit) from detail_booking_unit det where det.id_booking = bk.id_booking) jumlah_bus");
         $this->db->where('id_booking', $kode_booking);
         $this->db->limit(1);
-        $query = $this->db->get('booking');
+        $query = $this->db->get('booking bk');
         return $query->result_array();
     }
     public function get_sisa_bayar($kode_booking){
@@ -61,11 +66,15 @@ class M_pembayaran extends CI_Model
     }
     public function get_kwitansi($id_pembayaran){
         $this->db->select('id_pembayaran, id_booking, byr.dari, byr.untuk, bk.tujuan, byr.tanggal tanggal_bayar,
-                DATE_FORMAT(bk.tanggal_dari, "%d/%m/%Y") tanggal_dari,
-                DATE_FORMAT(bk.tanggal_sampai, "%d/%m/%Y") tanggal_sampai,
-                DATE_FORMAT(bk.jam_dari, "%H:%i") jam_dari,  DATE_FORMAT(bk.jam_sampai, "%H:%i") jam_sampai, bk.jumlah_bus,FORMAT(bk.harga,0) harga,FORMAT(bk.total,0) total,FORMAT(byr.sisa,0) sisa_bayar, FORMAT(byr.jumlah,0) jumlah_bayar');
+                DATE_FORMAT((select min(tanggal) from detail_booking det where det.id_booking = bk.id_booking), "%d/%m/%Y") tanggal_dari,
+                DATE_FORMAT((select max(tanggal) from detail_booking det where det.id_booking = bk.id_booking), "%d/%m/%Y") tanggal_sampai,
+                (select count(id_unit) from detail_booking_unit det where det.id_booking = bk.id_booking) jumlah_bus,                
+                FORMAT(bk.total,0) total,
+                FORMAT(byr.sisa,0) sisa_bayar, 
+                FORMAT(byr.jumlah,0) jumlah_bayar');
         $this->db->where('id_pembayaran',$id_pembayaran);
         $this->db->join('booking bk','id_booking');
+       
         $query = $this->db->get('pembayaran byr');
       //   echo $this->db->last_query();
       //  die;
@@ -74,15 +83,15 @@ class M_pembayaran extends CI_Model
 
     function get_harga_unit($id_booking){
       $this->db->select('count(*) jumlah, format(harga,0) harga')->where('id_booking', $id_booking)->group_by('harga');
-
-      return $this->db->get('booking_harga_unit')->result_array();
+      return $this->db->get('detail_booking_unit')->result_array();
     }
 
     public function get_invoice($id_booking){
         $this->db->select('id_booking, bk.tujuan,
-                DATE_FORMAT(bk.tanggal_dari, "%d/%m/%Y") tanggal_dari,
-                DATE_FORMAT(bk.tanggal_sampai, "%d/%m/%Y") tanggal_sampai,
-                DATE_FORMAT(bk.jam_dari, "%H:%i") jam_dari,  DATE_FORMAT(bk.jam_sampai, "%H:%i") jam_sampai, bk.jumlah_bus,FORMAT(bk.harga,0) harga,FORMAT(bk.total,0) total');
+        DATE_FORMAT((select min(tanggal) from detail_booking det where det.id_booking = bk.id_booking), "%d/%m/%Y") tanggal_dari,
+        DATE_FORMAT((select max(tanggal) from detail_booking det where det.id_booking = bk.id_booking), "%d/%m/%Y") tanggal_sampai,
+        (select count(id_unit) from detail_booking_unit det where det.id_booking = bk.id_booking) jumlah_bus,
+       FORMAT(bk.total,0) total');
         $this->db->where('id_booking',$id_booking);
         $query = $this->db->get('booking bk');
         // echo $this->db->last_query();

@@ -7,19 +7,19 @@
                         <div class="box-body">
                             <div class="" style=" height: 60% !important;
     overflow: scroll;" >
-                            <table id="dt" class="table table-bordered table-hover table-condensed no-wrap " width="100%" cellspacing="0" style="white-space:nowrap; ">
+
+                            <table id="dt" class="table table-bordered table-hover table-condensed no-wrap " width="100%" cellspacing="0" style="white-space:nowrap; font-size: 12px;">
                             <?php
                             $month = $bulan;
                             $year = $tahun;
                             $number = cal_days_in_month(CAL_GREGORIAN, $month, $year); // 31
                             $unit = $this->db->get('unit')->result_array();
-                            $booking = $this->db->query("SELECT EXTRACT( DAY FROM tanggal_dari ) tanggal_dari, warna,
-                                                  			 EXTRACT( DAY FROM tanggal_sampai ) tanggal_sampai,
-                                                  			 tujuan, bk.id_marketing, nama_penyewa,id_unit, id_marketing,
-                                                  			 (select MAX(status) from pembayaran byr where byr.id_booking = bk.id_booking) status
-                                                         from booking bk
-                                                         left join marketing using(id_marketing)
-                                                         where EXTRACT(MONTH FROM tanggal_dari)  = $bulan and EXTRACT(YEAR FROM tanggal_dari)  = $tahun ")->result_array();
+                            $booking = $this->db->query("select id_booking, id_unit, warna, nama_penyewa, tujuan, id_marketing, 
+                            EXTRACT( DAY FROM tanggal ) tanggal,
+                            (select MAX(status) from pembayaran byr where byr.id_booking = bk.id_booking) status
+                             from booking bk join detail_booking using(id_booking)                           
+                            left join marketing using(id_marketing)
+                                                         where EXTRACT(MONTH FROM tanggal)  = $bulan and EXTRACT(YEAR FROM tanggal)  = $tahun ")->result_array();
                                                         //  echo $this->db->last_query();
                                                         //  die;
                             echo "  <thead><tr>";
@@ -28,6 +28,7 @@
                             }
                             echo "</tr></thead><tbody>";
                             foreach ($unit as $key => $value) {
+                              $id_unit = $value['id_unit'];
                               $no_seri_unit = $value['seri'];
                               echo "<tr>";
                               echo "<td >{$no_seri_unit}</td>";
@@ -35,7 +36,7 @@
                                 $tujuan = '';
                                 $penyewa = $bgcolor = $id_marketing = $marketing = '';
                                 foreach ($booking as $key => $value2) {
-                                  if ($value2['tanggal_dari'] == $i && strpos($value2['id_unit'], $no_seri_unit) !== false ){
+                                  if ($value2['tanggal'] == $i && strpos($value2['id_unit'], $id_unit) !== false ){
                                     $tujuan .= $value2['tujuan'];
                                     $penyewa .= $value2['nama_penyewa'];
                                     $id_marketing .= $value2['id_marketing'];
@@ -58,7 +59,7 @@
                           </tbody>
                             </table>
 
-                        </div>                      
+                        </div>
                         </div>
                     </div>
                 </div>

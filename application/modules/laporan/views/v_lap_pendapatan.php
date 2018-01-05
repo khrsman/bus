@@ -1,39 +1,48 @@
         <section class="content">
           <div class="row" id="tabel">
                                   <?php
+                                
                                   $total = 0;
-                                  foreach ($data as $key => $value) {
-                                    $data_pendapatan = $this->db->query("SELECT id_unit,tanggal_dari,tanggal_sampai,harga,
-                                      datediff(tanggal_sampai, tanggal_dari) hari, total from booking
-                                                where id_unit like '%".$value['seri']."%'")->result_array(); ?>
-                                          <div class="col-md-6">
-                                              <div class="box box-primary">
-                                                  <div class="box-header">
-                                                  Pendapatan bus <?php echo $value['seri'] ?>
+                                  foreach ($data as $key => $value) {                                                  
+                                    ?>
+                                          <div class="col-md-12"> 
+                                              <div class="box box-primary box-solid">
+                                                  <div class="box-header ">
+                                                  Pendapatan bus <?php echo $key ?>
                                                   </div>
                                                   <div class="box-body">
+
                                       <table id="dt" class="table table-hover table-bordered display nowrap" width="100%" cellspacing="0">
                                           <thead>
-                                              <tr>
-                                                  <th>Seri</th>
+                                              <tr>                                                  
                                                   <th>Tanggal</th>
-                                                  <th>Jumlah Hari</th>
-                                                  <th>Total</th>
+                                                  <th>Nama</th>
+                                                  <th>Alamat</th>
+                                                  <th>Tujuan</th>
+                                                  <th>Hari</th>
+                                                  <th>Harga</th>                                                
+                                                  <th>Kas Jalan</th>                                                
+                                                  <th>Sisa</th>                                                
                                               </tr>
                                           </thead>
                                           <tbody>
                                       <?php
-                                    $total = 0;
-                                      foreach ($data_pendapatan as $key => $value2) {
-                                          $jumlah = $value2['total'];
-                                          $jumlah =  str_replace(",", "", $jumlah);
-                                          $total = $total+$jumlah
+                                    $total = $total_harga = $total_kas_jalan =  0;
+                                    foreach ($value as $key2 => $value2) {   
+                                        $selisih =  $value2['harga'] - $value2['kas_jalan'];
+                                        $total = $total + $selisih; 
+                                        $total_harga = $total_harga + $value2['harga'];
+                                        $total_kas_jalan = $total_kas_jalan +$value2['kas_jalan'];                   
                                       ?>
-                                    <tr>
-                                        <td><?php echo $value['seri'] ?></td>
-                                        <td><?php echo $value2['tanggal_dari'] ?></td>
-                                        <td><?php echo $value2['hari'] ?></td>
-                                        <td><?php echo number_format($value2['total']) ?></td>
+                                    <tr>                                       
+                                        <td><?php echo $value2['tanggal'] ?></td>
+                                        <td><?php echo $value2['nama_penyewa'] ?></td>
+                                        <td><?php echo $value2['alamat_jemput'] ?></td>
+                                        <td><?php echo $value2['tujuan'] ?></td>                                       
+                                        <td><?php echo $value2['jumlah_hari'] ?></td>
+                                        <td>Rp. <?php echo number_format($value2['harga']) ?></td>
+                                        <td>Rp. <?php echo number_format($value2['kas_jalan']) ?></td>
+                                        <td>Rp. <?php echo number_format($selisih) ?></td>
                                     </tr>
                                     <?php
 
@@ -41,8 +50,10 @@
                                 </tbody>
                                 <tfooter>
                                 <tr>
-                                    <td colspan="3"> Total </td>
-                                    <td><?php echo number_format($total) ?></td>
+                                    <td colspan="5"> Total </td>
+                                    <td>Rp. <?php echo number_format($total_harga) ?></td>
+                                    <td>Rp. <?php echo number_format($total_kas_jalan) ?></td>
+                                    <td>Rp. <?php echo number_format($total) ?></td>
                                 </tr>
                             <tfooter>
                             </table>

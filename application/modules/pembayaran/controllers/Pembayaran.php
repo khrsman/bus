@@ -61,7 +61,7 @@ class Pembayaran extends CI_Controller {
     }
 
     function by_id_booking(){
-    $data['page'] = 'v_pembayaran_by_id_booking';
+    $data['page'] = 'v_pembayaran_by_id_booking'; 
     $data['kode_bayar'] = $this->M_pembayaran->get_kode_bayar();
     $kode_booking = $this->input->get('id_booking');
     $data_booking = $this->M_pembayaran->get_detail_booking($kode_booking);

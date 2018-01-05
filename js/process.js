@@ -21,7 +21,7 @@ $().ready(function(){
 
   $(".input_number").keypress(function(event){
     // alert(event.which);
-    return (event.which >= 48 && event.which <= 57) || event.which == 8 || event.which == 0 ;
+    return (event.which >= 48 && event.which <= 57) || (event.which >= 96 && event.which <= 105) || event.which == 8 || event.which == 0 ;
   })
 
 
@@ -48,7 +48,10 @@ $().ready(function(){
   // Aksi pada saat tombol hapus di klik
   $('body').on('click', '.hapus', function() {
     var id = $(this).val();
-    hapus(id,url_hapus,url_get);
+    if (confirm("Yakin untuk menghapus data?")) {
+     
+      hapus(id,url_hapus,url_get);
+   }
   });
 
   // Aksi pada saat tombol simpan di klik

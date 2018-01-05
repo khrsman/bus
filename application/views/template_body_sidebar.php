@@ -43,9 +43,9 @@
           </span>
         </a>
         <ul class="treeview-menu" style="display: block;">
-          <li><a href="<?php echo site_url() ?>/booking"><i class="fa fa-circle-o"></i> Booking</a></li>
+          <li><a href="<?php echo site_url() ?>/booking"><i class="fa fa-circle-o"></i> Booking dan pembayaran</a></li>
 
-          <li><a href="<?php echo site_url() ?>/pembayaran"><i class="fa fa-circle-o"></i> Pembayaran</a></li>
+          <li><a href="<?php echo site_url() ?>/pembayaran"><i class="fa fa-circle-o"></i> Kwitansi</a></li>
           <li><a href="<?php echo site_url() ?>/spj"><i class="fa fa-circle-o"></i> SPJ</a></li>
           <li><a href="<?php echo site_url() ?>/faktur_pembelian"><i class="fa fa-circle-o"></i> Pembelian sparepart</a></li>
             <li><a href="<?php echo site_url() ?>/pengeluaran"><i class="fa fa-circle-o"></i> Pengeluaran</a></li>

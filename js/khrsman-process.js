@@ -116,6 +116,7 @@ function edit_page(id,url_edit){
 
       var arr = JSON.parse(resdata);
       $.each(arr[0], function(key, value){
+       console.log(id_val+' - '+value);
         var id_val = key;
         $("#"+id_val).val(value);
       });

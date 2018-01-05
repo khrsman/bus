@@ -32,9 +32,9 @@
                                   <label class="col-sm-4 control-label">Bus</label>
                                   <div class="col-sm-8" id='cb_unit_ajax'>
                                     <?php
-                                    // $this->cb_options->unit();
+                                     $this->cb_options->unit();
                                     ?>
-                                  -
+                                  
                                   </div>
                             </div>
 													<div class="form-group">
@@ -164,12 +164,12 @@
                                 <thead>
                                     <tr>
                                       <th> Cetak </th>
-                                        <th>No booking</th>
+                                        <th>Nama (tujuan)</th>
+                                        <th>Tanggal</th>
 																			 <th>Bus</th>
 																			 <th>Sopir</th>
 																			 <th>Crew</th>
-																			 <th>Km awal</th>
-																			 <th>Km akhir</th>
+																			 <th>Total</th>																			 
 																			 <th id="aksi">Aksi</th>
                                     </tr>
                                 </thead>
@@ -194,12 +194,16 @@ $().ready(function(){
   var url_hapus =  page+'/delete';
   var url_get = page+'/get';
 
+  // $("#id_sopir").val(5);
+
+  // $("#id_sumber").val('2');
+
   $("#id_booking").change(function(){
     // alert('test');
      id = $(this).val();
 
 
-$.post( "<?php echo site_url('booking/get_unit_booking ') ?>", { id: id })
+$.get( "<?php echo site_url('booking/get_unit_booking') ?>", { id: id })
   .done(function( data ) {
     $("#cb_unit_ajax").html(data)
     // alert( "Data Loaded: " + data );
@@ -208,7 +212,7 @@ $.post( "<?php echo site_url('booking/get_unit_booking ') ?>", { id: id })
   });
 
   $("#solar_per_liter").keyup(function(){
-    harga = $(this).val();
+    harga = $(this).val() || 0 ;
     liter = $("#solar_dibutuhkan").val() || 0 ;
     total = parseInt(liter)*parseInt(harga);
     $("#biaya_solar").val(total);

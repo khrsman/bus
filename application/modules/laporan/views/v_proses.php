@@ -60,7 +60,7 @@
                             <h3 class="box-title add_page">Laporan Pendapatan</h3>
                         </div>
                         <div class="box-body">
-                            <form role="form" id="pendapatan" class="form-horizontal xform" action="laporan/pendapatan" method="post">
+                            <form role="form" id="pendapatan" class="form-horizontal form_pendapatan" action="laporan/pendapatan" method="post">
                                 <div class="form-group">
                                         <label class="col-sm-4 control-label">Tanggal</label>
                                         <div class="col-sm-8">
@@ -111,7 +111,7 @@
                             <h3 class="box-title add_page">Laporan Pengeluaran</h3>
                         </div>
                         <div class="box-body">
-                            <form role="form" class="form-horizontal xform" action="laporan/pengeluaran" method="post">
+                            <form role="form" class="form-horizontal form_pengeluaran" action="laporan/pengeluaran" method="post">
                                 <div class="form-group">
                                         <label class="col-sm-4 control-label">Tanggal</label>
                                         <div class="col-sm-8">
@@ -162,7 +162,7 @@
                             <h3 class="box-title add_page">Rekap pengeluaran</h3>
                         </div>
                         <div class="box-body">
-                            <form role="form" class="form-horizontal xform" action="laporan/rekap_pengeluaran" method="post">
+                            <form role="form" class="form-horizontal form_rekap_pengeluaran" action="laporan/rekap_pengeluaran" method="post">
                                 <div class="form-group">
                                         <label class="col-sm-4 control-label">Tanggal</label>
                                         <div class="col-sm-8">
@@ -197,7 +197,7 @@
                             <h3 class="box-title add_page">Rekap pendapatan</h3>
                         </div>
                         <div class="box-body">
-                            <form role="form" class="form-horizontal xform" action="laporan/rekap_pendapatan" method="post">
+                            <form role="form" class="form-horizontal form_rekap_pendapatan" action="laporan/rekap_pendapatan" method="post">
                                 <div class="form-group">
                                         <label class="col-sm-4 control-label">Tanggal</label>
                                         <div class="col-sm-8">
@@ -232,7 +232,7 @@
                             <h3 class="box-title add_page">Rekap Total</h3>
                         </div>
                         <div class="box-body">
-                            <form role="form" class="form-horizontal xform" action="laporan/rekap_total" method="post">
+                            <form role="form" class="form-horizontal form_rekap_total" action="laporan/rekap_total" method="post">
                                 <div class="form-group">
                                         <label class="col-sm-4 control-label">Tanggal</label>
                                         <div class="col-sm-8">
@@ -267,7 +267,7 @@
                             <h3 class="box-title add_page">Pemakaian Sparepart</h3>
                         </div>
                         <div class="box-body">
-                            <form role="form" id="pemakaian_sparepart" class="form-horizontal xform" action="laporan/pemakaian_sparepart" method="post">
+                            <form role="form" id="pemakaian_sparepart" class="form-horizontal form_pemakaian_sparepart" action="laporan/pemakaian_sparepart" method="post">
                                   <!-- <div class="form-group">
                                       <label class="col-sm-4 control-label">Filter</label>
                                         <div class="col-sm-8">
@@ -335,7 +335,7 @@
                                   </div>
                         </div>
                         <div class="box-footer" style="float:right">
-                            <button type="input" class="btn btn-primary edit_page"><span class="fa fa-check"></span> Lihat Laporan</button>
+                            <button type="input" class="btn btn-primary"><span class="fa fa-check"></span> Lihat Laporan</button>
                         </div>
                         </form>
                     </div>
@@ -357,38 +357,122 @@
 <script src="<?php echo base_url() ?>js/jquery.multiselect.js"></script>
 <script>
 	 $(function(){
-          $( "form" ).on( "submit", function( event ) {
-            event.preventDefault();
-            action = $(this).attr('action');
 
-data = $(this).find(".input_validation").val();
-              if(!data){
-                valid = false;
-                $.notify({
-                  title: "Error :",
-                  message: "tidak boleh kosong!",
-                  icon: 'fa fa-check'
-                },{
-                  type: "danger"
-                });
-              $(this).addClass("focus");
-           } else{
-             var request = $.ajax({
-                 url: "<?php echo site_url(); ?>/"+action,
-                 data: {data:  $( this ).serialize()},
-                 type: "POST",
-                //  dataType: "html"
-             });
-             request.done(function(data) {
-               $(".input_laporan").slideUp();
-                 $("#page_content").html(data);
-                 $("#page_content").show();
-             });
-           }
+     $( ".form_pendapatan" ).on( "submit", function( event ) {
+      event.preventDefault();
+      thiss = $(this);
+      if(validate(thiss)){
+        action = $(this).attr('action');
+        get_laporan(action, thiss);
+      };
+     });
+     $( ".form_pengeluaran" ).on( "submit", function( event ) {
+       event.preventDefault();
+       thiss = $(this);
+       if(validate(thiss)){
+         action = $(this).attr('action');
+         get_laporan(action, thiss);
+       };
+     });
+     $( ".form_rekap_pendapatan" ).on( "submit", function( event ) {
+       event.preventDefault();
+       thiss = $(this);
+       if(validate(thiss)){
+         action = $(this).attr('action');
+         get_laporan(action, thiss);
+       };
+     });
+     $( ".form_rekap_pengeluaran" ).on( "submit", function( event ) {
+       event.preventDefault();
+       thiss = $(this);
+       if(validate(thiss)){
+         action = $(this).attr('action');
+         get_laporan(action, thiss);
+       };
+     });
+     $( ".form_rekap_total" ).on( "submit", function( event ) {
+       event.preventDefault();
+       thiss = $(this);
+       if(validate(thiss)){
+         action = $(this).attr('action');
+         get_laporan(action, thiss);
+       };
+     });
+     $( ".form_pemakaian_sparepart" ).on( "submit", function( event ) {
+       event.preventDefault();
+       thiss = $(this);
+       if(validate(thiss)){
+         action = $(this).attr('action');
+         get_laporan(action, thiss);
+       };
+     });
 
+//           $( "form" ).on( "submit", function( event ) {
+//             event.preventDefault();
+//             action = $(this).attr('action');
+//
+//             // console.log(this);
+//
+// data = $(this).find(".input_validation").val();
+//               if(!data){
+//                 valid = false;
+//                 $.notify({
+//                   title: "Error :",
+//                   message: "tidak boleh kosong!",
+//                   icon: 'fa fa-check'
+//                 },{
+//                   type: "danger"
+//                 });
+//               $(this).addClass("focus");
+//            } else{
+//              var request = $.ajax({
+//                  url: "<?php echo site_url(); ?>/"+action,
+//                  data: {data:  $( this ).serialize()},
+//                  type: "POST",
+//                 //  dataType: "html"
+//              });
+//              request.done(function(data) {
+//                $(".input_laporan").slideUp();
+//                  $("#page_content").html(data);
+//                  $("#page_content").show();
+//              });
+//            }
+//
+//
+//           });
 
-          });
+//
+function validate(thiss){
+  var valid = true;
+  thiss.find('.input_validation').each(function() {
+    if(!this.value){
+      valid = false;
+      $.notify({
+        title: "Error :",
+        message: "Data inputan tidak boleh kosong!",
+        icon: 'fa fa-remove'
+      },{
+        type: "danger"
+      });
+    $(this).addClass("focus");
+ }
+});
+return valid;
+}
 
+function get_laporan(action, thiss){
+  var request = $.ajax({
+                   url: "<?php echo site_url(); ?>/"+action,
+                   data: {data:  thiss.serialize()},
+                   type: "POST",
+                  //  dataType: "html"
+               });
+               request.done(function(data) {
+                 $(".input_laporan").slideUp();
+                  $("#page_content").html(data);
+                  $("#page_content").show();
+               });
+}
 
      $('.jenis_laporan').click(function(){
       //  alert(this.id);

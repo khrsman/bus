@@ -10,7 +10,7 @@
         </section>
         <section class="content">
             <div class="row" style="display:none" id="form_tambah">
-                <div class="col-md-12">
+                <div class="col-md-6">
                     <div class="box box-primary">
                         <div class="box-header with-border">
                             <h3 class="box-title add_page">Tambah</h3>
@@ -22,7 +22,10 @@
 																<div class="form-group">
                                   <label class="col-sm-4 control-label">Nama</label>
                                   <div class="col-sm-8">
-                                      <input type = "text" name="id_sparepart" id="id_sparepart" class="form-control"  >
+                                    <?php
+                                    $this->load->library('Cb_options');
+                                    $this->cb_options->sparepart();
+                                     ?>
                                   </div>
                             </div>
 													<div class="form-group">
@@ -34,13 +37,21 @@
 													<div class="form-group">
                                   <label class="col-sm-4 control-label">Id unit</label>
                                   <div class="col-sm-8">
-                                      <input type = "text" name="id_unit" id="id_unit" class="form-control"  >
+                                    <?php
+                                    $this->cb_options->unit();
+                                     ?>
                                   </div>
                             </div>
 													<div class="form-group">
                                   <label class="col-sm-4 control-label">Tanggal</label>
                                   <div class="col-sm-8">
-                                      <input type = "text" name="tanggal" id="tanggal" class="form-control"  >
+                                    <div class="input-group">
+                                    <div class="input-group-addon">
+                                      <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <input type = "text" name="tanggal" id="tanggal" class="form-control datepicker"  >
+                                  </div>
+
                                   </div>
                             </div>
 
@@ -82,3 +93,17 @@
 </div>
 </section>
 </div>
+
+
+<script type="text/javascript" src="<?php echo base_url() ?>js/datepicker/js/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="<?php echo base_url() ?>js/datepicker/locales/bootstrap-datepicker.id.min.js"></script>
+<link rel="stylesheet" href="<?php echo base_url() ?>js/datepicker/css/bootstrap-datepicker.css">
+<script type="text/javascript">
+$('.datepicker').datepicker({
+      format: 'yyyy-mm-dd',
+      todayBtn: "linked",
+      language: "id",
+     calendarWeeks: true,
+      autoclose: true
+ });
+</script>

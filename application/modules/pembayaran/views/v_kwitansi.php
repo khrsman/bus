@@ -199,7 +199,7 @@
                 </td>
 
                 <td>
-                  <?php echo $inv['tanggal_dari']." jam ".$inv['jam_dari']." s.d ".$inv['tanggal_dari']." jam ".$inv['jam_dari']  ?>
+                  <?php echo $inv['tanggal_dari']." s.d ".$inv['tanggal_dari'] ?>
                 </td>
             </tr>
             <tr class="item">

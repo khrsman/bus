@@ -55,7 +55,7 @@ class Laporan extends CI_Controller {
     }
   }
     $unit = rtrim($unit,',');
-    $data['data'] = $this->M_laporan->get_laporan_pendapatan($unit);
+    $data['data'] = $this->M_laporan->get_laporan_pendapatan($unit,$tanggal_dari,$tanggal_sampai);
 
 // die($this->db->last_query());
 

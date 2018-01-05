@@ -66,7 +66,7 @@ class Spj extends CI_Controller {
     // fungsi menampilkan halaman edit
     function get_for_edit(){
       $id = $this->input->get('id');
-      $data = $this->M_spj->get($id);
+      $data = $this->M_spj->get_data_edit($id);
       echo json_encode($data);
     }
 

@@ -1,23 +1,29 @@
         <section class="content">
           <div class="row" id="tabel">
               <div class="col-md-12">
-                  <div class="box box-primary">
+                  <div class="box box-primary box-solid">
                       <div class="box-header">
-                        <h3>  Laporan Rekap Pendapatan </h3>
+                         Laporan Rekap Pendapatan 
                       </div>
                       <div class="box-body">
                           <table id="dt" class="table table-hover table-bordered display nowrap" width="100%" cellspacing="0">
                               <thead>
                                   <tr>
                                      <th>Unit</th>
-                                     <th>Jumlah</th>
+                                     <th>Jumlah Hari</th>
+                                     <th>Total</th>
+                                     <th>Kas Jalan</th>
+                                     <th>Selisih</th>
                                   </tr>
                               </thead>
                               <tbody>
                                 <?php foreach ($data_rekap as $key => $value) { ?>
                                   <tr>
                                       <td><?php echo $value['seri'] ?></td>
-                                      <td>Rp. <?php echo $value['jumlah'] ?></td>
+                                      <td><?php echo $value['jumlah_hari'] ?> Hari</td> 
+                                      <td>Rp. <?php echo  number_format($value['total']) ?></td> 
+                                      <td>Rp. <?php echo  number_format($value['kas_jalan']) ?></td> 
+                                      <td>Rp. <?php echo  number_format($value['total'] - $value['kas_jalan']) ?></td> 
                                   </tr>
                                   <?php   } ?>
                               </tbody>

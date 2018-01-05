@@ -90,6 +90,7 @@
 </head>
 
   <div class="content-wrapper">
+      <button class="btn btn-primary btn-lg" onclick="window.print()" style="margin:10px"><i class="fa fa-print"></i> Cetak</button>
     <div class="invoice-box">
         <table cellpadding="0" cellspacing="0">
             <tr class="top">
@@ -172,7 +173,7 @@
                     Berangkat
                 </td>
                 <td>
-                  <?php echo $spj['tanggal_dari'] ?> Jam <?php echo $spj['jam_dari'] ?> WIB
+                  <?php echo $spj['tanggal_dari'] ?> 
                 </td>
             </tr>
             <tr class="item">
@@ -180,7 +181,7 @@
                     Tiba
                 </td>
                 <td>
-                    <?php echo $spj['tanggal_sampai'] ?> Jam <?php echo $spj['jam_sampai'] ?> WIB
+                    <?php echo $spj['tanggal_sampai'] ?>
                 </td>
             </tr>
 

@@ -1,9 +1,9 @@
         <section class="content">
           <div class="row" id="tabel">
               <div class="col-md-12">
-                  <div class="box box-primary">
+                  <div class="box box-primary box-solid">
                     <div class="box-header">
-                      <h3>  Laporan Rekap Pengeluaran </h3>
+                      Laporan Rekap Pengeluaran
                     </div>
                       <div class="box-body">
                           <table id="dt" class="table table-hover table-bordered display nowrap" width="100%" cellspacing="0">
@@ -17,7 +17,7 @@
                                 <?php foreach ($data_rekap as $key => $value) { ?>
                                   <tr>
                                       <td><?php echo $value['kategori'] ?></td>
-                                      <td><?php echo $value['jumlah'] ?></td>
+                                      <td>Rp. <?php echo number_format($value['jumlah']) ?></td>
                                   </tr>
                                   <?php   } ?>
                               </tbody>

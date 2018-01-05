@@ -12,18 +12,18 @@
 
          public function status_pembayaran()
          {
-           $cb_kelurahan = '<select class="form-control" name="status" id="status_pembayaran">
-             <option selected="">--- PILIH ---</option>
+           $cb_kelurahan = '<select class="form-control input_validation" name="status" id="status_pembayaran">
+             <option selected="" value="" disabled>--- PILIH ---</option>
              <option value="LUNAS">LUNAS</option>
              <option value="CICILAN">CICILAN</option>
-             </select>'    ;
+             </select>'  ;
 
            echo $cb_kelurahan;
          }
-
+ 
          public function marketing()
          {
-           $header = '<select class="form-control input_validation" name="id_marketing">
+           $header = '<select class="form-control input_validation" name="id_marketing" id="id_marketing">
              <option value="" selected="" disabled>--- PILIH ---</option>';
            $select_item = '';
            $footer = '</select>';
@@ -39,8 +39,8 @@
 
          public function unit()
          {
-           $header = '<select class="form-control input_validation" name="id_unit">
-             <option selected="">--- PILIH ---</option>';
+           $header = '<select class="form-control input_validation" name="id_unit" id="id_unit">
+             <option selected="" value="" disabled>--- PILIH ---</option>';
            $select_item = '';
            $footer = '</select>';
 
@@ -52,11 +52,11 @@
            $cb_unit = $header.$select_item.$footer;
            echo $cb_unit;
          }
-
+         
          public function sopir()
          {
-           $header = '<select class="form-control" name="id_sopir">
-             <option selected="">--- PILIH ---</option>';
+           $header = '<select class="form-control" name="id_sopir" id="id_sopir">
+             <option selected="" value="" disabled>--- PILIH ---</option>';
            $select_item = '';
            $footer = '</select>';
 
@@ -71,8 +71,8 @@
 
          public function supplier()
          {
-           $header = '<select class="form-control" name="id_supplier">
-             <option selected="">--- PILIH ---</option>';
+           $header = '<select class="form-control" name="id_supplier"  id="id_supplier" >
+             <option selected="" value="" disabled>--- PILIH ---</option>';
            $select_item = '';
            $footer = '</select>';
 
@@ -87,8 +87,8 @@
 
          public function sparepart()
          {
-           $header = '<select class="form-control input_validation" name="id_sparepart">
-             <option selected="" disabled>--- PILIH ---</option>';
+           $header = '<select class="form-control input_validation" name="id_sparepart" id="id_sparepart">
+             <option selected="" value="" disabled >--- PILIH ---</option>';
            $select_item = '';
            $footer = '</select>';
 
@@ -103,8 +103,8 @@
 
          public function crew()
          {
-           $header = '<select class="form-control" name="id_crew">
-             <option selected="">--- PILIH ---</option>';
+           $header = '<select class="form-control" name="id_crew" id="id_crew">
+             <option selected="" value="" disabled>--- PILIH ---</option>';
            $select_item = '';
            $footer = '</select>';
 
@@ -119,8 +119,8 @@
 
          public function kategori_pengeluaran()
          {
-           $header = '<select class="form-control" name="id_kategori_pengeluaran">
-             <option selected="">--- PILIH ---</option>';
+           $header = '<select class="form-control input_validation" name="id_kategori_pengeluaran"  id="id_kategori_pengeluaran">
+             <option selected="" value="" disabled>--- PILIH ---</option>';
            $select_item = '';
            $footer = '</select>';
 
@@ -137,7 +137,7 @@
          public function kode_booking()
          {
            $header = '<select class="form-control" name="id_booking" id="id_booking">
-             <option selected="">--- PILIH ---</option>';
+             <option selected="" value="" disabled>--- PILIH ---</option>';
            $select_item = '';
            $footer = '</select>';
 
