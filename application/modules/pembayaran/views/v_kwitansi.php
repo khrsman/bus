@@ -41,7 +41,7 @@
                     <table>
                         <tr>
                             <td class="title">
-                                  <img src="<?php echo base_url() ?>img/logo_dmh.png" style="width:100px;">
+                                  <img src="<?php echo base_url() ?>img/logo_dmh.png" style="width:200px;">
                             </td>
                             <td style="text-align:right">
                                 NO : <?php echo $inv['id_pembayaran'] ?><br>
@@ -52,6 +52,7 @@
             </tr>
             <tr class="information">
                 <td colspan="2">
+                  <br><br>
                   <center><strong>KWITANSI</strong></center><BR>
                 </td>
             </tr>

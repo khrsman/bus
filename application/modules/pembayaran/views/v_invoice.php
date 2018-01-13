@@ -52,18 +52,18 @@
       <table border="0">
           <tr>
               <td class="title">
-                    <img src="<?php echo base_url() ?>img/logo_dmh.png" style="width:100px;">
+                    <img src="<?php echo base_url() ?>img/logo_dmh.png" style="width:200px;">
               </td>
               <td style="text-align:right">
                   <!-- No : <?php echo $inv['id_booking'] ?><br> -->
               </td>
           </tr>
       </table>
+      <br>
 
         <table cellpadding="0" cellspacing="0" class="table_invoice">
             <tr class="top">
                 <td colspan="2">
-
                 </td>
             </tr>
             <tr>
