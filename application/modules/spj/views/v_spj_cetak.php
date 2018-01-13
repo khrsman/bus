@@ -5,19 +5,23 @@
       size:  auto;   /* auto is the initial value */
       margin: 0mm;  /* this affects the margin in the printer settings */
   }
+  .btn{
+              display:none;
+          }
 </style>
 
-      <style>
+<style>        
     .invoice-box{
         max-width:800px;
         margin:auto;
         padding:30px;
         border:1px solid #eee;
         box-shadow:0 0 10px rgba(0, 0, 0, .15);
-        font-size:16px;
+        font-size:12px;
         line-height:24px;
-        font-family:'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
-        color:#555;
+        /* font-family:'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; */
+        font-family: serif;
+        color:#555;     
     }
 
     .invoice-box table{
@@ -61,7 +65,7 @@
     }
 
     .invoice-box table tr.item td{
-        border-bottom:1px solid #eee;
+        /* border-bottom:1px solid #eee; */
     }
 
     .invoice-box table tr.item.last td{
@@ -73,7 +77,7 @@
         font-weight:bold;
     }
 
-    @media only screen and (max-width: 600px) {
+    /* @media only screen and (max-width: 600px) {
         .invoice-box table tr.top table td{
             width:100%;
             display:block;
@@ -85,7 +89,7 @@
             display:block;
             text-align:center;
         }
-    }
+    } */
     </style>
 </head>
 
@@ -110,31 +114,33 @@
             </tr>
             <tr class="information">
                 <td colspan="2">
-                  <center><strong>SURAT PERINTAH JALAN</strong></center><BR>
+                  <center><strong><h2>SURAT PERINTAH JALAN</h2></strong></center>
+                  <br>
+                
+                  <br>
                 </td>
-            </tr>
+            </tr>          
             <tr class="information">
                 <td colspan="2">
                     <table>
                         <tr>
-                            <td>
-                              <span style="display:inline-block; width: 120px;">NO ORDER</span>: <br>
-                              <span style="display:inline-block; width: 120px;">NO BUS</span>: <?php echo $spj['unit'] ?><br>
-                              <span style="display:inline-block; width: 120px;">NAMA SOPIR</span>: <?php echo $spj['nama_sopir'] ?><br>
-                              <span style="display:inline-block; width: 120px;">KM AWAL</span>: <?php echo $spj['km_awal'] ?><br>
+                            <td>                              
+                              <span style="display:inline-block; width: 100px;"><strong>No unit </strong></span>: <?php echo $spj['unit'] ?><br>
+                              <span style="display:inline-block; width: 100px;"><strong>Type unit </strong></span>: <?php echo $spj['tipe_bus'] ?> <br>
+                              <span style="display:inline-block; width: 100px;"><strong>Tanggal</strong></span>: <?php echo $spj['tanggal_dari']." - ".$spj['tanggal_sampai'] ?><br>
                             </td>
-
+                            
                             <td>
-                              <span style="display:inline-block; width: 100px;">TYPE BUS </span>: -<br>
-                              <span style="display:inline-block; width: 100px;">CREW </span>: <?php echo $spj['nama_crew'] ?><br>
-                              <span style="display:inline-block; width: 100px;">KM AKHIR </span>: <?php echo $spj['km_akhir'] ?><br>
+                            <span style="display:inline-block; width: 120px;"><strong>Sopir</strong></span>: <?php echo $spj['nama_sopir'] ?><br>
+                              <span style="display:inline-block; width: 120px;"><strong>Crew </strong></span>: <?php echo $spj['nama_crew'] ?><br>
+                              
                             </td>
                         </tr>
                     </table>
                 </td>
             </tr>
 
-            <tr class="heading">
+            <tr class="heading" >
                   <td colspan="2">
                 <center>Detail</center>
                 </td>
@@ -147,7 +153,14 @@
                   <?php echo $spj['alamat_jemput'] ?>
                 </td>
             </tr>
-
+            <tr class="item">
+                <td>
+                Jam jemput
+                </td>
+                <td>
+                  <?php echo $spj['jam_jemput'] ?>
+                </td>
+            </tr>
             <tr class="item">
                 <td>
                     Tujuan
@@ -167,24 +180,14 @@
                 <td>
                     <?php echo $spj['nama_penyewa'] ?>
                 </td>
-            </tr>
+            </tr>   
             <tr class="item">
-                <td>
-                    Berangkat
-                </td>
-                <td>
-                  <?php echo $spj['tanggal_dari'] ?> 
-                </td>
-            </tr>
-            <tr class="item">
-                <td>
-                    Tiba
-                </td>
-                <td>
-                    <?php echo $spj['tanggal_sampai'] ?>
-                </td>
-            </tr>
-
+            <td>              
+            </td>
+            <td>          
+            </td>
+        </tr>      
+           
             <tr class="heading">
                   <td colspan="2">
                 <center>Pengeluaran</center>
@@ -220,10 +223,13 @@
         </table>
         <table>
             <tr>
-              <td><br>Keterangan<br>Biaya tol, parkir dan penyebrangan<br>ditanggung konsumen</td>
-                  <td style="float:right">
-                    <br>bandung, 27 september 2017
-
+              <td style="font-size:10px">
+                  <br>Keterangan:
+                  <br>Biaya tol, parkir dan penyebrangan
+                  <br>ditanggung konsumen
+                </td>
+                  <td style="float:right; padding-right: 100px;" >
+                    <br>bandung, <?php echo $spj['tanggal_spj'] ?> 
                 </td>
             </tr>
         </table>

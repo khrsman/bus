@@ -112,7 +112,12 @@ class Booking extends CI_Controller {
     // echo $this->db->last_query();
     $footer = '</select>';
     $cb_unit = $header.$select_item.$footer;
-    echo $cb_unit;
+    $this->db->select('DATE_FORMAT(min(tanggal), "%d/%m/%Y") tanggal_dari,
+                      DATE_FORMAT(max(tanggal), "%d/%m/%Y") tanggal_sampai');
+     $query =   $this->db->where('id_booking',$id)->get('detail_booking')->result_array()[0];
+    $tanggal = $query['tanggal_dari']." - ". $query['tanggal_sampai']  ;
+    echo json_encode(array('select' => $cb_unit, 'tanggal' => $tanggal));
+
 
     }
 

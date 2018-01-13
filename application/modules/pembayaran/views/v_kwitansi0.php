@@ -20,6 +20,67 @@
         text-align:left;
     }
 
+    .invoice-box table td{
+        padding:5px;
+        vertical-align:top;
+    }
+
+    .invoice-box table tr td:nth-child(2){
+        text-align:left;
+    }
+
+
+    .invoice-box table tr.top table td{
+        padding-bottom:20px;
+    }
+
+    .invoice-box table tr.top table td.title{
+        font-size:45px;
+        line-height:45px;
+        color:#333;
+    }
+
+    .invoice-box table tr.information table td{
+        padding-bottom:40px;
+    }
+
+    .invoice-box table tr.heading td{
+        background:#eee;
+        border-bottom:1px solid #ddd;
+        font-weight:bold;
+    }
+
+    .invoice-box table tr.details td{
+        padding-bottom:20px;
+    }
+
+    .invoice-box table tr.item td{
+        border-bottom:1px solid #eee;
+    }
+
+    .invoice-box table tr.item.last td{
+        border-bottom:none;
+    }
+
+    .invoice-box table tr.total td:nth-child(1){
+        border-top:2px solid #eee;
+        font-weight:bold;
+    }
+
+    @media only screen and (max-width: 600px) {
+        .invoice-box table tr.top table td{
+            width:100%;
+            display:block;
+            text-align:center;
+        }
+
+        .invoice-box table tr.information table td{
+            width:100%;
+            display:block;
+            text-align:center;
+        }
+    }
+
     @media print {
   .btn {
     display: none;
@@ -35,7 +96,7 @@
   <button class="btn btn-primary btn-lg" onclick="window.print()" style="margin:10px"><i class="fa fa-print"></i> Cetak</button>
 
     <div class="invoice-box">
-        <table cellpadding="0" cellspacing="0" >
+        <table cellpadding="0" cellspacing="0">
             <tr class="top">
                 <td colspan="2">
                     <table>
@@ -50,26 +111,41 @@
                     </table>
                 </td>
             </tr>
+
+            <!-- <tr class="information">
+                <td colspan="2">
+                    <table>
+                        <tr>
+                            <td>
+                                Next Step Webs, Inc.<br>
+                                12345 Sunny Road<br>
+                                Sunnyville, TX 12345
+                            </td>
+
+                            <td>
+                                Acme Corp.<br>
+                                John Doe<br>
+                                john@example.com
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr> -->
             <tr class="information">
                 <td colspan="2">
                   <center><strong>KWITANSI</strong></center><BR>
                 </td>
             </tr>
-            <tr>
-              <td colspan="2" style="text-align:right">
-                <?php
-                  echo date('d');
-                  echo " ".date('F');
-                  echo " ".date('Y');
-                     ?>
-              </td>
+            <tr class="heading">
+                <td>
+                  Pembayaran
+                </td>
+                <td>
+
+                </td>
             </tr>
-            <tr>
-              <td colspan="2">
-                <strong>Pembayaran </strong><br>
-              </td>
-            </tr>
-            <tr style=" border-top: 1px solid black;">
+
+            <tr class="item">
                 <td>
                     Sudah Terima dari:
                 </td>
@@ -83,17 +159,23 @@
                 <td>
                     Banyaknya:
                 </td>
+
                 <td>
                   <span id="terbilang">   <?php echo $terbilang ?> </span>
                 </td>
             </tr>
-            <tr>
-              <td colspan="2">
-                <br>
-                <strong>Detail </strong><br>
-              </td>
+
+            <tr class="heading">
+                <td>
+                    Detail
+                </td>
+
+                <td>
+
+                </td>
             </tr>
-            <tr style=" border-top: 1px solid black;">
+
+            <tr class="item">
                 <td>
                     Untuk Pembayaran:
                 </td>
@@ -106,6 +188,7 @@
                 <td>
                     Tujuan:
                 </td>
+
                 <td>
                     <?php echo $inv['tujuan'] ?>
                 </td>
@@ -124,7 +207,10 @@
                   Jumlah
                 </td>
                 <td>
-                  Rp. <?php echo $inv['jumlah_bayar'] ?>
+                  <div id="jumlah_bus_kwitansi">
+                  <?php foreach ($harga_unit as $key => $value): ?>
+                      <span >  <?php echo $value['jumlah'] ?> unit x  Rp. <?php echo $value['harga'] ?></span><br>
+                  <?php endforeach; ?>
                 </div>
                 </td>
             </tr>
@@ -144,20 +230,18 @@
                   <span id="sisa_bayar_kwitansi">   Rp. <?php echo $inv['sisa_bayar'] ?></span>
                 </td>
             </tr>
-            <tr>
-              <td colspan="2" style="text-align:right">
-                <br>
-                Bandung, <?php
-                  echo date('d');
-                  echo " ".date('F');
-                  echo " ".date('Y');
-                     ?>
-              </td>
+
+            <tr class="item">
+                <td><br><br><br><strong>Jumlah:   <span id="jumlah_bayar_kwitansi"> Rp. <?php echo $inv['jumlah_bayar'] ?><strong> </span></td>
+                <td style="float:right">
+                  bandung,
+                  <?php
+                    echo date('d',strtotime($inv['tanggal_bayar']));
+                    echo " ".date('F',strtotime($inv['tanggal_bayar']));
+                    echo " ".date('Y',strtotime($inv['tanggal_bayar']));
+                       ?>
+                </td>
             </tr>
-
-
-
-
         </table>
     </div>
 

@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="<?php echo base_url('AdminLTE/plugins/timepicker') ?>/bootstrap-timepicker.min.css">
+
 <div id="page_custom" value="spj">
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -19,6 +21,17 @@
                         <div class="box-body">
                             <form role="form" class="form-horizontal xform">
                                 <input type="hidden" id="id_spj" name="id_spj" >
+                                <div class="form-group">
+                                  <label class="col-sm-4 control-label">Tanggal SPJ</label>
+                                  <div class="col-sm-8">
+                                      <div class="input-group">
+                                      <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                      </div>
+                                      <input class="form-control datepicker" name="tanggal_spj" id="tanggal_spj" type="text">
+                                    </div>
+                                  </div>
+                            </div>
 																<div class="form-group">
                                   <label class="col-sm-4 control-label">Kode booking</label>
                                   <div class="col-sm-8">
@@ -33,10 +46,31 @@
                                   <div class="col-sm-8" id='cb_unit_ajax'>
                                     <?php
                                      $this->cb_options->unit();
-                                    ?>
-                                  
+                                    ?>                                  
                                   </div>
                             </div>
+                            <div class="form-group">
+                                  <label class="col-sm-4 control-label">Tanggal</label>
+                                  <div class="col-sm-8">
+                                      <input type = "text" value="-"  readonly id="tanggal_berangkat" class="form-control"  >
+                                  </div>
+                            </div>
+                          
+													<div class="form-group">
+                                  <label class="col-sm-4 control-label">Jam jemput</label>
+                                  <div class="col-sm-4">
+                                      <!-- <input type = "text" value="0"  class="form-control timepicker"  > -->
+                                      <div class="bootstrap-timepicker">
+                                      <div class="input-group">
+                    <input type="text" name="jam_jemput" id="jam_jemput" class="form-control timepicker">
+                    <div class="input-group-addon">
+                      <i class="fa fa-clock-o"></i>
+                    </div>
+                    </div>
+                    </div>
+                  </div>                                                                
+                            </div>
+                          
 													<div class="form-group">
                                   <label class="col-sm-4 control-label">Sopir</label>
                                   <div class="col-sm-8">
@@ -54,17 +88,12 @@
                                   </div>
                             </div>
 													<div class="form-group">
-                                  <label class="col-sm-4 control-label">Km awal</label>
+                                  <label class="col-sm-4 control-label">Tipe Bus</label>
                                   <div class="col-sm-8">
-                                      <input type = "text" value="0" name="km_awal" id="km_awal" class="form-control"  >
+                                      <input type = "text" value="" name="tipe_bus" id="tipe_bus" class="form-control"  >
                                   </div>
                             </div>
-													<div class="form-group">
-                                  <label class="col-sm-4 control-label">Km akhir</label>
-                                  <div class="col-sm-8">
-                                      <input type = "text" value="0" name="km_akhir" id="km_akhir" class="form-control"  >
-                                  </div>
-                            </div>
+                          
                             <div class="form-group">
                               <label class="col-sm-4 control-label">Solar perliter x jumlah</label>
                               <div class="col-sm-8">
@@ -165,7 +194,7 @@
                                     <tr>
                                       <th> Cetak </th>
                                         <th>Nama (tujuan)</th>
-                                        <th>Tanggal</th>
+                                        <th>Tanggal Berangkat</th>
 																			 <th>Bus</th>
 																			 <th>Sopir</th>
 																			 <th>Crew</th>
@@ -182,11 +211,15 @@
 </div>
 </section>
 </div>
-
+<script src="<?php echo base_url('AdminLTE/plugins/timepicker') ?>/bootstrap-timepicker.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url() ?>js/datepicker/js/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="<?php echo base_url() ?>js/datepicker/locales/bootstrap-datepicker.id.min.js"></script>
+<link rel="stylesheet" href="<?php echo base_url() ?>js/datepicker/css/bootstrap-datepicker.css">
 
 <script type="text/javascript">
 
 $().ready(function(){
+  
   var page = $("#page_custom").attr("value");
   var url_simpan = page+'/add';
   var url_edit =  page+'/get_for_edit';
@@ -205,11 +238,27 @@ $().ready(function(){
 
 $.get( "<?php echo site_url('booking/get_unit_booking') ?>", { id: id })
   .done(function( data ) {
-    $("#cb_unit_ajax").html(data)
+    obj = JSON.parse(data);  
+     $("#cb_unit_ajax").html(obj.select);
+     $("#tanggal_berangkat").val(obj.tanggal);
+
     // alert( "Data Loaded: " + data );
   });
 
   });
+
+  $('.timepicker').timepicker({
+      showInputs: false,
+      showMeridian: false,
+      defaultTime: '00:00'
+    })
+    $('.datepicker').datepicker({
+						format: 'yyyy-mm-dd',
+						todayBtn: "linked",
+						language: "id",
+					 calendarWeeks: true,
+						autoclose: true
+			 });
 
   $("#solar_per_liter").keyup(function(){
     harga = $(this).val() || 0 ;
@@ -239,6 +288,7 @@ $.get( "<?php echo site_url('booking/get_unit_booking') ?>", { id: id })
   });
 
   $('body').on('click', '.hapus_custom', function() {
+    if (confirm("Yakin untuk menghapus data?")) {
     var id = $(this).val();
     $.ajax({
         type: "GET",
@@ -266,9 +316,9 @@ $.get( "<?php echo site_url('booking/get_unit_booking') ?>", { id: id })
           });
         }
     });
+  }
     });
-
-
+    
     $('#simpan_custom').click(function(){
       var valid = true;
       $('.input_validation').each(function() {
@@ -286,8 +336,8 @@ $.get( "<?php echo site_url('booking/get_unit_booking') ?>", { id: id })
      }
     });
     if(valid){
-      var data = $('form').serialize();
-    }
+      var data = $('form').serialize();  
+
     $.ajax({
           type: "POST",
           url: url_simpan,
@@ -316,6 +366,7 @@ $.get( "<?php echo site_url('booking/get_unit_booking') ?>", { id: id })
             });
           }
       });
+    }
     });
 
 

@@ -24,7 +24,7 @@ class M_spj extends CI_Model
         (select nama from pegawai where pegawai.id_pegawai = spj.id_crew) crew,
         format(biaya_total,0)
         ');
-        $this->db->order_by('tanggal','desc');
+        $this->db->order_by('id_spj','desc');
         $query = $this->db->get('spj spj');
         return $query->result_array();
     }
@@ -50,8 +50,11 @@ class M_spj extends CI_Model
         bk.alamat_jemput,
         bk.tujuan,
         bk.nama_penyewa,
-        DATE_FORMAT((select min(tanggal) from detail_booking det where det.id_booking = bk.id_booking), "%d/%m/%Y") tanggal_dari,
-        DATE_FORMAT((select max(tanggal) from detail_booking det where det.id_booking = bk.id_booking), "%d/%m/%Y") tanggal_sampai,
+        DATE_FORMAT(tanggal_spj,"%d %M %Y") tanggal_spj,
+        DATE_FORMAT((select min(tanggal) from detail_booking det where det.id_booking = bk.id_booking and id_unit = spj.id_unit), "%d/%m/%Y") tanggal_dari,
+        DATE_FORMAT((select max(tanggal) from detail_booking det where det.id_booking = bk.id_booking and id_unit = spj.id_unit), "%d/%m/%Y") tanggal_sampai,
+        spj.jam_jemput,
+        spj.tipe_bus,
         spj.biaya_sopir,
         spj.biaya_crew,
         spj.biaya_solar,
@@ -74,6 +77,8 @@ class M_spj extends CI_Model
     public function insert($data)
     {
         $query = $this->db->insert('spj', $data);
+        echo $this->db->last_query();
+        // die;
         return $query;
     }
 

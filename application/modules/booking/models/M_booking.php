@@ -19,7 +19,8 @@ class M_booking extends CI_Model
         } else {
             $this->db->select('id_booking pk,
             DATE_FORMAT((select min(tanggal) from detail_booking where id_booking = booking.id_booking), "%d/%m/%Y") tanggal,
-            nama_penyewa, no_telepon,alamat_jemput, tujuan, "-" status,
+            nama_penyewa, no_telepon,alamat_jemput, tujuan,
+            (select max(status) from pembayaran where id_booking = booking.id_booking) status,
             ');
         }
 
@@ -58,10 +59,6 @@ format(total - (select sum(biaya_total) from spj where id_booking = booking.id_b
         $this->db->join('spj','spj.id_booking = dtl.id_booking and spj.id_unit = dtl.id_unit', 'left');
         $this->db->where('dtl.id_booking', $id_booking);
         return $this->db->get('detail_booking_unit dtl')->result_array();
-
-
-     
-
 
     }
 
@@ -121,8 +118,14 @@ format(total - (select sum(biaya_total) from spj where id_booking = booking.id_b
 
     public function delete_by_id($id)
     {
-        $this->db->where('id_booking', $id);
-        $query = $this->db->delete('booking');
+
+        $this->db->trans_start();
+        $query = $this->db->where('id_booking', $id)->delete('booking');
+        $query2 = $this->db->where('id_booking', $id)->delete('detail_booking');
+        $query3 = $this->db->where('id_booking', $id)->delete('detail_booking_unit');
+        $query4 = $this->db->where('id_booking', $id)->delete('spj');
+        $query5 = $this->db->where('id_booking', $id)->delete('pembayaran');
+        $this->db->trans_complete();
     }
 
     public function get_kode_booking($id = null)

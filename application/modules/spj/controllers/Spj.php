@@ -15,7 +15,7 @@ class Spj extends CI_Controller {
     $this->load->view('v_main',$data);
     }
 
-    function cetak(){
+    function cetak(){ 
     $data['page'] = 'v_spj_cetak';
     $id = $this->input->get('id');
     $data['spj'] = $this->M_spj->get_detail_spj($id);
@@ -27,6 +27,7 @@ class Spj extends CI_Controller {
     function add(){
         $data = array();
         parse_str($_POST['data'], $data);
+      
         // jika fieldnya auto increment
         if (isset($data['id_spj'])) {
           $data['id_spj'] = NULL;

@@ -14,13 +14,16 @@
                             $year = $tahun;
                             $number = cal_days_in_month(CAL_GREGORIAN, $month, $year); // 31
                             $unit = $this->db->get('unit')->result_array();
-                            $booking = $this->db->query("select id_booking, id_unit, warna, nama_penyewa, tujuan, id_marketing, 
+                            $booking = $this->db->query("select id_booking, id_unit, warna, nama_penyewa, tujuan, id_marketing,
                             EXTRACT( DAY FROM tanggal ) tanggal,
                             (select MAX(status) from pembayaran byr where byr.id_booking = bk.id_booking) status
-                             from booking bk join detail_booking using(id_booking)                           
+                             from booking bk join detail_booking using(id_booking)
                             left join marketing using(id_marketing)
                                                          where EXTRACT(MONTH FROM tanggal)  = $bulan and EXTRACT(YEAR FROM tanggal)  = $tahun ")->result_array();
-                                                        //  echo $this->db->last_query();
+                                                        // echo $this->db->last_query();
+                                                        //  die;
+                                                        // echo '<pre>';
+                                                        //  print_r($booking);
                                                         //  die;
                             echo "  <thead><tr>";
                             for ($i=0; $i <= $number; $i++) {
@@ -36,7 +39,7 @@
                                 $tujuan = '';
                                 $penyewa = $bgcolor = $id_marketing = $marketing = '';
                                 foreach ($booking as $key => $value2) {
-                                  if ($value2['tanggal'] == $i && strpos($value2['id_unit'], $id_unit) !== false ){
+                                  if ($value2['tanggal'] == $i && $value2['id_unit'] == $id_unit ){
                                     $tujuan .= $value2['tujuan'];
                                     $penyewa .= $value2['nama_penyewa'];
                                     $id_marketing .= $value2['id_marketing'];

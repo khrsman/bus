@@ -460,7 +460,10 @@ $(function() {
     $('body').on('click', '.hapus_custom', function() {
         var id = $(this).val();
         var url_hapus = page + '/delete';
-        $.ajax({
+
+        if (confirm("Yakin untuk menghapus data?")) {
+     
+            $.ajax({
             type: "GET",
             url: url_hapus,
             data: {
@@ -484,10 +487,12 @@ $(function() {
                     message: "Telah terjadi kesalahan!",
                     icon: 'fa fa-check'
                 }, {
-                    type: "danger"
+                    type: "danger" 
                 });
             }
         });
+   }
+     
     });
 
  // aksi pada saat tombol edit data di klik
@@ -574,7 +579,6 @@ $(function() {
             add3 = '<div class="harga_per_unit" id="' + val + '"><label class="col-sm-2 control-label">' + text + ' </label> <div class="col-sm-10"><input type = "text" name="harga_perunit[' + val + ']" id="" value="'+harga+'" class="form-control hitung_total harga_unit" onkeydown="return (event.which >= 48 && event.which <= 57) || event.which == 8 || event.which == 46 || event.which == 37 || event.which == 39"></div>';
                                     $('.form_harga_unit').append(add3);
          });
-
 
 
       });

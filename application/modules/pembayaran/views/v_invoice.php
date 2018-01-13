@@ -2,6 +2,11 @@
 <html>
 <head>
       <style>
+              @media print {
+  .btn {
+    display: none;
+  }
+}
     .invoice-box{
         max-width:800px;
         margin:auto;
@@ -14,73 +19,28 @@
         color:#555;
     }
 
-    .invoice-box table{
+    .invoice-box .table_invoice{
         width:100%;
         line-height:inherit;
         text-align:left;
+        border: 5px double black;
     }
 
-    .invoice-box table td{
-        padding:5px;
-        vertical-align:top;
+    .table_invoice th, td {
+    padding-left: 10px;
+    padding-right: 10px;
+    /*text-align: left;*/
+}
+    .table_invoice .section{
+      border-top: 1px solid black;
+    }
+    .table_invoice .section td{
+      padding-top: 1em;
     }
 
-    .invoice-box table tr td:nth-child(2){
-        text-align:left;
-    }
 
 
-    .invoice-box table tr.top table td{
-        padding-bottom:20px;
-    }
-
-    .invoice-box table tr.top table td.title{
-        font-size:45px;
-        line-height:45px;
-        color:#333;
-    }
-
-    .invoice-box table tr.information table td{
-        padding-bottom:40px;
-    }
-
-    .invoice-box table tr.heading td{
-        background:#eee;
-        border-bottom:1px solid #ddd;
-        font-weight:bold;
-    }
-
-    .invoice-box table tr.details td{
-        padding-bottom:20px;
-    }
-
-    .invoice-box table tr.item td{
-        border-bottom:1px solid #eee;
-    }
-
-    .invoice-box table tr.item.last td{
-        border-bottom:none;
-    }
-
-    .invoice-box table tr.total td:nth-child(1){
-        border-top:2px solid #eee;
-        font-weight:bold;
-    }
-
-    @media only screen and (max-width: 600px) {
-        .invoice-box table tr.top table td{
-            width:100%;
-            display:block;
-            text-align:center;
-        }
-
-        .invoice-box table tr.information table td{
-            width:100%;
-            display:block;
-            text-align:center;
-        }
-    }
-    </style>
+      </style>
 </head>
   <div class="content-wrapper">
     <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" style="margin:10px">
@@ -89,113 +49,117 @@
   <button class="btn btn-primary btn-lg" onclick="window.print()" style="margin:10px"><i class="fa fa-print"></i> Cetak</button>
 
     <div class="invoice-box">
-        <table cellpadding="0" cellspacing="0">
+      <table border="0">
+          <tr>
+              <td class="title">
+                    <img src="<?php echo base_url() ?>img/logo_dmh.png" style="width:100px;">
+              </td>
+              <td style="text-align:right">
+                  <!-- No : <?php echo $inv['id_booking'] ?><br> -->
+              </td>
+          </tr>
+      </table>
+
+        <table cellpadding="0" cellspacing="0" class="table_invoice">
             <tr class="top">
                 <td colspan="2">
-                    <table>
-                        <tr>
-                            <td class="title">
-                                  <img src="<?php echo base_url() ?>img/logo_dmh.png" style="width:100px;">
-                            </td>
 
-                            <td style="text-align:right">
-                                No : <?php echo $inv['id_booking'] ?><br>
-
-                            </td>
-                        </tr>
-                    </table>
                 </td>
             </tr>
-
-            <!-- <tr class="information">
+            <tr>
                 <td colspan="2">
-                    <table>
-                        <tr>
-                            <td>
-                                Next Step Webs, Inc.<br>
-                                12345 Sunny Road<br>
-                                Sunnyville, TX 12345
-                            </td>
-
-                            <td>
-                                Acme Corp.<br>
-                                John Doe<br>
-                                john@example.com
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr> -->
-
-            <tr class="information">
-                <td colspan="2">
-                  <center><strong>Invoice</strong></center><BR>
+                  <center><strong><u><h3>INVOICE</h3></u></strong></center>
                 </td>
             </tr>
-
-            <tr class="heading">
+            <tr>
+              <td colspan="2" style="text-align:right">
+                <?php
+                  echo date('d');
+                  echo " ".date('F');
+                  echo " ".date('Y');
+                     ?>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                <strong>PT. DUA MUTIARA HARUM </strong><br>
+                Jl. Raya Cileunyi No.383A Bandung <br>
+                Ph. 022-7648 4995 <br>
+                NPWP : 02.735.454.7-444.000
+              </td>
+            </tr>
+            <tr class="section">
                 <td>
-                    Detail
+                    Kepada:
                 </td>
-
                 <td>
-
+                  <!-- <?php echo $inv['dari'] ?> -->
                 </td>
             </tr>
-
             <tr class="item">
                 <td>
-                    Tujuan:
+                    Alamat:
                 </td>
 
+                <td>
+                  <!-- <span id="terbilang">   <?php echo $terbilang ?> </span> -->
+                </td>
+            </tr>
+
+
+          <tr class="section">
+                <td width="140px">
+                    Untuk pembayaran
+                </td>
+                <td>
+                </td>
+            </tr>
+            <tr>
+                  <td>
+                      Tanggal:
+                  </td>
+                  <td>
+                    <?php echo $inv['tanggal_dari']."  s.d ".$inv['tanggal_sampai'] ?>
+                  </td>
+              </tr>
+            <tr class="item">
+                <td>
+                    Tujuan
+                </td>
                 <td>
                     <?php echo $inv['tujuan'] ?>
                 </td>
             </tr>
-            <tr class="item">
-                <td>
-                    Tanggal:
-                </td>
 
-                <td>
-                  <?php echo $inv['tanggal_dari']."  s.d ".$inv['tanggal_sampai'] ?>
+            <tr>
+              <td colspan="2">
+                <br>
+                Keterangan: <br>
+                Harga <strong>belum</strong> termasuk tol, parkir dan tip crew <br>
+                Dp minimal 30% <br>
+                Pelunanasan Maksimal H-1
+              </td>
+            </tr>
+              <tr class="section">
+                <td colspan=2>
+                <strong>Rp. <?php echo $inv['total'] ?>, - </strong>
+                <br>
+                <br>
                 </td>
             </tr>
-            <tr class="item">
-                <td>
-                  Jumlah
-                </td>
-                <td>
-                  <div id="jumlah_bus_kwitansi">
-                  <?php foreach ($harga_unit as $key => $value): ?>
-                      <span >  <?php echo $value['jumlah'] ?> unit x  Rp. <?php echo $value['harga'] ?></span><br>
-                  <?php endforeach; ?>
-                </div>
-                  <!-- <span id="jumlah_bus_kwitansi"> <?php echo $inv['jumlah_bus'] ?> bus x  Rp. <?php echo $inv['harga'] ?></span> -->
-                </td>
+            <tr>
+              <td colspan="2">
+                <strong><i><u>Transfer</u></i></strong><br>
+                Bank: BCA <br>
+                Atas Nama: Abung Hendryana <br>
+                Nomer Rekening: 7770601660 <br>
+              </td>
             </tr>
-            <tr class="item">
-                <td>
-                Harga
-                </td>
-                <td>
-                    <span id="harga_total_kwitansi"> Rp. <?php echo $inv['total'] ?> </span>
-                </td>
-            </tr>
-            <tr class="item">
-                <td><br><br><br><strong> Jumlah: <span id="harga_total_kwitansi2"> Rp. <?php echo $inv['total'] ?> </span><strong></td>
-                <td style="float:right">
-                  bandung,
-                  <?php
-                    echo date('d');
-                    echo " ".date('F');
-                    echo " ".date('Y');
 
-                       ?>
-                </td>
-            </tr>
         </table>
     </div>
+
+
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
