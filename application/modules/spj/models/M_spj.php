@@ -50,19 +50,21 @@ class M_spj extends CI_Model
         bk.alamat_jemput,
         bk.tujuan,
         bk.nama_penyewa,
+        bk.no_telepon,
         DATE_FORMAT(tanggal_spj,"%d %M %Y") tanggal_spj,
         DATE_FORMAT((select min(tanggal) from detail_booking det where det.id_booking = bk.id_booking and id_unit = spj.id_unit), "%d/%m/%Y") tanggal_dari,
         DATE_FORMAT((select max(tanggal) from detail_booking det where det.id_booking = bk.id_booking and id_unit = spj.id_unit), "%d/%m/%Y") tanggal_sampai,
         spj.jam_jemput,
         spj.tipe_bus,
-        spj.biaya_sopir,
-        spj.biaya_crew,
-        spj.biaya_solar,
-        spj.biaya_tol,
-        spj.biaya_parkir,
-        spj.biaya_tips,
-        spj.biaya_penyebrangan,
-        spj.biaya_lain
+        format(spj.biaya_sopir,0) biaya_sopir,
+        format(spj.biaya_crew,0) biaya_crew,
+        format(spj.biaya_solar,0) biaya_solar,
+        format(spj.biaya_tol,0) biaya_tol,
+        format(spj.biaya_parkir,0) biaya_parkir,
+        format(spj.biaya_tips,0) biaya_tips,
+        format(spj.biaya_penyebrangan,0) biaya_penyebrangan,
+        format(spj.biaya_lain,0) biaya_lain,
+        format(biaya_total,0) biaya_total
         '
         );
         $this->db->join('booking bk', 'id_booking');

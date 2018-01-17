@@ -6,11 +6,11 @@
     #modal_table tr>td {
         padding: 5px;
     }
-    
+
     tr:hover {
         /*background-color: red;*/
         cursor: pointer;
-        
+
     }
 </style>
 
@@ -74,7 +74,7 @@ $this->cb_options->marketing();
                                         <input type="text" name="alamat_jemput" id="alamat_jemput" class="form-control">
                                     </div>
                                 </div>
-                       
+
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label">Total</label>
                                     <div class="col-sm-8">
@@ -270,13 +270,13 @@ $(document).on("click", "tbody>tr", function(e) {
         //  console.log(data);
         var arr = JSON.parse(data);
 
-        unit = arr.unit;      
+        unit = arr.unit;
 
         txt_unit = '<table class="table">';
         unit.forEach(function(element) {
             kas_jalan = element.kas_jalan || 0;
-            txt_unit = txt_unit + '<tr><td>' + element.seri + '</td><td> Rp. ' + element.harga + '</td><td> Kas Jalan Rp. ' + kas_jalan + ' </td></tr>';          
-           
+            txt_unit = txt_unit + '<tr><td>' + element.seri + '</td><td> Rp. ' + element.harga + '</td><td> Kas Jalan Rp. ' + kas_jalan + ' </td></tr>';
+
         });
         txt_unit = txt_unit + '</table>';
 
@@ -356,7 +356,7 @@ $(function() {
                                 if ($('.harga_per_unit').is('#' + val)) {} else {
                                     add3 = '<div class="harga_per_unit" id="' + val + '"><label class="col-sm-2 control-label">' + text + ' </label> <div class="col-sm-10"><input type = "text" name="harga_perunit[' + val + ']" id="" value="0" class="form-control hitung_total harga_unit" onkeydown="return (event.which >= 48 && event.which <= 57) || (event.which >= 96 && event.which <= 105) || event.which == 8 || event.which == 46 || event.which == 37 || event.which == 39"></div>';
                                     $('.form_harga_unit').append(add3);
-                                  
+
                                 }
                             } else {
                                 $('.tanggal_unit option:selected').each(function() {
@@ -368,13 +368,13 @@ $(function() {
                                 } else {
                                     $('#' + val).remove();
                                 }
-                              
+
                             }
                         }
                     });
                 });
             } else {
-                $('#' + val).remove();            
+                $('#' + val).remove();
             }
         }
     });
@@ -387,7 +387,7 @@ $(function() {
         $('#dt').dataTable({
             "destroy": true,
             "bLengthChange": false,
-            // "scrollX": true,
+            "scrollX": true,
             "displayLength": 10,
             "language": {
                 "lengthMenu": "Tampilkan _MENU_ data per halaman ",
@@ -409,7 +409,7 @@ $(function() {
                             '<button value="' + json[i][0] + '" class="btn btn-danger hapus_custom"><i class="fa  fa-trash"></i> Hapus</button>';
                         json[i][0] = '<a href ="pembayaran/by_id_booking?id_booking=' + id + '" class="btn btn-success" ><i class="fa fa-pencil"></i> Bayar </a> <a href ="pembayaran/invoice?id_booking=' + id + '" class="btn btn-success" ><i class="fa fa-pencil"></i> Cetak Invoice </a> ';
                         // json[i].splice(0,1); // hapus kolom index
-                    }                   
+                    }
                     return json;
                 }
             },
@@ -462,7 +462,7 @@ $(function() {
         var url_hapus = page + '/delete';
 
         if (confirm("Yakin untuk menghapus data?")) {
-     
+
             $.ajax({
             type: "GET",
             url: url_hapus,
@@ -487,12 +487,12 @@ $(function() {
                     message: "Telah terjadi kesalahan!",
                     icon: 'fa fa-check'
                 }, {
-                    type: "danger" 
+                    type: "danger"
                 });
             }
         });
    }
-     
+
     });
 
  // aksi pada saat tombol edit data di klik
@@ -501,13 +501,13 @@ $(function() {
   var page = window.location.href;
   var url_edit = page+'/get_for_edit';
   var id = $(this).val();
- 
-  
+
+
   $('.add_page').hide();
   $('.edit_page').show();
   $('.edit_protection').prop('readonly', false);
   $('#tabel').toggle( "slide", 'slow', function(){$('#form_tambah').toggle( "slide");});
-    
+
       // ambil data yang akan diedit menggunakan ajax
       request = $.get(url_edit,{id: id});
       request.done(function(data){
@@ -525,7 +525,7 @@ $(function() {
         $.each(arr.input, function(key, value){
             val =value.date;
             data =value.select;
-            // console.log(add3);        
+            // console.log(add3);
 
             $('#mdp_tanggal_booking').multiDatesPicker('addDates',val);
 
@@ -554,7 +554,7 @@ $(function() {
 
                                 if ($('.harga_per_unit').is('#' + val)) {} else {
                                     add3 = '<div class="harga_per_unit" id="' + val + '"><label class="col-sm-2 control-label">' + text + ' </label> <div class="col-sm-10"><input type = "text" name="harga_perunit[' + val + ']" id="" value="0" class="form-control hitung_total harga_unit" onkeydown="return (event.which >= 48 && event.which <= 57) || event.which == 8 || event.which == 46 || event.which == 37 || event.which == 39"></div>';
-                                    $('.form_harga_unit').append(add3);                                  
+                                    $('.form_harga_unit').append(add3);
                                 }
                             } else {
                                 $('.tanggal_unit option:selected').each(function() {
@@ -566,7 +566,7 @@ $(function() {
                                 } else {
                                     $('#' + val).remove();
                                 }
-                              
+
                             }
                         }
                     });

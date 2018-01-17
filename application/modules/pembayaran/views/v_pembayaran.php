@@ -80,6 +80,7 @@ $('#dt').dataTable({
   "destroy": true,
   "bLengthChange": false,
   "displayLength":10,
+  "scrollX": true,
   "language": {
           "lengthMenu": "Tampilkan _MENU_ data per halaman ",
           "search": "Cari ",
