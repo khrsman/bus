@@ -22,6 +22,11 @@ class Booking extends CI_Controller {
       $data['tahun'] = $this->input->post('tahun');
       $this->load->view('v_schedule_table',$data);
     }
+    function view_schedule_excel(){
+      $data['bulan'] = $this->input->get('bulan');
+      $data['tahun'] = $this->input->get('tahun');
+      $this->load->view('v_schedule_table_excel',$data);
+    }
 
     function detail(){
         $id = $this->input->get('id');
@@ -30,17 +35,17 @@ class Booking extends CI_Controller {
         $data_tanggal = $this->M_booking->get_detail_tanggal($id);
         $tanggal = '';
         foreach ($data_tanggal as $key => $value) {
-          $tanggal .= DateTime::createFromFormat('Y-m-d', $value['tanggal'])->format('d/m/Y').', ';           
+          $tanggal .= DateTime::createFromFormat('Y-m-d', $value['tanggal'])->format('d/m/Y').', ';
         }
-    
+
 
         // $data_kas_jalan = $this->M_booking->get_detail_kas_jalan($id);
 // echo "<pre>";
 //         print_r($data_unit);
 //         print_r($data_kas_jalan);
 //         die;
-        $data['unit'] = $data_unit;       
-        $data['tanggal'] = $tanggal;       
+        $data['unit'] = $data_unit;
+        $data['tanggal'] = $tanggal;
 
            echo json_encode($data);
     }
@@ -61,43 +66,43 @@ class Booking extends CI_Controller {
     function add(){
         $data = array();
         parse_str($_POST['data'], $data);
-     
+
         $id_booking = $data['id_booking'];
-        $detail_booking = array();  
+        $detail_booking = array();
         $data_perunit = array();
-        
+
         #data untuk tabel booking_detail
-        $tanggal_unit = $data['tanggal_unit'];      
+        $tanggal_unit = $data['tanggal_unit'];
         foreach ($tanggal_unit as $key => $value) {
           foreach ($value as $keyy => $valuee) {
             $detail_booking[$key]['id_booking'] = $id_booking;
-            $detail_booking[$key]['tanggal'] =  DateTime::createFromFormat('d-m-Y', $keyy)->format('Y-m-d');       
-            $detail_booking[$key]['id_unit'] = $valuee;          
+            $detail_booking[$key]['tanggal'] =  DateTime::createFromFormat('d-m-Y', $keyy)->format('Y-m-d');
+            $detail_booking[$key]['id_unit'] = $valuee;
           }
-        }    
+        }
 
         $data_harga = $data['harga_perunit'];
-          
+
       #data untuk tabel detail harga perunit
         foreach ($data_harga as $key => $value) {
           $data_perunit[$key]['id_unit'] = $key;
           $data_perunit[$key]['harga'] = $value;
           $data_perunit[$key]['id_booking'] = $id_booking;
-      
+
         }
         #keluarkan data dari array data yang akan diinsert ke tabel booking
         unset($data['harga_perunit']);
         unset($data['tanggal_unit']);
 
-        
+
         $insert = $this->M_booking->insert($data,$data_perunit,$detail_booking);
-        
+
     }
 
     function get_unit_booking(){
-    
+
       $id = $this->input->get('id');
-    
+
       $header = '<select class="form-control input_validation" name="id_unit" id="id_unit">
       <option selected="">--- PILIH ---</option>';
     $select_item = '';
@@ -118,46 +123,45 @@ class Booking extends CI_Controller {
     $tanggal = $query['tanggal_dari']." - ". $query['tanggal_sampai']  ;
     echo json_encode(array('select' => $cb_unit, 'tanggal' => $tanggal));
 
-
     }
 
     // fungsi update
     function update(){
       $data = array();
       parse_str($_POST['data'], $data);
-   
+
       $id_booking = $data['id_booking'];
-      $detail_booking = array();  
+      $detail_booking = array();
       $data_perunit = array();
-      
+
       #data untuk tabel booking_detail
-      $tanggal_unit = $data['tanggal_unit'];      
+      $tanggal_unit = $data['tanggal_unit'];
       foreach ($tanggal_unit as $key => $value) {
         foreach ($value as $keyy => $valuee) {
           $detail_booking[$key]['id_booking'] = $id_booking;
-          $detail_booking[$key]['tanggal'] =  DateTime::createFromFormat('d-m-Y', $keyy)->format('Y-m-d');       
-          $detail_booking[$key]['id_unit'] = $valuee;          
+          $detail_booking[$key]['tanggal'] =  DateTime::createFromFormat('d-m-Y', $keyy)->format('Y-m-d');
+          $detail_booking[$key]['id_unit'] = $valuee;
         }
-      }    
+      }
 
       $data_harga = $data['harga_perunit'];
-        
+
     #data untuk tabel detail harga perunit
       foreach ($data_harga as $key => $value) {
         $data_perunit[$key]['id_unit'] = $key;
         $data_perunit[$key]['harga'] = $value;
         $data_perunit[$key]['id_booking'] = $id_booking;
-    
+
       }
       #keluarkan data dari array data yang akan diinsert ke tabel booking
       unset($data['harga_perunit']);
       unset($data['tanggal_unit']);
       unset($data['id_booking']);
 
-      
+
       $insert = $this->M_booking->update_by_id($id_booking,$data,$data_perunit,$detail_booking);
 
-      
+
       // $update = $this->M_booking->update_by_id($data,$id);
     }
 
@@ -184,17 +188,17 @@ class Booking extends CI_Controller {
       $data = $this->M_booking->get($id);
       $data_detail = $this->M_booking->get_detail_tanggal($id);
       $data_unit = $this->M_booking->get_detail_booking_unit($id);
-      
+
             $input = array();
             foreach ($data_detail as $key => $value) {
               $date_y =(int) DateTime::createFromFormat('Y-m-d', $value['tanggal'])->format('Y');
               $date_m =(int) DateTime::createFromFormat('Y-m-d', $value['tanggal'])->format('m');
               $date_d =(int) DateTime::createFromFormat('Y-m-d', $value['tanggal'])->format('d');
               $date =  $date_d."-".$date_m."-".$date_y;
-               $input[$key]['select'] = $this->select_unit_for_edit($value['tanggal'],$date,$id);            
+               $input[$key]['select'] = $this->select_unit_for_edit($value['tanggal'],$date,$id);
                $input[$key]['date'] = $date;
             }
-      
+
             echo json_encode(array('data_booking' => $data, 'input' => $input, 'data_unit' => $data_unit ));
     }
 
@@ -211,17 +215,17 @@ class Booking extends CI_Controller {
       $cb_content = $header.$select_item.$footer;
       echo $cb_content;
     }
-  
+
     function select_unit_for_edit($date_normal,$date,$id){
-          
+
       $query =  $this->db->query("select * from detail_booking where tanggal = '$date_normal' and id_booking = $id")->result_array();
-  
+
       $selected_val = array();
       foreach ($query as $key => $value) {
-       $selected_val[] = $value['id_unit']; 
+       $selected_val[] = $value['id_unit'];
       }
-  
-  
+
+
       $header = '<select multiple class="form-control tanggal_unit" name="tanggal_unit[]['.$date.']" id="tanggal_unit">';
       $select_item = '';
       $footer = '</select>';
@@ -236,6 +240,13 @@ class Booking extends CI_Controller {
       $footer = '</select>';
       $cb_content = $header.$select_item.$footer;
       return $cb_content;
+    }
+
+    function autocomplete_nama(){
+      $nama = $this->input->get('term');
+     $this->db->like('nama', $nama);
+      $query = $this->db->get('customer')->result_array();
+      echo json_encode($query);
     }
 
 }

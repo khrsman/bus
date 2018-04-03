@@ -24,8 +24,13 @@
                                   <div class="col-sm-8">
                                       <input type = "text" name="nama" id="nama" class="form-control"  >
                                   </div>
+                            </div>                                                         
+                                <div class="form-group">
+                                  <label class="col-sm-4 control-label">Stok</label>
+                                  <div class="col-sm-8">
+                                      <input type = "text" name="stok" id="stok" class="form-control"  >
+                                  </div>
                             </div>
-
                             </form>
                         </div>
                         <div class="box-footer">

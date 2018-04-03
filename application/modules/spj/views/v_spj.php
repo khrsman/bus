@@ -28,16 +28,16 @@
                                       <div class="input-group-addon">
                                         <i class="fa fa-calendar"></i>
                                       </div>
-                                      <input class="form-control datepicker" name="tanggal_spj" id="tanggal_spj" type="text">
+                                      <input class="form-control datepicker" name="tanggal_spj" id="tanggal_spj" value = "<?php echo date('d/m/Y') ?>" type="text">
                                     </div>
                                   </div>
                             </div>
 																<div class="form-group">
                                   <label class="col-sm-4 control-label">Kode booking</label>
-                                  <div class="col-sm-8">
+                                  <div class="col-sm-8" id='kode_spj_dinamis'>
                                     <?php
                                     $this->load->library('Cb_options');
-                                    $this->cb_options->kode_booking();
+                                    $this->cb_options->kode_booking_spj();
                                     ?>
                                   </div>
                             </div>
@@ -46,7 +46,7 @@
                                   <div class="col-sm-8" id='cb_unit_ajax'>
                                     <?php
                                      $this->cb_options->unit();
-                                    ?>                                  
+                                    ?>
                                   </div>
                             </div>
                             <div class="form-group">
@@ -55,7 +55,7 @@
                                       <input type = "text" value="-"  readonly id="tanggal_berangkat" class="form-control"  >
                                   </div>
                             </div>
-                          
+
 													<div class="form-group">
                                   <label class="col-sm-4 control-label">Jam jemput</label>
                                   <div class="col-sm-4">
@@ -68,9 +68,9 @@
                     </div>
                     </div>
                     </div>
-                  </div>                                                                
+                  </div>
                             </div>
-                          
+
 													<div class="form-group">
                                   <label class="col-sm-4 control-label">Sopir</label>
                                   <div class="col-sm-8">
@@ -93,7 +93,6 @@
                                       <input type = "text" value="" name="tipe_bus" id="tipe_bus" class="form-control"  >
                                   </div>
                             </div>
-                          
                             <div class="form-group">
                               <label class="col-sm-4 control-label">Solar perliter x jumlah</label>
                               <div class="col-sm-8">
@@ -102,7 +101,7 @@
                                   <div class="input-group-addon">
                                   X
                                   </div>
-                                  <input class="form-control input_number hitung_biaya" placeholder="solar dibutuhkan" id="solar_dibutuhkan" type="text">
+                                  <input class="form-control input_number hitung_biaya" placeholder="solar dibutuhkan" name="jumlah_solar" id="jumlah_solar" type="text">
                                 </div>
                               </div>
                             </div>
@@ -198,7 +197,7 @@
 																			 <th>Bus</th>
 																			 <th>Sopir</th>
 																			 <th>Crew</th>
-																			 <th>Total</th>																			 
+																			 <th>Total</th>
 																			 <th id="aksi">Aksi</th>
                                     </tr>
                                 </thead>
@@ -215,11 +214,14 @@
 <script type="text/javascript" src="<?php echo base_url() ?>js/datepicker/js/bootstrap-datepicker.js"></script>
 <script type="text/javascript" src="<?php echo base_url() ?>js/datepicker/locales/bootstrap-datepicker.id.min.js"></script>
 <link rel="stylesheet" href="<?php echo base_url() ?>js/datepicker/css/bootstrap-datepicker.css">
+<script src="<?php echo base_url('js') ?>/jquery.masknumber.js"></script>
 
 <script type="text/javascript">
 
 $().ready(function(){
-  
+
+  $('.input_number').maskNumber();
+
   var page = $("#page_custom").attr("value");
   var url_simpan = page+'/add';
   var url_edit =  page+'/get_for_edit';
@@ -227,46 +229,47 @@ $().ready(function(){
   var url_hapus =  page+'/delete';
   var url_get = page+'/get';
 
-  // $("#id_sopir").val(5);
 
-  // $("#id_sumber").val('2');
-
-  $("#id_booking").change(function(){
-    // alert('test');
-     id = $(this).val();
-
-
-$.get( "<?php echo site_url('booking/get_unit_booking') ?>", { id: id })
-  .done(function( data ) {
-    obj = JSON.parse(data);  
-     $("#cb_unit_ajax").html(obj.select);
-     $("#tanggal_berangkat").val(obj.tanggal);
-
-    // alert( "Data Loaded: " + data );
-  });
-
-  });
 
   $('.timepicker').timepicker({
       showInputs: false,
       showMeridian: false,
       defaultTime: '00:00'
     })
+
     $('.datepicker').datepicker({
-						format: 'yyyy-mm-dd',
+						format: 'dd/mm/yyyy',
 						todayBtn: "linked",
 						language: "id",
 					 calendarWeeks: true,
 						autoclose: true
 			 });
 
+   $('.datepicker').change(function(){
+     tanggal = $(this).val();
+       request = $.get("<?php echo site_url('spj/kode_booking_spj')?>", {tanggal: tanggal});
+       request.done(function(data){
+         $("#kode_spj_dinamis").html(data);
+         $("#id_booking").change(function(){
+            id = $(this).val();
+           $.get( "<?php echo site_url('booking/get_unit_booking') ?>", { id: id })
+             .done(function( data ) {
+               obj = JSON.parse(data);
+                $("#cb_unit_ajax").html(obj.select);
+                $("#tanggal_berangkat").val(obj.tanggal);
+         });
+         });
+       })
+   })
+
+
   $("#solar_per_liter").keyup(function(){
     harga = $(this).val() || 0 ;
-    liter = $("#solar_dibutuhkan").val() || 0 ;
+    liter = $("#jumlah_solar").val() || 0 ;
     total = parseInt(liter)*parseInt(harga);
     $("#biaya_solar").val(total);
   });
-  $("#solar_dibutuhkan").keyup(function(){
+  $("#jumlah_solar").keyup(function(){
   liter = $(this).val();
   harga = $("#solar_per_liter").val() || 0 ;
   total = parseInt(liter)*parseInt(harga);
@@ -318,7 +321,7 @@ $.get( "<?php echo site_url('booking/get_unit_booking') ?>", { id: id })
     });
   }
     });
-    
+
     $('#simpan_custom').click(function(){
       var valid = true;
       $('.input_validation').each(function() {
@@ -336,7 +339,7 @@ $.get( "<?php echo site_url('booking/get_unit_booking') ?>", { id: id })
      }
     });
     if(valid){
-      var data = $('form').serialize();  
+      var data = $('form').serialize();
 
     $.ajax({
           type: "POST",
@@ -375,6 +378,7 @@ function loadDataTable_custom(url){
 $('#dt').dataTable({
   "destroy": true,
   "bLengthChange": false,
+  "scrollX": true,
   "displayLength":10,
   "language": {
           "lengthMenu": "Tampilkan _MENU_ data per halaman ",

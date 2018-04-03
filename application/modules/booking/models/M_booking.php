@@ -75,6 +75,9 @@ format(total - (select sum(biaya_total) from spj where id_booking = booking.id_b
         $query = $this->db->insert('booking', $data);
         $query2 = $this->db->insert_batch('detail_booking_unit', $data_perunit);
         $query3 = $this->db->insert_batch('detail_booking', $detail_booking);
+        $nama = $data['nama_penyewa'];
+        $no_telepon = $data['no_telepon'];
+        $this->db->query("insert ignore into customer(nama,no_telepon) values('$nama','$no_telepon')");
         $this->db->trans_complete();
 
         if ($this->db->trans_status() === false) {

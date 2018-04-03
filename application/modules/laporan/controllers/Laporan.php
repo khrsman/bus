@@ -20,9 +20,10 @@ class Laporan extends CI_Controller {
       parse_str($_POST['data'], $input);
 
     $tanggal_dari = $input['tanggal_dari'];
-
-    $tanggal_dari = DateTime::createFromFormat('d/m/Y',  $tanggal_dari)->format('Y-m-d');
     $tanggal_sampai = $input['tanggal_sampai'];
+    $data['tanggal_dari'] =  $tanggal_dari;
+    $data['tanggal_sampai'] =  $tanggal_sampai;
+    $tanggal_dari = DateTime::createFromFormat('d/m/Y',  $tanggal_dari)->format('Y-m-d');
     $tanggal_sampai = DateTime::createFromFormat('d/m/Y', $tanggal_sampai)->format('Y-m-d');
 
     $kategori = '';
@@ -32,10 +33,27 @@ class Laporan extends CI_Controller {
     }
   }
     $kategori = rtrim($kategori,',');
+    $data['kategori'] = $kategori;
     $data['data'] = $this->M_laporan->get_laporan_pengeluaran($tanggal_dari,$tanggal_sampai,$kategori);
 
 
     $this->load->view('v_lap_pengeluaran',$data);
+    }
+
+    function pengeluaran_excel(){
+    $input = $this->input->get();
+
+    $tanggal_dari = $input['tanggal_dari'];
+    $tanggal_sampai = $input['tanggal_sampai'];
+
+    $tanggal_dari = DateTime::createFromFormat('d/m/Y',  $tanggal_dari)->format('Y-m-d');
+    $tanggal_sampai = DateTime::createFromFormat('d/m/Y', $tanggal_sampai)->format('Y-m-d');
+
+    $kategori = $input['kategori'] ;
+    $data['data'] = $this->M_laporan->get_laporan_pengeluaran($tanggal_dari,$tanggal_sampai,$kategori);
+
+
+    $this->load->view('v_lap_pengeluaran_excel',$data);
     }
 
     function pendapatan(){
@@ -44,8 +62,10 @@ class Laporan extends CI_Controller {
       parse_str($_POST['data'], $input);
 
     $tanggal_dari = $input['tanggal_dari'];
-    $tanggal_dari = DateTime::createFromFormat('d/m/Y',  $tanggal_dari)->format('Y-m-d');
     $tanggal_sampai = $input['tanggal_sampai'];
+    $data['tanggal_dari'] =  $tanggal_dari;
+    $data['tanggal_sampai'] =  $tanggal_sampai;
+    $tanggal_dari = DateTime::createFromFormat('d/m/Y',  $tanggal_dari)->format('Y-m-d');
     $tanggal_sampai = DateTime::createFromFormat('d/m/Y', $tanggal_sampai)->format('Y-m-d');
 
     $unit = '';
@@ -55,6 +75,8 @@ class Laporan extends CI_Controller {
     }
   }
     $unit = rtrim($unit,',');
+
+    $data['unit'] = $unit;
     $data['data'] = $this->M_laporan->get_laporan_pendapatan($unit,$tanggal_dari,$tanggal_sampai);
 
 // die($this->db->last_query());
@@ -62,28 +84,69 @@ class Laporan extends CI_Controller {
     $this->load->view('v_lap_pendapatan',$data);
     }
 
+    function pendapatan_excel(){
+
+      $input = $this->input->get();
+
+
+    $tanggal_dari = $input['tanggal_dari'];
+    $tanggal_dari = DateTime::createFromFormat('d/m/Y',  $tanggal_dari)->format('Y-m-d');
+    $tanggal_sampai = $input['tanggal_sampai'];
+    $tanggal_sampai = DateTime::createFromFormat('d/m/Y', $tanggal_sampai)->format('Y-m-d');
+    $unit = $input['unit'];
+    $data['data'] = $this->M_laporan->get_laporan_pendapatan($unit,$tanggal_dari,$tanggal_sampai);
+
+// die($this->db->last_query());
+
+    $this->load->view('v_lap_pendapatan_excel',$data);
+    }
+
     function rekap_pengeluaran(){
       $input = array();
       parse_str($_POST['data'], $input);
+    $tanggal_dari = $input['tanggal_dari'];
+    $tanggal_sampai = $input['tanggal_sampai'];
+    $data['tanggal_dari'] =  $tanggal_dari;
+    $data['tanggal_sampai'] =  $tanggal_sampai;
+    $tanggal_dari = DateTime::createFromFormat('d/m/Y',  $tanggal_dari)->format('Y-m-d');
+    $tanggal_sampai = DateTime::createFromFormat('d/m/Y', $tanggal_sampai)->format('Y-m-d');
+
+    $data['data_rekap'] = $this->M_laporan->get_laporan_rekap_pengeluaran($tanggal_dari,$tanggal_sampai);
+    $this->load->view('v_lap_rekap_pengeluaran',$data);
+    }
+    function rekap_pengeluaran_excel(){
+        $input = $this->input->get();
     $tanggal_dari = $input['tanggal_dari'];
     $tanggal_dari = DateTime::createFromFormat('d/m/Y',  $tanggal_dari)->format('Y-m-d');
     $tanggal_sampai = $input['tanggal_sampai'];
     $tanggal_sampai = DateTime::createFromFormat('d/m/Y', $tanggal_sampai)->format('Y-m-d');
 
     $data['data_rekap'] = $this->M_laporan->get_laporan_rekap_pengeluaran($tanggal_dari,$tanggal_sampai);
-    $this->load->view('v_lap_rekap_pengeluaran',$data);
+    $this->load->view('v_lap_rekap_pengeluaran_excel',$data);
     }
 
     function rekap_pendapatan(){
       $input = array();
       parse_str($_POST['data'], $input);
     $tanggal_dari = $input['tanggal_dari'];
+    $tanggal_sampai = $input['tanggal_sampai'];
+    $data['tanggal_dari'] =  $tanggal_dari;
+    $data['tanggal_sampai'] =  $tanggal_sampai;
+    $tanggal_dari = DateTime::createFromFormat('d/m/Y',  $tanggal_dari)->format('Y-m-d');
+    $tanggal_sampai = DateTime::createFromFormat('d/m/Y', $tanggal_sampai)->format('Y-m-d');
+
+    $data['data_rekap'] = $this->M_laporan->get_laporan_rekap_pendapatan($tanggal_dari,$tanggal_sampai);
+    $this->load->view('v_lap_rekap_pendapatan',$data);
+    }
+    function rekap_pendapatan_excel(){
+      $input = $this->input->get();
+    $tanggal_dari = $input['tanggal_dari'];
     $tanggal_dari = DateTime::createFromFormat('d/m/Y',  $tanggal_dari)->format('Y-m-d');
     $tanggal_sampai = $input['tanggal_sampai'];
     $tanggal_sampai = DateTime::createFromFormat('d/m/Y', $tanggal_sampai)->format('Y-m-d');
 
     $data['data_rekap'] = $this->M_laporan->get_laporan_rekap_pendapatan($tanggal_dari,$tanggal_sampai);
-    $this->load->view('v_lap_rekap_pendapatan',$data);
+    $this->load->view('v_lap_rekap_pendapatan_excel',$data);
     }
 
     function rekap_total(){
@@ -91,25 +154,35 @@ class Laporan extends CI_Controller {
       parse_str($_POST['data'], $input);
     // $data['page'] = 'v_lap_rekap_total';
     $tanggal_dari = $input['tanggal_dari'];
+    $tanggal_sampai = $input['tanggal_sampai'];
+    $data['tanggal_dari'] =  $tanggal_dari;
+    $data['tanggal_sampai'] =  $tanggal_sampai;
+    $tanggal_dari = DateTime::createFromFormat('d/m/Y',  $tanggal_dari)->format('Y-m-d');
+    $tanggal_sampai = DateTime::createFromFormat('d/m/Y', $tanggal_sampai)->format('Y-m-d');
+     $pendapatan_bis= $this->M_laporan->get_laporan_rekap_pendapatan($tanggal_dari,$tanggal_sampai);
+
+    $data['data_rekap_pemasukan'] = $pendapatan_bis;
+    $data['data_rekap_pengeluaran'] = $this->M_laporan->get_laporan_rekap_pengeluaran($tanggal_dari,$tanggal_sampai);
+    // print_r(  $data['data_rekap_pengeluaran']);
+    // die;
+
+    $this->load->view('v_lap_rekap_total',$data);
+    }
+
+    function rekap_total_excel(){
+    $input = $this->input->get();
+    $tanggal_dari = $input['tanggal_dari'];
     $tanggal_dari = DateTime::createFromFormat('d/m/Y',  $tanggal_dari)->format('Y-m-d');
     $tanggal_sampai = $input['tanggal_sampai'];
     $tanggal_sampai = DateTime::createFromFormat('d/m/Y', $tanggal_sampai)->format('Y-m-d');
+     $pendapatan_bis= $this->M_laporan->get_laporan_rekap_pendapatan($tanggal_dari,$tanggal_sampai);
 
-    $query = $this->db->query('select * from unit')->result_array();
-    foreach ($query as $key => $value) {
-      $seri = $value['seri'];
-      $query = $this->db->query('SELECT sum(harga) total from booking where (tanggal_dari >= "'.$tanggal_dari.'" and tanggal_dari <= "'.$tanggal_sampai.'") and id_unit like "%'.$seri.'%"' )->result_array();
-      $pendapatan_bis[$seri] = $query[0]['total'];
-                        // $total = $total + $pendapatan_bis
-
-    }
-    // echo '<pre>';
-    // print_r($pendapatan_bis);
-    // // $pendapatan[$seri][]
-    // die;
     $data['data_rekap_pemasukan'] = $pendapatan_bis;
     $data['data_rekap_pengeluaran'] = $this->M_laporan->get_laporan_rekap_pengeluaran($tanggal_dari,$tanggal_sampai);
-    $this->load->view('v_lap_rekap_total',$data);
+    // print_r(  $data['data_rekap_pengeluaran']);
+    // die;
+
+    $this->load->view('v_lap_rekap_total_excel',$data);
     }
 
     function pemakaian_sparepart(){
@@ -128,13 +201,13 @@ class Laporan extends CI_Controller {
 
     $unit = '';
     $sparepart = '';
-    if($this->input->post('id_unit')){
-    foreach ($this->input->post('id_unit')  as $key => $value) {
+    if($input['id_unit']){
+    foreach ($input['id_unit']  as $key => $value) {
       $unit .= $value.",";
       }
     }
-    if($this->input->post('id_sparepart')){
-    foreach ($this->input->post('id_sparepart')  as $key => $value) {
+    if($input['id_sparepart']){
+    foreach ($input['id_sparepart']  as $key => $value) {
       $sparepart .= $value.",";
       }
     }

@@ -1,16 +1,11 @@
-<div style="text-align:right; padding:5px">
-  <a class="btn btn-success" href='<?php echo site_url("laporan/pengeluaran_excel?tanggal_dari=$tanggal_dari&tanggal_sampai=$tanggal_sampai&kategori=$kategori"); ?>'><span class="fa fa-file-excel-o "></span> Export Excel</a>
-  <br>
-</div>
-        <section class="content">
-            <div class="row" id="tabel">
-                <div class="col-md-12">
-                    <div class="box box-primary box-solid">
-                        <div class="box-header">
-                         Laporan  pengeluaran
-                        </div>
-                        <div class="box-body">
-                            <table id="dt" class="table  table-bordered" width="100%" cellspacing="0">
+<?php
+header("Content-Type:   application/vnd.ms-excel; charset=utf-8");
+header("Content-Disposition: attachment; filename=lap_pengeluaran.xls");  //File name extension was wrong
+header("Expires: 0");
+header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+header("Cache-Control: private",false);
+ ?>
+                                  <table id="dt" class="table  table-bordered" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
                                         <th>Tanggal</th>
@@ -44,10 +39,3 @@
                                 </tr>
                             <tfooter>
                             </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-    </div>
-</div>
-</section>

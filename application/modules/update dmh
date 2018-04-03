@@ -1,0 +1,39 @@
+process js tambahkan   "scrollX": true, pada pagination
+customer
+booking pada view (javascript)
+booking pada controller (fungsi autoload_nama)
+
+    $("#nama_penyewa").autocomplete({
+    source: function (request, response) {
+         $.ajax({
+             url: "<?php echo site_url('booking/autocomplete_nama') ?>",
+             type: "GET",
+             data: request,
+             success: function (dataa) {
+               data = JSON.parse(dataa);
+                 response($.map(data, function (el) {
+                     return {
+                         alamat_jemput: el.alamat,
+                         no_telepon: el.no_telepon,
+                         value: el.nama
+                     };
+                 }));
+             }
+         });
+    },
+    select: function (event, ui) {
+        $("#no_telepon").val(ui.item.no_telepon);
+        $("#alamat_jemput").val(ui.item.alamat_jemput);
+    }
+});
+
+
+
+
+
+  function autocomplete_nama(){
+      $nama = $this->input->get('term');
+     $this->db->like('nama', $nama);
+      $query = $this->db->get('customer')->result_array();
+      echo json_encode($query);
+    }

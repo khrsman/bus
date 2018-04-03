@@ -25,7 +25,7 @@
         box-shadow:0 0 10px rgba(0, 0, 0, .15);
         font-size:12px;
         /*line-height:24px;*/
-        /* font-family:'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; */
+
         font-family: serif;
         color:#555;
     }
@@ -34,7 +34,8 @@
         width:100%;
         line-height:inherit;
         text-align:left;
-          font-size:10px;
+          font-size:12px;
+          font-family: "Lucida Console", Monaco, monospace
     }
 
     </style>
@@ -145,7 +146,7 @@
                             <span style="display:inline-block; width: 120px;">Crew</span>: Rp. <?php echo $spj['biaya_crew'] ?><br>
 
                             <!-- <span style="display:inline-block; width: 120px; text-align:center">Operasional</span><br> -->
-                            <span style="display:inline-block; width: 120px;">Solar</span>: Rp. <?php echo $spj['biaya_solar'] ?> <br>
+                            <span style="display:inline-block; width: 120px;">Solar</span>: Rp. <?php echo $spj['biaya_solar'].' ('.$spj['jumlah_solar'].')' ?> <br>
                             <span style="display:inline-block; width: 120px;">Tol</span>: Rp. <?php echo $spj['biaya_tol'] ?> <br>
                             <span style="display:inline-block; width: 120px;">Parkir</span>: Rp. <?php echo $spj['biaya_parkir'] ?> <br>
                             <span style="display:inline-block; width: 120px;">Tips</span>: Rp. <?php echo $spj['biaya_tips'] ?> <br>

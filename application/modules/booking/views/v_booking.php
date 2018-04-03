@@ -10,7 +10,6 @@
     tr:hover {
         /*background-color: red;*/
         cursor: pointer;
-
     }
 </style>
 
@@ -264,7 +263,6 @@ $(document).on("click", "tbody>tr", function(e) {
     if ($(e.target).hasClass('hapus_custom') || $(e.target).hasClass('edit_custom')) {
         return;
     }
-
     id = $(this).find(".edit_custom").val();
     $.get("<?php echo site_url() ?>/booking/detail?id=" + id, function(data, status) {
         //  console.log(data);
@@ -346,7 +344,7 @@ $(function() {
                             var val = thisOpt.val();
                             var text = thisOpt.attr("title");
                             var count = $('#langOpt option:selected').length;
-
+  console.log(thisOpt);
                             var units = [];
                             if (thisOpt.prop('checked')) {
                                 $('.tanggal_unit option:selected').each(function() {
@@ -626,5 +624,39 @@ $(function() {
             }
         });
     }
+
+    // $( "#nama_penyewa" ).autocomplete({
+    //   source: [ "c++", "java", "php", "coldfusion", "javascript", "asp", "ruby" ]
+    // });
+
+    $("#nama_penyewa").autocomplete({
+    source: function (request, response) {
+         $.ajax({
+             url: "<?php echo site_url('booking/autocomplete_nama') ?>",
+             type: "GET",
+             data: request,
+             success: function (dataa) {
+               data = JSON.parse(dataa);
+                 response($.map(data, function (el) {
+                     return {
+                         alamat_jemput: el.alamat,
+                         nama: el.nama,
+                         no_telepon: el.no_telepon,
+                         value: el.nama + ' - ' + el.no_telepon
+                     };
+                 }));
+             }
+         });
+    },
+    select: function (event, ui) {
+      event.preventDefault();
+      $("#nama_penyewa").val(ui.item.nama);
+      // alert(ui.item.nama);
+        $("#no_telepon").val(ui.item.no_telepon);
+        $("#alamat_jemput").val(ui.item.alamat_jemput);
+    }
+});
+
+
 });
 </script>

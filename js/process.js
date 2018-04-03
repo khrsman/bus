@@ -49,7 +49,7 @@ $().ready(function(){
   $('body').on('click', '.hapus', function() {
     var id = $(this).val();
     if (confirm("Yakin untuk menghapus data?")) {
-     
+
       hapus(id,url_hapus,url_get);
    }
   });
@@ -127,6 +127,7 @@ $('#dt').dataTable({
   // "bRetrieve":true,
     "destroy": true,
   // "fnClearTable": true,
+  "scrollX": true,
   "bLengthChange": false,
   "displayLength":10,
   "language": {

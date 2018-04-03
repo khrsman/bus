@@ -20,7 +20,7 @@
 
            echo $cb_kelurahan;
          }
- 
+
          public function marketing()
          {
            $header = '<select class="form-control input_validation" name="id_marketing" id="id_marketing">
@@ -52,7 +52,7 @@
            $cb_unit = $header.$select_item.$footer;
            echo $cb_unit;
          }
-         
+
          public function sopir()
          {
            $header = '<select class="form-control" name="id_sopir" id="id_sopir">
@@ -142,6 +142,23 @@
            $footer = '</select>';
 
            $data = $this->CI->db->get('booking')->result_array();
+           foreach ($data as $key => $value) {
+             $select_item .= '<option value="'.$value['id_booking'].'">'.$value['id_booking'].' ('.$value['nama_penyewa'].' - '.$value['tujuan'].')</option>'  ;
+           }
+           $footer = '</select>';
+           $cb_unit = $header.$select_item.$footer;
+           echo $cb_unit;
+         }
+
+         public function kode_booking_spj()
+         {
+           $header = '<select class="form-control" name="id_booking" id="id_booking">
+             <option selected="" value="" disabled>--- PILIH ---</option>';
+           $select_item = '';
+           $footer = '</select>';
+
+           $tanggal =     date('Y-m-d');
+           $data = $this->CI->db->select('distinct(id_booking), nama_penyewa, tujuan')->join('detail_booking','id_booking')->where('tanggal', $tanggal)->get('booking')->result_array();
            foreach ($data as $key => $value) {
              $select_item .= '<option value="'.$value['id_booking'].'">'.$value['id_booking'].' ('.$value['nama_penyewa'].' - '.$value['tujuan'].')</option>'  ;
            }

@@ -1,17 +1,17 @@
 <?php
  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Pegawai extends CI_Controller {
+class Customer extends CI_Controller {
 
     function __construct()
     {
         parent::__construct();
-        $this->load->model('M_pegawai');
+        $this->load->model('M_customer');
     }
 
     // view
     function index(){
-    $data['page'] = 'v_pegawai';
+    $data['page'] = 'v_customer';
     $this->load->view('v_main',$data);
     }
 
@@ -20,10 +20,10 @@ class Pegawai extends CI_Controller {
         $data = array();
         parse_str($_POST['data'], $data);
         // jika fieldnya auto increment
-        if (isset($data['id_pegawai'])) {
-          $data['id_pegawai'] = NULL;
+        if (isset($data['id_customer'])) {
+          $data['id_customer'] = NULL;
         };
-        $insert = $this->M_pegawai->insert($data);
+        $insert = $this->M_customer->insert($data);
         if (!$insert) {
             $msg = $this->db->_error_message();
             $num = $this->db->_error_number();
@@ -34,20 +34,20 @@ class Pegawai extends CI_Controller {
     function update(){
       $data = array();
       parse_str($_POST['data'], $data);
-      $id = $data['id_pegawai'];
-      $update = $this->M_pegawai->update_by_id($data,$id);
+      $id = $data['id_customer'];
+      $update = $this->M_customer->update_by_id($data,$id);
     }
 
     // fungsi hapus
     function delete(){
       $id = $this->input->get('id');
-      $delete = $this->M_pegawai->delete_by_id($id);
+      $delete = $this->M_customer->delete_by_id($id);
       $this->index();
     }
 
     // fungsi dataTable
     function get(){
-      $data = $this->M_pegawai->get();
+      $data = $this->M_customer->get();
       $data_json = array();
       foreach ($data as $key => $value) {
         $data_json[] = array_values($value);
@@ -58,7 +58,7 @@ class Pegawai extends CI_Controller {
     // fungsi menampilkan halaman edit
     function get_for_edit(){
       $id = $this->input->get('id');
-      $data = $this->M_pegawai->get($id);
+      $data = $this->M_customer->get($id);
       echo json_encode($data);
     }
 

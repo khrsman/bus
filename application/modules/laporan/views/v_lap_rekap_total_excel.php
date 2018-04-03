@@ -1,12 +1,13 @@
 
-        <section class="content">
-          <div style="text-align:right; padding:5px">
-            <a class="btn btn-success" href='<?php echo site_url("laporan/rekap_total_excel?tanggal_dari=$tanggal_dari&tanggal_sampai=$tanggal_sampai"); ?>'><span class="fa fa-file-excel-o "></span> Export Excel</a>
-            <br>
-          </div>
+<?php
+header("Content-Type:   application/vnd.ms-excel; charset=utf-8");
+header("Content-Disposition: attachment; filename=lap_rekap_total.xls");  //File name extension was wrong
+header("Expires: 0");
+header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+header("Cache-Control: private",false);
+ ?>
           <div class="row" id="tabel">
               <div class="col-md-6">
-
                   <div class="box box-primary">
                       <div class="box-header">
                           Pendapatan

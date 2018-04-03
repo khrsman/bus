@@ -18,7 +18,8 @@
         width:100%;
         line-height:inherit;
         text-align:left;
-          font-size:10px;
+        font-size:12px;
+        font-family: "Lucida Console", Monaco, monospace
     }
 
     @media print {
@@ -118,7 +119,7 @@
                 </td>
 
                 <td>
-                  <?php echo $inv['tanggal_dari']." s.d ".$inv['tanggal_dari'] ?>
+                  <?php echo $inv['tanggal_dari']." s.d ".$inv['tanggal_sampai'] ?>
                 </td>
             </tr>
             <tr class="item">

@@ -13,6 +13,7 @@
                                         <th>Nama</th>
                                        <th>Unit</th>
                                        <th>Jumlah</th>
+                                       <th>Stok Saat Ini</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -28,6 +29,7 @@
                                         <td><?php echo $value['nama_sparepart'] ?></td>
                                         <td><?php echo $value['unit'] ?></td>
                                         <td><?php echo $value['jumlah'] ?> </td>
+                                        <td><?php echo $value['stok'] ?> </td>
                                     </tr>
                                     <?php
                                         }

@@ -56,6 +56,7 @@ class M_spj extends CI_Model
         DATE_FORMAT((select max(tanggal) from detail_booking det where det.id_booking = bk.id_booking and id_unit = spj.id_unit), "%d/%m/%Y") tanggal_sampai,
         spj.jam_jemput,
         spj.tipe_bus,
+        spj.jumlah_solar,
         format(spj.biaya_sopir,0) biaya_sopir,
         format(spj.biaya_crew,0) biaya_crew,
         format(spj.biaya_solar,0) biaya_solar,
